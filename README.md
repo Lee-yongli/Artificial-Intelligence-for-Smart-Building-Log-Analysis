@@ -54,8 +54,9 @@ The project currently includes:
 
 - Merging 14 floor-level CSV files.
 - Creating a zone-minute feature table.
+- Cleaning and resampling 2018-2019 data for floors 3, 4, 5, and 7 to 15-minute zone-level records.
 - Running exploratory data analysis.
 - Saving EDA summaries and plots.
 - Checking NaN values in the cleaned 15-minute dataset.
 
-Next steps are feature engineering, rolling-window features, train/test splitting, and anomaly detection experiments.
+Next steps are EDA on the cleaned selected-floor dataset, feature engineering, rolling-window features, train/test splitting, and anomaly detection experiments.
