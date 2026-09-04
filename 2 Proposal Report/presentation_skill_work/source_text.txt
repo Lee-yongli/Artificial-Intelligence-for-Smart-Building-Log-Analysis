@@ -1,0 +1,824 @@
+    Artificial Intelligence for Smart-Building Log
+                        Analysis
+
+                     PROJECT PROPOSAL
+       Group Number: C262T-4201 | Ticket Number: D01 | Host Organisation: Smart Facilities SA
+
+Mentors: Wenhao Liang and Abhilash Sridhara | Week 1 starts: 03-Aug-2026
+
+             Username                    Team Member Name                  Preferred Name
+             a1948935       Huaye Qi                                              Qi
+             a1906489       Yongli Jiang                                         Lee
+             a1940040       Jiahao Wang                                         Gavin
+             a1947217       Meng Zhang                                        Penelope
+             a1941715       Zirui Geng                                           Roc
+
+                                        Date: 27 August 2026
+
+
+
+
+                                                                                        Page 1 of 15
+Table of Contents
+Executive Summary ................................................................................................................................ 2
+
+1. Project Background and Description .................................................................................................... 4
+
+2. PROJECT SCOPE ................................................................................................................................ 5
+
+      2.1 Scope Rationale ........................................................................................................................ 5
+
+      2.2 Inclusions.................................................................................................................................. 6
+
+      2.3 Exclusions ................................................................................................................................. 6
+
+3. Risks .................................................................................................................................................. 7
+
+4. Budget ............................................................................................................................................... 7
+
+5. Roles and Responsibilities .................................................................................................................. 8
+
+      5.1 Individual Contributions and Learning Plan ............................................................................... 10
+
+      5.2 Communications Plan ............................................................................................................. 11
+
+      5.3 Project Stakeholders ................................................................................................................ 11
+
+6. Deliverables and Project Evaluation Criteria....................................................................................... 12
+
+7. Implementation Plan ........................................................................................................................ 13
+
+8. Project Schedule .............................................................................................................................. 14
+
+9. References ....................................................................................................................................... 15
+
+APPROVAL ........................................................................................................................................... 15
+
+
+
+
+EXECUTIVE SUMMARY
+Smart Facilities SA is the host organisation for this project. The project will investigate the use of artificial
+intelligence and machine-learning techniques for analysing smart-building operational data. The publicly
+available CU-BEMS Energy Research Data from the Chamchuri 5 building at Chulalongkorn University will
+be used as the primary research dataset. The dataset contains minute-level measurements collected
+across seven building floors and multiple zones, including air-conditioning, lighting and plug-load power
+consumption, together with indoor temperature, relative humidity and illuminance measurements. The
+selected dataset is used as a representative development and evaluation dataset for the project prototype
+and does not represent the full range of smart-building systems described in the Smart Facilities SA project
+environment.
+
+The project will develop and evaluate a reproducible data-analysis pipeline for integrating and analysing
+these heterogeneous measurements. The pipeline will support data preparation, data integration, feature
+extraction, pattern analysis, anomaly detection, visualisation and evaluation. Python will be used as the
+
+                                                                                                                                       Page 2 of 15
+main programming language, together with open-source data science and machine-learning libraries. The
+project will compare interpretable statistical baseline methods with several suitable unsupervised
+anomaly-detection approaches. This will allow the final recommendations to be based on evidence from
+different methods rather than relying on a single model.
+
+The analysis will examine operational patterns at building, floor, zone and device levels where supported
+by the available data. The project will investigate potentially unusual patterns such as unexpected changes
+in equipment power consumption, unusual temporal behaviour and deviations from typical relationships
+between energy consumption and environmental conditions. Because the selected dataset does not
+provide comprehensive verified records of equipment faults or abnormal incidents, detected anomalies
+will not automatically be treated as confirmed real-world failures. Evaluation will instead use controlled
+synthetic anomalies, stability and consistency testing, alert-volume analysis and qualitative review of
+representative results.
+
+The main outputs will include a documented data-integration and analysis pipeline, reusable source code,
+a canonical analysis-ready dataset or reproducible transformation process, exploratory analysis results,
+anomaly-detection results and visualisations. The project will also develop a framework for interpreting
+and prioritising detected anomalies based on factors such as magnitude, persistence, recurrence, location
+and supporting context. A final technical report will summarise the results, limitations and
+recommendations for possible future operational use.
+
+The project is planned over ten teaching weeks. No mandatory software-licensing cost is expected
+because the main tools are open source. An optional budget of AUD 200 is included for cloud computing if
+local or organisational computing resources are not sufficient. Total student effort is estimated at about
+400 hours. This is recorded separately as an estimated labour-value item rather than a direct project cost.
+
+
+
+
+                                                                                             Page 3 of 15
+1. PROJECT BACKGROUND AND DESCRIPTION
+Smart Facilities SA is the host organisation for this project. Its facilities-management environment includes
+a range of smart-building systems, such as access-control devices, heating and cooling systems,
+environmental sensors, lifts, power-management systems and building-management servers. The project
+focuses on the use of artificial intelligence and machine-learning techniques to support anomaly detection
+in smart-building operations.
+
+To provide a realistic and reproducible basis for the research, the project will use publicly available smart-
+building operational data collected through the CU-BEMS building energy management system at the
+Chamchuri 5 building of Chulalongkorn University. The selected dataset will serve as a representative
+development and evaluation dataset for the project prototype and does not represent the full range of
+smart-building systems described in the broader Smart Facilities SA project environment.
+
+The selected dataset contains minute-level measurements collected from a seven-storey academic office
+building between July 2018 and December 2019. The available data includes power consumption from air-
+conditioning, lighting and plug-load systems, together with indoor environmental measurements such as
+temperature, relative humidity and illuminance. Measurements are available across multiple floors and
+zones, although the number and type of available devices and sensors vary between locations
+(Pipattanasomporn et al., 2020).
+
+Analysing this type of smart-building data is not straightforward. Different floors and zones have different
+equipment configurations and operating conditions, while normal behaviour can vary according to time,
+location, device type and environmental conditions. The data also contains a large volume of minute-level
+observations that would be difficult to inspect manually. For these reasons, fixed rules or manual
+inspection may not consistently identify unusual operational behaviour. Previous research has examined
+data-driven anomaly detection in building and energy environments, where large volumes of sensor and
+operational data can be used to identify patterns and potential abnormal behaviour (Himeur et al., 2021).
+
+This project will examine whether artificial intelligence and machine-learning methods can distinguish
+normal operational behaviour from unusual patterns in the selected building energy and environmental
+data. Potential anomalies may include unexpected changes in equipment power consumption, unusual
+temporal patterns, deviations from typical environmental conditions, or inconsistent relationships
+between related variables. The project will not assume that one detection method is suitable for all cases.
+Instead, interpretable statistical baselines and selected machine-learning approaches will be developed
+and compared using the selected dataset. This is necessary because anomaly-detection methods use
+different assumptions about normal and abnormal behaviour, and their performance can vary between
+datasets and application domains (Chandola et al., 2009).
+
+The project will also consider how detected anomalies can be presented with sufficient context to support
+interpretation and prioritisation in a future operational environment. Because the selected dataset does
+not provide comprehensive verified records of equipment faults, security incidents or other abnormal
+events, a detected anomaly will not automatically be interpreted as a confirmed real-world incident.
+Instead, evaluation will use controlled synthetic anomalies, consistency and stability checks, alert-volume
+analysis and qualitative review of representative cases.
+
+The project objectives are to:
+
+
+                                                                                               Page 4 of 15
+    •   Create a reproducible workflow for importing, integrating, cleaning, transforming and analysing
+        smart-building data across multiple floors and zones.
+    •   Develop a consistent data structure for integrating heterogeneous measurements, including
+        equipment power consumption and environmental sensor data.
+    •   Identify normal temporal, device-level, zone-level and cross-variable operational patterns.
+    •   Develop and compare suitable anomaly-detection methods, including statistical baselines and
+        selected machine-learning approaches.
+    •   Create visualisations that show operational patterns, anomaly timing, affected floors, zones or
+        systems, and supporting evidence.
+    •   Evaluate the detection methods using controlled synthetic anomalies, consistency and stability
+        checks, alert-volume analysis and qualitative review where appropriate.
+    •   Develop an interpretation and prioritisation approach that could support facilities or security staff
+        in reviewing and triaging detected anomalies in a future operational environment.
+
+The expected benefits for Smart Facilities SA include improved visibility of smart-building operational
+patterns and a structured approach for identifying potentially unusual behaviour. The project may help
+demonstrate how anomaly-detection methods could support the prioritisation of investigation effort by
+facilities or security staff in a future operational environment. The results will also provide evidence about
+the usefulness, limitations and practical requirements of AI-assisted monitoring, including the
+requirements for extending the prototype to other smart-building or security-related data sources before
+any larger-scale production system is considered.
+
+
+
+2. PROJECT SCOPE
+
+2.1 Scope Rationale
+
+ • The project scope focuses on the main tasks required for analysing smart-building operational and
+    sensor data and is designed to be achievable within the available ten-week project timeframe. It
+    covers data integration and preparation, feature engineering, exploratory pattern analysis, anomaly
+    detection, evaluation, visualisation and interpretation. These areas are included because the
+    performance of anomaly-detection methods depends on the quality, structure and characteristics of
+    the available data (Chandola et al., 2009).
+
+ • The project will use the CU-BEMS Energy Research Data from the Chamchuri 5 building as its primary
+    research dataset. The analysis will focus on the available measurements across multiple floors and
+    zones, including air-conditioning, lighting and plug-load power consumption, indoor temperature,
+    relative humidity and illuminance. The selected dataset represents a subset of the broader smart-
+    building environment described in the Smart Facilities SA project context. Therefore, the prototype will
+    focus on the available CU-BEMS measurements while considering how the approach could be
+    extended to other operational or security-related data sources in a future deployment.
+
+ • The project will compare interpretable statistical baseline methods with selected machine-learning
+    approaches. It will not assume that one method is suitable for every variable, device or operating
+    condition. Visualisation and anomaly prioritisation are also included so that detected patterns can be
+    interpreted in their building and operational context and could support facilities or security staff in
+    reviewing representative findings in a future operational environment.
+                                                                                                Page 5 of 15
+ • Production deployment, automated building control, and cybersecurity testing are outside the scope
+    of this project. These exclusions keep the project focused on developing and evaluating an analytical
+    prototype rather than creating a live operational system.
+
+
+2.2 Inclusions
+
+ • The following aspects of the project are considered within scope:
+
+ • Review and characterisation of the selected CU-BEMS dataset, including available floors and zones,
+    measurement variables, timestamps, sampling frequency, missingness, data volume and quality
+    constraints.
+ • Data cleaning and preparation, including timestamp processing, duplicate handling, missing-value
+   treatment, data-type standardisation and integration of measurements from different floors, zones
+   and systems into an analysis-ready structure.
+ • Feature engineering at appropriate time, floor, zone and device levels, such as rolling statistics, moving
+    averages, rate of change, temporal features, power-consumption patterns and relationships between
+    energy consumption and environmental measurements.
+ • Exploratory analysis and pattern discovery to identify normal operating patterns, daily and weekly
+    cycles, recurring behaviour, differences between floors or zones, and relationships between building
+    energy consumption and environmental conditions.
+ • Development of interpretable statistical baseline methods and one or more suitable machine-learning
+   anomaly-detection approaches for predominantly unlabeled smart-building operational data.
+ • Comparison and evaluation of candidate methods using controlled synthetic anomalies, stability and
+    consistency testing, alert-volume analysis and qualitative review of representative results.
+ • Visualisation of normal operating patterns and detected anomalies, with sufficient contextual
+    information to show their timing, location, affected variables and supporting evidence.
+ • Development of an interpretation and prioritisation framework based on available evidence, such as
+   anomaly magnitude, persistence, recurrence, affected floor or zone and relationships with other
+   measurements, to support potential review and triage by facilities or security staff in a future
+   operational environment.
+ • Documentation, source-code packaging and final presentation of findings, limitations and
+   recommendations.
+
+
+2.3 Exclusions
+
+ • The following aspects of the potential project are explicitly out of scope unless later agreed through
+    formal scope control:
+
+ • Deployment of a production, 24/7 monitoring platform within live building-management infrastructure.
+ • Direct control of physical building equipment or automated execution of operational responses.
+ • Replacement of existing building-management, energy-management, maintenance or monitoring
+    systems.
+ • Procurement or installation of new sensors, controllers, networking equipment or other building
+    hardware.
+ • Long-term collection of new operational data beyond the selected research dataset.
+ • Formal cybersecurity penetration testing, vulnerability exploitation or forensic investigation.
+
+                                                                                              Page 6 of 15
+ • Direct validation of security incidents, access-control events or lift-system anomalies, as these data
+   types are not available in the selected CU-BEMS dataset. Their inclusion would require additional
+   approved data sources and further development.
+ • Confirming that every detected anomaly represents an actual equipment fault or operational failure, as
+   the selected dataset does not provide comprehensive verified incident labels.
+ • Guaranteeing prediction of all future equipment failures or security incidents; the project is an
+     analytical investigation and prototype evaluation.
+
+3. RISKS
+The most significant project risks arise from the quality and structure of the selected smart-building
+dataset, the absence of verified anomaly labels, the complexity of integrating measurements across floors
+and zones, and the limited ten-week project timeframe. These risks may affect both model validity and
+project delivery. The project will therefore conduct an early data audit, maintain interpretable baseline
+methods, document uncertainty explicitly and avoid dependence on any single modelling technique.
+                                Probability
+            Risk                                          Impact                                 Mitigation Strategy
+                                (out of 1.0)
+                                                                               Perform a data-quality audit early in the project;
+ Missing, inconsistent or
+                                               High; may add 20–30 hours       quantify missingness; identify invalid or inconsistent
+ noisy measurements in the         0.70
+                                               and reduce model reliability    values; define cleaning and imputation rules; preserve
+ selected dataset
+                                                                               the original data and document all transformations.
+                                                                               Use unsupervised methods; compare against statistical
+ Few or no trustworthy                                                         baselines; inject controlled synthetic anomalies where
+                                               High; limits conventional
+ labels for true anomalies or      0.80                                        appropriate; conduct stability and consistency testing;
+                                               accuracy measurement
+ equipment faults                                                              analyse representative results and explicitly report
+                                                                               evaluation limitations.
+ Complexity in integrating                                                     Develop a canonical analysis structure; standardise
+ data across multiple floors,                  Medium–High; may add 20–        timestamps and variable names; document mappings
+                                   0.65
+ zones and measurement                         30 hours                        between floors, zones and measurements; test
+ types                                                                         individual subsets before full integration.
+                                                                               Begin with selected floors, zones or time periods during
+ Large data volume or
+                                               Medium–High; may slow           development; optimise data types and processing
+ computational limitations
+                                   0.50        experimentation and model       steps; aggregate data where justified; use optional
+ caused by minute-level
+                                               evaluation                      cloud computing only if existing resources are
+ measurements
+                                                                               insufficient.
+                                                                               Use multiple types and magnitudes of controlled
+ Synthetic anomalies may                       High; may limit the practical   anomalies; base scenarios on plausible changes in
+ not accurately represent          0.60        interpretation of evaluation    power consumption or environmental measurements;
+ real equipment faults                         results                         distinguish clearly between simulated anomalies and
+                                                                               confirmed real-world faults.
+                                                                               Compare alert volumes; tune thresholds; consider
+ Excessive false positives
+                                                                               persistence and recurrence; rank anomalies rather than
+ make anomaly results              0.65        High; reduces practical value
+                                                                               treating all detections equally; provide contextual
+ difficult to interpret
+                                                                               visualisations.
+                                                                               Use time-based validation and comparisons across
+ Model results are unstable                                                    different data subsets; test multiple algorithms and
+                                               Medium–High; may weaken
+ across different floors,          0.45                                        parameter settings; conduct sensitivity analysis; prefer
+                                               conclusions
+ zones or time periods                                                         simpler and more stable methods when performance is
+                                                                               similar.
+                                                                               Maintain a defined project backlog and weekly
+ Scope expansion or uneven                     Medium; could delay             milestone review; assign clear workstream owners;
+                                   0.40
+ team workload                                 milestones                      prioritise core deliverables; discuss major scope
+                                                                               changes with the mentor before implementation.
+
+
+
+
+4. BUDGET
+The project is designed to minimise direct expenditure by using existing student/organisational computing
+resources and open-source software. Actual and potential project cash expenditure and hypothetical
+labour-value estimates are separated below. Any optional expenditure will require client/mentor approval
+before commitment.
+
+                                                                                                                       Page 7 of 15
+                 Budget Item                       Estimated Cost                                   Justification
+                                                                            The selected smart-building dataset is publicly available
+ Public CU-BEMS research dataset              AUD 0 (actual)                for research and analysis, so no data acquisition or
+                                                                            licensing cost is expected.
+ Python/R and open-source analytics                                         No licence fee is expected for the core programming, data
+                                              AUD 0 (actual)
+ libraries                                                                  preparation, visualisation and machine-learning toolchain.
+ Existing student/university/host computing                                 The project will use available laptops, university facilities or
+                                              AUD 0 incremental (actual)
+ resources                                                                  approved host resources where practical.
+                                                                            Use organisation/university-approved storage already
+ Secure project storage using approved
+                                              AUD 0 incremental (actual)    available to the project; no new storage purchase is
+ existing services
+                                                                            assumed.
+                                                                            Only if local or approved existing resources are insufficient
+                                              Up to AUD 200 (potential
+ Optional cloud compute contingency                                         for selected experiments; expenditure is not assumed
+                                              actual)
+                                                                            unless approved.
+ Student project effort: 5 members x 8                                      Illustrative labour value at AUD 40/hour. This is not an
+                                              AUD 16,000 (hypothetical)
+ h/week x 10 weeks = 400 h                                                  expected cash cost to Smart Facilities SA.
+                                                                            Electronic delivery is preferred; small printing or
+ Presentation / final handover materials      AUD 0-50 (potential actual)
+                                                                            presentation costs may arise only if required.
+                                                                            The planned project can be completed using open-source
+ Estimated mandatory project cash cost        AUD 0                         software and existing resources, subject to data-access
+                                                                            and computing arrangements.
+
+
+
+
+5. ROLES AND RESPONSIBILITIES
+The allocation below reflects the tasks initially completed by each team member during Week 1 and
+establishes the primary workstreams for the remainder of the project. Responsibilities are distributed
+according to the main technical and project requirements, including data preparation and integration,
+feature engineering, anomaly detection, technical integration, evaluation, project coordination,
+documentation and presentation.
+
+Each team member has a defined area of responsibility while remaining jointly responsible for
+collaboration, integration, peer review and the overall quality of the final project outputs. Responsibilities
+may be refined as the characteristics of the selected dataset, technical requirements and stakeholder
+feedback become clearer.
+
+
+
+
+                                                Primary Role /
+              Team Member                                                                     Responsibilities
+                                                    Focus
+ Huaye Qi (Qi)                                Project Leader &              •   Coordinate project activities, team
+ a1948935                                     Machine Learning
+                                                                                progress and major task dependencies.
+                                              Engineer
+                                                                            •   Lead key technical decisions and
+                                                                                communication with mentors/client.
+                                                                            •   Research, select and implement suitable
+                                                                                anomaly-detection methods.
+                                                                            •   Compare statistical baselines and
+                                                                                machine-learning approaches.
+                                                                            •   Guide the integration and communication
+                                                                                of major technical findings.
+ Yongli Jiang (Lee)                           Data Engineer                 •   Analyse the structure and quality of the
+ a1906489
+                                                                                selected smart-building operational and
+                                                                                sensor data.
+                                                                            •   Develop the data structure and data-
+                                                                                preparation process for integrating
+                                                                                measurements across floors, zones and
+                                                                                systems.
+
+                                                                                                                        Page 8 of 15
+                                       Primary Role /
+            Team Member                                                      Responsibilities
+                                           Focus
+                                                            •    Perform data cleaning, transformation
+                                                                 and timestamp processing.
+                                                            •    Develop relevant features for pattern
+                                                                 analysis and anomaly detection.
+                                                            •    Support exploratory analysis of normal
+                                                                 operational patterns.
+Jiahao Wang (Gavin)                  AI Systems             •    Integrate data preparation, feature
+a1940040                             Engineer &
+                                                                 engineering and anomaly-detection
+                                     Evaluation Lead
+                                                                 components into the analysis pipeline.
+                                                            •    Design the system workflow and
+                                                                 experimental evaluation approach.
+                                                            •    Evaluate model outputs, false-positive
+                                                                 burden, stability and limitations.
+                                                            •    Compare methods and support evidence-
+                                                                 based model selection.
+                                                            •    Interpret overall technical results and
+                                                                 recommendations.
+
+Meng Zhang (Penelope)                Project                •    Organise project materials and meeting
+a1947217                             Coordination &
+                                                                 outputs.
+                                     Presentation
+                                     Support                •    Prepare presentation slides, diagrams
+                                                                 and visual summaries based on team
+                                                                 technical outputs.
+                                                            •    Support the communication of project
+                                                                 progress and findings.
+                                                            •    Assist with preparation of the final
+                                                                 presentation materials.
+Zirui Geng (Roc)                     Documentation &        •    Maintain project documentation, timeline
+a1941715                             Project Support
+                                                                 tracking and milestone records.
+                                     Officer
+                                                            •    Organise shared project materials and
+                                                                 supporting evidence.
+                                                            •    Assist with report formatting, references
+                                                                 and documentation consistency.
+                                                            •    Support final submission and handover
+                                                                 preparation.
+Wenhao Liang and Abhilash Sridhara   Project Mentors    Provide academic and methodological guidance, review
+                                                        project progress and assumptions, and advise the team on
+                                                        scope, risks and project direction.
+Smart Facilities SA                  Client / Host      Provide the operational context and application perspective
+                                     Organisation       for the project; clarify requirements and review the
+                                                        usefulness of project outputs.
+
+
+
+
+                                                                                                    Page 9 of 15
+5.1 Individual Contributions and Learning Plan
+
+The team will monitor individual contributions through assigned workstreams, weekly progress reviews,
+shared documentation and milestone-based deliverables. Each team member will maintain responsibility
+for their primary work area while contributing to integration, peer review and the final project outputs. The
+project is also intended to support individual learning through the practical application of technical and
+project-management knowledge.
+
+              Team Member                     Planned Contribution                          Expected Learning
+ Huaye Qi (Qi)                        Lead project coordination and technical     Develop practical knowledge of
+ a1948935                             direction, while researching, selecting     technical project leadership, statistical
+                                      and supporting the implementation of        and machine-learning approaches to
+                                      suitable anomaly-detection methods.         anomaly detection, model selection and
+                                                                                  communication of technical findings.
+ Yongli Jiang (Lee)                   Analyse the selected smart-building         Develop practical skills in understanding
+ a1906489                             operational and sensor data and support     heterogeneous operational data,
+                                      data profiling, cleaning, transformation,   identifying data-quality issues, data
+                                      integration and feature engineering for     preparation and feature engineering.
+                                      the analysis pipeline.
+ Jiahao Wang (Gavin)                  Integrate the main technical                Develop practical skills in AI system
+ a1940040                             components of the analysis pipeline and     integration, experimental evaluation,
+                                      support the evaluation and comparison       robustness analysis and evidence-based
+                                      of anomaly-detection methods and            interpretation of analytical results.
+                                      results.
+ Meng Zhang (Penelope)                Organise project materials and meeting      Develop practical skills in project
+ a1947217                             outputs and support the preparation of      coordination, presentation preparation
+                                      presentation slides, diagrams and visual    and communicating project progress
+                                      summaries based on team technical           and technical findings.
+                                      outputs.
+ Zirui Geng (Roc)                     Support the preparation of visual           Develop practical skills in project
+ a1941715                             materials, technical documentation,         coordination, technical documentation,
+                                      project tracking and final report,          presentation preparation and structured
+                                      presentation and handover materials.        communication of project results.
+ Wenhao Liang and Abhilash Sridhara   Project Mentors                             Provide academic and methodological
+                                                                                  guidance, review project progress and
+                                                                                  assumptions, and advise the team on
+                                                                                  scope, risks and project direction.
+ Smart Facilities SA                  Client / Host Organisation                  Provide operational context and an
+                                                                                  application perspective, clarify project
+                                                                                  requirements where necessary, and
+                                                                                  review the practical relevance and
+                                                                                  usefulness of project outputs and
+                                                                                  recommendations.
+Progress and learning will be reviewed at regular team meetings and project milestones. Where a team
+member encounters difficulties, delays, or critical technical blockers (such as data integration issues or
+model convergence challenges), an explicit escalation path is triggered: such risks will be flagged within 24
+hours to coordinate ad-hoc reviews, ensuring milestones are actively managed without compromising
+assigned workstream ownership. Individual contributions will be evidenced through project artefacts such
+as research notes, data-analysis outputs, code contributions, experimental results, visualisations,
+documentation, report sections and presentation materials.
+
+
+
+
+                                                                                                        Page 10 of 15
+5.2 Communications Plan
+The following communication plan has been established for the project and will be reviewed and adjusted
+as needed throughout the project period.
+   Stakeholder / Group                           Purpose                                Frequency                           Method
+                                                                             Weekly 45-60 minute meeting;     In-person/online meeting plus
+                                 Coordinate tasks, dependencies, code
+ Student team                                                                asynchronous updates as          agreed group chat; shared
+                                 integration and risks
+                                                                             needed                           repository and task board
+                                                                             Weekly or fortnightly 30-
+                                 Confirm project requirements,                                                Online/in-person meeting and
+ Smart Facilities SA client                                                  minute checkpoint, with
+                                 application context, operational                                             email; concise agenda and action
+ representative                                                              additional questions
+                                 relevance and key project decisions.                                         log
+                                                                             consolidated asynchronously
+                                                                             Weekly or fortnightly            Scheduled meeting and email;
+                                 Review methodology, scope, risks and
+ Project mentor                                                              checkpoint in line with course   milestone artefacts shared before
+                                 academic progress
+                                                                             arrangements                     review
+                                 Provide operational context and, where
+ Facilities/security subject-    available, assess the potential relevance   Targeted sessions during         Interview/workshop; structured
+ matter staff, if nominated      and interpretability of representative      Weeks 2, 7 and 9 or as agreed    examples and visualisations
+                                 anomaly outputs.
+                                 Confirm milestone completion and final      Milestone reviews and final      Presentation/demo plus final report
+ Whole stakeholder group
+                                 acceptance                                  Week 10 presentation             and handover package
+
+
+
+
+5.3 Project Stakeholders
+                     Name                    Role             Interest in the project                  Responsibilities
+                                                            Receives project outputs;
+                                                            concerned with
+                                                            operational value,
+             Smart Facilities SA                                                           Confirm project requirements, provide
+                                                            feasibility, risk, privacy,
+             client                   Client / Sponsor                                     operational direction and review key
+                                                            interpretability and
+             representative                                                                project outputs and recommendations.
+                                                            whether the prototype
+                                                            supports future decision-
+                                                            making.
+                                                            Need useful identification
+                                                                                           Provide operational context for
+                                                            of abnormal
+                                                                                           interpreting normal and potentially
+                                                            building/equipment
+             Facilities-              Primary                                              abnormal building behaviour, where
+                                                            behaviour without
+             management staff         operational users                                    possible, and review the practical
+                                                            excessive false positives
+                                                                                           usefulness of representative anomaly
+                                                            or unexplained model
+                                                                                           outputs.
+                                                            outputs.
+                                                            Interested in whether
+                                                            identified anomalies and
+                                                                                           Provide a security perspective on how
+                                                            unusual building
+                                      Potential                                            anomalies could be interpreted,
+             Security staff                                 behaviour could provide
+                                      operational users                                    prioritised and potentially investigated in
+                                                            useful context for future
+                                                                                           a future operational environment.
+                                                            security investigation and
+                                                            prioritisation.
+                                                            Interested in early            Provide equipment and maintenance
+                                                            indicators of equipment        context and assess whether
+                                                            degradation, recurring         representative anomaly patterns could
+             Maintenance /            Subject-matter
+                                                            faults and abnormal            potentially indicate equipment faults,
+             engineering staff        users
+                                                            operating patterns that        degradation or abnormal operating
+                                                            may support                    conditions in a future operational
+                                                            maintenance planning.          environment.
+                                                            Concerned with secure
+                                                                                           Advise on potential data-handling,
+                                                            data handling, access
+                                                                                           access, integration and system
+                                                            permissions, log
+             IT / data                Data and system                                      requirements that would need to be
+                                                            schemas, system
+             administrators           custodians                                           considered if the prototype were
+                                                            performance and
+                                                                                           extended to a live organisational
+                                                            reproducibility of data
+                                                                                           environment.
+                                                            extraction/processing.
+                                                            Interested in appropriate
+                                                            methodology, project
+                                                                                           Provide academic supervision,
+             Wenhao Liang and         Academic              governance, evidence-
+                                                                                           methodological guidance and feedback
+             Abhilash Sridhara        stakeholder           based evaluation and
+                                                                                           on project progress and deliverables.
+                                                            achievement of project
+                                                            objectives.
+
+
+                                                                                                                             Page 11 of 15
+                   Name                 Role            Interest in the project                   Responsibilities
+                                                       Responsible for
+                                                       completing the ten-week         Complete the agreed workstreams,
+            Student project                            project, integrating            integrate project outputs, manage risks
+                                  Delivery team
+            team                                       technical workstreams           and deliver the final prototype,
+                                                       and delivering a coherent,      documentation and presentation.
+                                                       defensible outcome.
+
+
+
+
+6. DELIVERABLES AND PROJECT EVALUATION CRITERIA
+The project will deliver the following items electronically to Smart Facilities SA using the publicly available
+CU-BEMS Energy Research Data as the primary research dataset.
+          Deliverable                                 Description                                       Evaluation Criteria
+                                  Reusable Python scripts/notebooks that load and
+                                                                                         Runs reproducibly on the selected CU-BEMS
+                                  integrate the selected CU-BEMS data, perform
+ D1. Data preparation and                                                                dataset; key transformations and assumptions
+                                  cleaning, timestamp processing and data
+ feature-engineering pipeline                                                            are documented; data-quality issues are
+                                  standardisation, and generate documented
+                                                                                         quantified.
+                                  analysis features.
+                                  Analysis of temporal behaviour, energy-
+                                                                                         Identifies understandable normal patterns and
+ D2. Exploratory pattern          consumption patterns, environmental conditions,
+                                                                                         provides evidence that supports subsequent
+ analysis                         floor and zone differences, and other recurring
+                                                                                         anomaly modelling.
+                                  operational patterns in the selected building data
+                                  A comparison of at least one interpretable
+                                                                                         Methods are evaluated consistently; false-
+                                  statistical baseline and one or more suitable
+ D3. Anomaly-detection model                                                             positive burden, stability and limitations are
+                                  machine-learning anomaly-detection methods,
+ comparison                                                                              reported; selected method(s) are justified by
+                                  including documented configurations, anomaly
+                                                                                         evidence.
+                                  outputs and comparative analysis.
+                                  Dashboard-style views of the selected CU-BEMS
+                                  data will provide an overall building summary,
+                                  including total or average power consumption,
+                                  average indoor temperature, relative humidity,
+                                  illuminance, and detected-anomaly counts.
+                                  Energy views will show air-conditioning, lighting
+                                                                                         A reviewer can filter by time period, floor, zone
+                                  and plug-load consumption over time, with
+                                                                                         and measurement type or system, locate and
+                                  comparisons across floors and zones.
+                                                                                         interpret representative detected anomalies
+                                  Environmental views will show temperature,
+ D4. Visualisation package                                                               without reading raw logs, and trace each view to
+                                  relative humidity and illuminance over time and
+                                                                                         the underlying CU-BEMS measurements. Visual
+                                  across floors and zones to provide contextual
+                                                                                         outputs are legible and do not present detected
+                                  evidence. Anomaly monitoring will display the
+                                                                                         anomalies as confirmed faults.
+                                  timestamp, affected floor and zone, variable or
+                                  system, anomaly magnitude or score, duration or
+                                  persistence, recurrence, and relevant energy or
+                                  environmental context. Filters will allow users to
+                                  select the time period, floor, zone, and
+                                  measurement type or system.
+                                  A practical structure for explaining detected
+                                  anomalies and ranking investigation priority based     Potential facilities or security reviewers can
+ D5. Interpretation and           on available evidence such as magnitude,               distinguish higher-priority from lower-priority
+ prioritisation framework         persistence, recurrence, affected floor or zone,       findings and understand why an anomaly was
+                                  subsystem context and any available anomaly            surfaced.
+                                  score.
+                                  Report covering data, methodology, experiments,        Conclusions are traceable to analysis results;
+ D6. Final technical report and   results, limitations, evaluation approach and          limitations are explicit; recommendations
+ recommendations                  recommendations for potential future application       distinguish prototype findings from production
+                                  in a live smart-building environment.                  requirements.
+                                                                                         Another technically capable reviewer can
+                                  Source code, environment/dependency
+ D7. Reproducible handover                                                               understand the project structure and reproduce
+                                  information, README/run instructions, selected
+ package and presentation                                                                the agreed analysis using the same CU-BEMS
+                                  outputs and final presentation/demo.
+                                                                                         dataset and documented environment.
+
+
+Project success will be judged primarily by reproducibility, technical validity, stability of the anomaly-
+detection methods, interpretability of outputs, usefulness of the prioritisation framework and the quality of
+evidence supporting conclusions.
+
+
+
+                                                                                                                       Page 12 of 15
+Although the chosen CU-BEMS dataset focuses on comprehensive energy and environmental benchmark
+records, in the absence of verified on-site equipment fault labels, conventional classification metrics (such
+as accuracy, recall, and F1-score) will serve only as auxiliary references rather than definitive standards for
+actual deployment performance. Consequently, the evaluation framework will adopt a multi-faceted
+approach, including controlled baseline consistency checks, anomaly stability analysis, alert frequency
+distribution evaluations, cross-method comparisons, and qualitative reviews of representative cases by
+facilities management experts, ensuring the business relevance and interpretability of the prototype
+system
+
+
+
+7. IMPLEMENTATION PLAN
+1. Dataset and project requirements confirmation (Week 1, Milestone M1): Confirm project objectives,
+stakeholder expectations, selected CU-BEMS dataset scope, success criteria and technical environment.
+Establish the repository, task board and reproducibility conventions.
+
+2. Data audit and analysis structure (Weeks 1–2, M2): Profile the available CU-BEMS files, floors, zones,
+variables, timestamps, sampling frequency, data volume, missingness and device configurations. Define
+the data structure and mappings required for analysis across selected data sources.
+
+3. Data preparation pipeline (Weeks 2–3, M3): Implement data loading, cleaning, timestamp processing,
+duplicate handling, missing-value treatment, standardisation and validation checks. Produce an analysis-
+ready dataset or reproducible transformation process.
+
+4. Feature engineering and exploratory pattern discovery (Weeks 3–4, M4): Create temporal, rolling-
+statistical, rate-of-change and cross-variable features. Examine daily and weekly cycles, correlations,
+differences between floors and zones, recurring operating patterns and relationships between energy
+consumption and environmental measurements.
+
+5. Baseline anomaly detection (Weeks 4–5, M5): Implement interpretable statistical baselines such as
+thresholds, z-scores, robust scores or rolling-deviation approaches to establish reference behaviour and
+identify potential anomalies.
+
+6. Machine-learning anomaly modelling (Weeks 5–6, M6): Implement and compare suitable
+unsupervised anomaly-detection methods such as Isolation Forest (Liu et al., 2008), Local Outlier Factor
+(Breunig et al., 2000) and other justified techniques. More complex methods will only be included if the
+data volume and structure support their use.
+
+7. Evaluation, tuning and robustness analysis (Weeks 6–7, M7): Apply controlled synthetic anomalies,
+time-based validation where appropriate, consistency and stability checks and comparison between
+representative methods. Tune thresholds and model parameters with attention to alert volume and
+interpretability.
+
+8. Visualisation and anomaly prioritisation (Weeks 7-8, M8): Develop dashboard-style views of air-
+conditioning, lighting and plug-load power consumption; indoor temperature; relative humidity;
+illuminance; and detected anomalies. Support filtering or comparison by time period, floor, zone and
+measurement type or system. For representative anomalies, show timing, affected floor or zone,
+affected variable or system, magnitude or available anomaly score, duration or persistence,
+
+                                                                                              Page 13 of 15
+recurrence and relevant contextual measurements. Use this evidence to support interpretation and
+prioritisation.
+
+9. Integrated prototype review (Week 9, M9): Run the end-to-end pipeline on the selected dataset, review
+representative outputs, assess technical and usability limitations, and correct high-priority issues before
+finalisation.
+
+10. Finalisation and handover (Week 10, M10): Finalise reproducible code, complete documentation and
+the technical report, prepare the final presentation or demonstration, document limitations and provide
+recommendations for potential future deployment in a live smart-building environment.
+
+11. The schedule assumes that the selected CU-BEMS dataset remains suitable for the planned analysis
+after the initial data audit. If significant data-quality issues, missing measurements or structural limitations
+are identified, the team will adjust the selected floors, zones, variables, feature set or analytical methods
+while maintaining the overall project objective of developing and evaluating a smart-building anomaly-
+analysis prototype.
+
+8. PROJECT SCHEDULE
+The schedule below runs from Monday of Week 1 through Friday of Week 10, as required by the template.
+Milestones correspond to the implementation plan above.
+
+
+
+
+                                                                                               Page 14 of 15
+9. REFERENCES
+Breunig, M. M., Kriegel, H.-P., Ng, R. T., & Sander, J. (2000). LOF: Identifying density-based local outliers. In
+Proceedings of the 2000 ACM SIGMOD international conference on management of data (pp. 93–104).
+Association for Computing Machinery. https://doi.org/10.1145/342009.335388
+
+Chandola, V., Banerjee, A., & Kumar, V. (2009). Anomaly detection: A survey. ACM Computing Surveys,
+41(3), Article 15, 1–58. https://doi.org/10.1145/1541880.1541882
+
+Himeur, Y., Ghanem, K., Alsalemi, A., Bensaali, F., & Amira, A. (2021). Artificial intelligence based anomaly
+detection of energy consumption in buildings: A review, current trends and new perspectives. Applied
+Energy, 287, 116601. https://doi.org/10.1016/j.apenergy.2021.116601
+
+Liu, F. T., Ting, K. M., & Zhou, Z.-H. (2008). Isolation forest. In 2008 eighth IEEE international conference on
+data mining (pp. 413–422). IEEE. https://doi.org/10.1109/ICDM.2008.17
+
+Pipattanasomporn, M., Chitalia, G., Songsiri, J., Aswakul, C., Pora, W., Suwankawin, S., Audomvongseree,
+K., & Hoonchareon, N. (2020). CU-BEMS, smart building electricity consumption and indoor environmental
+sensor datasets. Scientific Data, 7, Article 241. https://doi.org/10.1038/s41597-020-00582-3
+
+
+
+
+APPROVAL
+We approve the project as described above.
+                 Name                 Role (e.g. student, client, mentor)          Signature         Date
+ Huaye Qi (Qi)                        Student                               Huaye Qi           27/08/2026
+ Yongli Jiang (Lee)                   Student                               Yongli Jiang       27/08/2026
+ Jiahao Wang (Gavin)                  Student                               Jiahao Wang        27/08/2026
+ Meng Zhang (Penelope)                Student                               Meng Zhang         27/08/2026
+ Zirui Geng (Roc)                     Student                               Zirui Geng         26/08/2026
+ [Client representative name]         Client
+ Wenhao Liang and Abhilash Sridhara   Mentor
+
+
+
+
+                                                                                                  Page 15 of 15
+
