@@ -1,233 +1,30 @@
-source_file,year,floor,column,invalid_rule,invalid_count
-2018Floor3.csv,2018,3,z1_AC1(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z1_AC2(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z1_AC3(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z1_AC4(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z1_Light(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z1_Plug(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z2_AC1(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z2_Light(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z2_Plug(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z3_Light(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z3_Plug(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z4_AC1(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z4_Light(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z4_Plug(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z5_AC1(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z5_Light(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z5_Plug(kW),power_kw < 0,0
-2018Floor3.csv,2018,3,z1_S1(degC),temperature_c outside 10-45,0
-2018Floor3.csv,2018,3,z2_S1(degC),temperature_c outside 10-45,0
-2018Floor3.csv,2018,3,z4_S1(degC),temperature_c outside 10-45,0
-2018Floor3.csv,2018,3,z5_S1(degC),temperature_c outside 10-45,0
-2018Floor3.csv,2018,3,z1_S1(RH%),humidity_pct outside 0-100,0
-2018Floor3.csv,2018,3,z2_S1(RH%),humidity_pct outside 0-100,0
-2018Floor3.csv,2018,3,z4_S1(RH%),humidity_pct outside 0-100,0
-2018Floor3.csv,2018,3,z5_S1(RH%),humidity_pct outside 0-100,0
-2018Floor3.csv,2018,3,z1_S1(lux),lux < 0,0
-2018Floor3.csv,2018,3,z2_S1(lux),lux < 0,0
-2018Floor3.csv,2018,3,z4_S1(lux),lux < 0,0
-2018Floor3.csv,2018,3,z5_S1(lux),lux < 0,0
-2018Floor4.csv,2018,4,z1_AC1(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z1_AC2(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z1_AC3(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z1_AC4(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z1_Light(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z1_Plug(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z2_AC1(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z2_Light(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z2_Plug(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z3_Light(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z3_Plug(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z4_AC1(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z4_Light(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z4_Plug(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z5_AC1(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z5_Light(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z5_Plug(kW),power_kw < 0,0
-2018Floor4.csv,2018,4,z1_S1(degC),temperature_c outside 10-45,0
-2018Floor4.csv,2018,4,z2_S1(degC),temperature_c outside 10-45,0
-2018Floor4.csv,2018,4,z4_S1(degC),temperature_c outside 10-45,0
-2018Floor4.csv,2018,4,z5_S1(degC),temperature_c outside 10-45,0
-2018Floor4.csv,2018,4,z1_S1(RH%),humidity_pct outside 0-100,0
-2018Floor4.csv,2018,4,z2_S1(RH%),humidity_pct outside 0-100,0
-2018Floor4.csv,2018,4,z4_S1(RH%),humidity_pct outside 0-100,0
-2018Floor4.csv,2018,4,z5_S1(RH%),humidity_pct outside 0-100,0
-2018Floor4.csv,2018,4,z1_S1(lux),lux < 0,0
-2018Floor4.csv,2018,4,z2_S1(lux),lux < 0,0
-2018Floor4.csv,2018,4,z4_S1(lux),lux < 0,0
-2018Floor4.csv,2018,4,z5_S1(lux),lux < 0,0
-2018Floor5.csv,2018,5,z1_AC1(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z1_AC2(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z1_AC3(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z1_AC4(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z1_Light(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z1_Plug(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z2_AC1(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z2_Light(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z2_Plug(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z3_Light(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z3_Plug(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z4_AC1(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z4_Light(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z4_Plug(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z5_AC1(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z5_Light(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z5_Plug(kW),power_kw < 0,0
-2018Floor5.csv,2018,5,z1_S1(degC),temperature_c outside 10-45,0
-2018Floor5.csv,2018,5,z2_S1(degC),temperature_c outside 10-45,0
-2018Floor5.csv,2018,5,z4_S1(degC),temperature_c outside 10-45,0
-2018Floor5.csv,2018,5,z5_S1(degC),temperature_c outside 10-45,0
-2018Floor5.csv,2018,5,z1_S1(RH%),humidity_pct outside 0-100,0
-2018Floor5.csv,2018,5,z2_S1(RH%),humidity_pct outside 0-100,0
-2018Floor5.csv,2018,5,z4_S1(RH%),humidity_pct outside 0-100,0
-2018Floor5.csv,2018,5,z5_S1(RH%),humidity_pct outside 0-100,0
-2018Floor5.csv,2018,5,z1_S1(lux),lux < 0,0
-2018Floor5.csv,2018,5,z2_S1(lux),lux < 0,0
-2018Floor5.csv,2018,5,z4_S1(lux),lux < 0,0
-2018Floor5.csv,2018,5,z5_S1(lux),lux < 0,0
-2018Floor7.csv,2018,7,z1_AC1(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z1_AC2(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z1_AC3(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z1_AC4(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z1_Light(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z1_Plug(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z2_AC1(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z2_Light(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z2_Plug(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z3_Light(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z3_Plug(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z4_AC1(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z4_Light(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z4_Plug(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z5_AC1(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z5_Light(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z5_Plug(kW),power_kw < 0,0
-2018Floor7.csv,2018,7,z1_S1(degC),temperature_c outside 10-45,0
-2018Floor7.csv,2018,7,z2_S1(degC),temperature_c outside 10-45,0
-2018Floor7.csv,2018,7,z4_S1(degC),temperature_c outside 10-45,0
-2018Floor7.csv,2018,7,z5_S1(degC),temperature_c outside 10-45,0
-2018Floor7.csv,2018,7,z1_S1(RH%),humidity_pct outside 0-100,0
-2018Floor7.csv,2018,7,z2_S1(RH%),humidity_pct outside 0-100,0
-2018Floor7.csv,2018,7,z4_S1(RH%),humidity_pct outside 0-100,0
-2018Floor7.csv,2018,7,z5_S1(RH%),humidity_pct outside 0-100,0
-2018Floor7.csv,2018,7,z1_S1(lux),lux < 0,0
-2018Floor7.csv,2018,7,z2_S1(lux),lux < 0,0
-2018Floor7.csv,2018,7,z4_S1(lux),lux < 0,0
-2018Floor7.csv,2018,7,z5_S1(lux),lux < 0,0
-2019Floor3.csv,2019,3,z1_AC1(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z1_AC2(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z1_AC3(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z1_AC4(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z1_Light(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z1_Plug(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z2_AC1(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z2_Light(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z2_Plug(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z3_Light(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z3_Plug(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z4_AC1(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z4_Light(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z4_Plug(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z5_AC1(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z5_Light(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z5_Plug(kW),power_kw < 0,0
-2019Floor3.csv,2019,3,z1_S1(degC),temperature_c outside 10-45,0
-2019Floor3.csv,2019,3,z2_S1(degC),temperature_c outside 10-45,0
-2019Floor3.csv,2019,3,z4_S1(degC),temperature_c outside 10-45,0
-2019Floor3.csv,2019,3,z5_S1(degC),temperature_c outside 10-45,0
-2019Floor3.csv,2019,3,z1_S1(RH%),humidity_pct outside 0-100,0
-2019Floor3.csv,2019,3,z2_S1(RH%),humidity_pct outside 0-100,0
-2019Floor3.csv,2019,3,z4_S1(RH%),humidity_pct outside 0-100,0
-2019Floor3.csv,2019,3,z5_S1(RH%),humidity_pct outside 0-100,0
-2019Floor3.csv,2019,3,z1_S1(lux),lux < 0,0
-2019Floor3.csv,2019,3,z2_S1(lux),lux < 0,0
-2019Floor3.csv,2019,3,z4_S1(lux),lux < 0,0
-2019Floor3.csv,2019,3,z5_S1(lux),lux < 0,0
-2019Floor4.csv,2019,4,z1_AC1(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z1_AC2(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z1_AC3(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z1_AC4(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z1_Light(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z1_Plug(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z2_AC1(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z2_Light(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z2_Plug(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z3_Light(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z3_Plug(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z4_AC1(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z4_Light(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z4_Plug(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z5_AC1(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z5_Light(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z5_Plug(kW),power_kw < 0,0
-2019Floor4.csv,2019,4,z1_S1(degC),temperature_c outside 10-45,0
-2019Floor4.csv,2019,4,z2_S1(degC),temperature_c outside 10-45,0
-2019Floor4.csv,2019,4,z4_S1(degC),temperature_c outside 10-45,0
-2019Floor4.csv,2019,4,z5_S1(degC),temperature_c outside 10-45,0
-2019Floor4.csv,2019,4,z1_S1(RH%),humidity_pct outside 0-100,0
-2019Floor4.csv,2019,4,z2_S1(RH%),humidity_pct outside 0-100,0
-2019Floor4.csv,2019,4,z4_S1(RH%),humidity_pct outside 0-100,0
-2019Floor4.csv,2019,4,z5_S1(RH%),humidity_pct outside 0-100,0
-2019Floor4.csv,2019,4,z1_S1(lux),lux < 0,0
-2019Floor4.csv,2019,4,z2_S1(lux),lux < 0,0
-2019Floor4.csv,2019,4,z4_S1(lux),lux < 0,0
-2019Floor4.csv,2019,4,z5_S1(lux),lux < 0,0
-2019Floor5.csv,2019,5,z1_AC1(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z1_AC2(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z1_AC3(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z1_AC4(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z1_Light(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z1_Plug(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z2_AC1(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z2_Light(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z2_Plug(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z3_Light(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z3_Plug(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z4_AC1(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z4_Light(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z4_Plug(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z5_AC1(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z5_Light(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z5_Plug(kW),power_kw < 0,0
-2019Floor5.csv,2019,5,z1_S1(degC),temperature_c outside 10-45,0
-2019Floor5.csv,2019,5,z2_S1(degC),temperature_c outside 10-45,0
-2019Floor5.csv,2019,5,z4_S1(degC),temperature_c outside 10-45,0
-2019Floor5.csv,2019,5,z5_S1(degC),temperature_c outside 10-45,0
-2019Floor5.csv,2019,5,z1_S1(RH%),humidity_pct outside 0-100,0
-2019Floor5.csv,2019,5,z2_S1(RH%),humidity_pct outside 0-100,0
-2019Floor5.csv,2019,5,z4_S1(RH%),humidity_pct outside 0-100,0
-2019Floor5.csv,2019,5,z5_S1(RH%),humidity_pct outside 0-100,0
-2019Floor5.csv,2019,5,z1_S1(lux),lux < 0,0
-2019Floor5.csv,2019,5,z2_S1(lux),lux < 0,0
-2019Floor5.csv,2019,5,z4_S1(lux),lux < 0,0
-2019Floor5.csv,2019,5,z5_S1(lux),lux < 0,0
-2019Floor7.csv,2019,7,z1_AC1(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z1_AC2(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z1_AC3(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z1_AC4(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z1_Light(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z1_Plug(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z2_AC1(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z2_Light(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z2_Plug(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z3_Light(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z3_Plug(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z4_AC1(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z4_Light(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z4_Plug(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z5_AC1(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z5_Light(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z5_Plug(kW),power_kw < 0,0
-2019Floor7.csv,2019,7,z1_S1(degC),temperature_c outside 10-45,0
-2019Floor7.csv,2019,7,z2_S1(degC),temperature_c outside 10-45,0
-2019Floor7.csv,2019,7,z4_S1(degC),temperature_c outside 10-45,0
-2019Floor7.csv,2019,7,z5_S1(degC),temperature_c outside 10-45,0
-2019Floor7.csv,2019,7,z1_S1(RH%),humidity_pct outside 0-100,0
-2019Floor7.csv,2019,7,z2_S1(RH%),humidity_pct outside 0-100,0
-2019Floor7.csv,2019,7,z4_S1(RH%),humidity_pct outside 0-100,0
-2019Floor7.csv,2019,7,z5_S1(RH%),humidity_pct outside 0-100,0
-2019Floor7.csv,2019,7,z1_S1(lux),lux < 0,0
-2019Floor7.csv,2019,7,z2_S1(lux),lux < 0,0
-2019Floor7.csv,2019,7,z4_S1(lux),lux < 0,0
-2019Floor7.csv,2019,7,z5_S1(lux),lux < 0,0
+step,action,column,invalid_rule,invalid_count,values_changed_to_missing
+05_check_impossible_values,Convert impossible values to missing,z1_AC1(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z1_AC2(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z1_AC3(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z1_AC4(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z1_Light(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z1_Plug(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z1_S1(degC),temperature_c outside 10-45,0,0
+05_check_impossible_values,Convert impossible values to missing,z1_S1(RH%),humidity_pct outside 0-100,0,0
+05_check_impossible_values,Convert impossible values to missing,z1_S1(lux),lux < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z2_AC1(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z2_Light(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z2_Plug(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z2_S1(degC),temperature_c outside 10-45,0,0
+05_check_impossible_values,Convert impossible values to missing,z2_S1(RH%),humidity_pct outside 0-100,0,0
+05_check_impossible_values,Convert impossible values to missing,z2_S1(lux),lux < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z3_Light(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z3_Plug(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z4_AC1(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z4_Light(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z4_Plug(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z4_S1(degC),temperature_c outside 10-45,0,0
+05_check_impossible_values,Convert impossible values to missing,z4_S1(RH%),humidity_pct outside 0-100,0,0
+05_check_impossible_values,Convert impossible values to missing,z4_S1(lux),lux < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z5_AC1(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z5_Light(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z5_Plug(kW),power_kw < 0,0,0
+05_check_impossible_values,Convert impossible values to missing,z5_S1(degC),temperature_c outside 10-45,0,0
+05_check_impossible_values,Convert impossible values to missing,z5_S1(RH%),humidity_pct outside 0-100,0,0
+05_check_impossible_values,Convert impossible values to missing,z5_S1(lux),lux < 0,0,0
