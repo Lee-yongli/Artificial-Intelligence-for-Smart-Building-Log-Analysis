@@ -1,0 +1,21 @@
+analysis_step,floor,zone,rows,min_timestamp,max_timestamp,missing_time_windows,incomplete_15min_windows
+EDA Step 03 - floor and zone coverage,3,1,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,3,2,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,3,3,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,3,4,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,3,5,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,4,1,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,4,2,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,4,3,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,4,4,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,4,5,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,5,1,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,5,2,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,5,3,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,5,4,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,5,5,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,7,1,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,7,2,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,7,3,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,7,4,52704,2018-07-01,2019-12-31 23:45:00,0,0
+EDA Step 03 - floor and zone coverage,7,5,52704,2018-07-01,2019-12-31 23:45:00,0,0

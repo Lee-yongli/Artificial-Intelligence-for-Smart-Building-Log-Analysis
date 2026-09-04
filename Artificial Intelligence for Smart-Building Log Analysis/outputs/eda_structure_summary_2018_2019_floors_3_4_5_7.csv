@@ -1,0 +1,2 @@
+analysis_step,rows,columns,memory_mb,duplicate_rows,numeric_columns,datetime_columns
+EDA Step 02 - inspect shape and data types,1054080,46,278.45,0,32,1

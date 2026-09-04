@@ -1,0 +1,8 @@
+analysis_step,column_name,q1,q3,iqr,lower_bound,upper_bound,non_missing_count,outlier_count,outlier_pct
+EDA Step 13 - IQR potential outliers,ac_power_kw,0.0,0.07,0.07,-0.105,0.175,794847,184450,23.2057
+EDA Step 13 - IQR potential outliers,light_power_kw,0.0,2.096,2.096,-3.144,5.24,1012134,22597,2.2326
+EDA Step 13 - IQR potential outliers,plug_power_kw,0.05,0.3847,0.3347,-0.452,0.8867,1015667,69012,6.7947
+EDA Step 13 - IQR potential outliers,total_power_kw,0.078,3.108,3.03,-4.467,7.653,1020715,170049,16.6598
+EDA Step 13 - IQR potential outliers,temperature_c,23.628,26.92,3.292,18.69,31.858,538541,16115,2.9923
+EDA Step 13 - IQR potential outliers,humidity_pct,61.5536,70.4987,8.9451,48.1359,83.9163,538541,3057,0.5676
+EDA Step 13 - IQR potential outliers,lux,0.0,37.0,37.0,-55.5,92.5,538537,130,0.0241

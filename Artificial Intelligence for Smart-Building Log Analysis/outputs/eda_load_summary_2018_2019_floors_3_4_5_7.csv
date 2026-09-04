@@ -1,0 +1,2 @@
+analysis_step,file_name,rows,columns,min_timestamp,max_timestamp,floors,zones
+EDA Step 01 - load cleaned data,cleaned_zone_15min_2018_2019_floors_3_4_5_7.csv.gz,1054080,46,2018-07-01,2019-12-31 23:45:00,"3, 4, 5, 7","1, 2, 3, 4, 5"
