@@ -1,64 +1,60 @@
 # Artificial Intelligence for Smart-Building Log Analysis
 
-This repository contains the working files for the Industry Research Project on AI-assisted smart-building log analysis.
+This repository contains the analysis project folder for the Industry Research Project on AI-assisted smart-building log analysis.
 
-## Project Overview
+## Main Project Folder
 
-The project studies smart-building operational data from the CU-BEMS dataset. The current workflow focuses on data integration, exploratory data analysis, data cleaning, 15-minute resampling, missing-value inspection, and preparation for later feature engineering and anomaly detection.
+```text
+Artificial Intelligence for Smart-Building Log Analysis/
+```
 
-## Repository Structure
+This folder contains:
 
-- `Artificial Intelligence for Smart-Building Log Analysis/Artificial_Intelligence_for_Smart_Building_Log_Analysis.ipynb`
-  Main Jupyter notebook for merging the 14 CSV files, creating the first zone-level feature table, running EDA, and checking missing values.
-
-- `Artificial Intelligence for Smart-Building Log Analysis/outputs/`
-  Small summary outputs and preview files that are suitable for GitHub review.
+- `Artificial_Intelligence_for_Smart_Building_Log_Analysis.ipynb`: main Jupyter notebook.
+- `outputs/`: small reviewable summary files, EDA charts, and preview tables.
+- `Raw Data/`: local-only raw CSV folder. This folder is ignored by Git and is not uploaded.
 
 ## Data Policy
 
-The raw CSV files and large generated datasets are intentionally excluded from Git because they are large and duplicated.
+Raw CU-BEMS CSV files are not included in this GitHub repository because they are large and should be managed outside Git.
 
-To reproduce the workflow locally, place the 14 raw CSV files here:
+To run the notebook locally, place the 14 raw CSV files here:
 
 ```text
 Artificial Intelligence for Smart-Building Log Analysis/Raw Data/
 ```
 
-Expected raw file names:
+Expected files:
 
 ```text
 2018Floor1.csv ... 2018Floor7.csv
 2019Floor1.csv ... 2019Floor7.csv
 ```
 
-Large generated outputs such as `combined_wide_2018_2019.csv.gz`, `features_zone_minute_2018_2019.csv.gz`, and `cleaned_zone_15min_2018_2019.csv.gz` are also excluded. They should be regenerated locally from the notebook when needed.
+Large generated `.csv.gz` outputs are also excluded from Git. They can be regenerated from the notebook.
 
 ## Environment
 
-Install the main Python dependencies:
+Install the Python dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Then open the notebook in Jupyter:
+Open the notebook:
 
 ```bash
 jupyter notebook "Artificial Intelligence for Smart-Building Log Analysis/Artificial_Intelligence_for_Smart_Building_Log_Analysis.ipynb"
 ```
 
-## Current Analysis Stage
+## Current Status
 
-The project has completed:
+The project currently includes:
 
 - Merging 14 floor-level CSV files.
-- Creating a modelling-friendly zone-minute feature table.
+- Creating a zone-minute feature table.
 - Running exploratory data analysis.
-- Producing small EDA summaries and charts.
-- Checking NaN counts in the cleaned 15-minute dataset.
+- Saving EDA summaries and plots.
+- Checking NaN values in the cleaned 15-minute dataset.
 
-Next recommended stage:
-
-- Complete feature engineering on the cleaned 15-minute zone-level table.
-- Add rolling-window features by floor, zone, and measurement.
-- Prepare train/test splits for anomaly detection experiments.
+Next steps are feature engineering, rolling-window features, train/test splitting, and anomaly detection experiments.
