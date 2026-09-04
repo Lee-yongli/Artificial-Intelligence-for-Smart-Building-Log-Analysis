@@ -9,11 +9,6 @@ Artificial Intelligence for Smart-Building Log Analysis/Raw Data/
 # Large generated datasets. Recreate these from the notebook.
 Artificial Intelligence for Smart-Building Log Analysis/outputs/*.csv.gz
 
-# Intermediate QA/render folders generated during document or presentation work.
-2 Proposal Report/docx_render_qa_v*/
-2 Proposal Report/presentation_skill_work/source_pdf_pages/
-2 Proposal Report/presentation_skill_work/qa/
-
 # Local runtime artifacts.
 __pycache__/
 *.pyc

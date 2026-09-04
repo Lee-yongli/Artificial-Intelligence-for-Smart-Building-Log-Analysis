@@ -14,12 +14,6 @@ The project studies smart-building operational data from the CU-BEMS dataset. Th
 - `Artificial Intelligence for Smart-Building Log Analysis/outputs/`
   Small summary outputs and preview files that are suitable for GitHub review.
 
-- `2 Proposal Report/`
-  Proposal documents, presentation material, speaker notes, and supporting project documentation.
-
-- `1 Progress Report/`
-  Progress report template/material.
-
 ## Data Policy
 
 The raw CSV files and large generated datasets are intentionally excluded from Git because they are large and duplicated.
