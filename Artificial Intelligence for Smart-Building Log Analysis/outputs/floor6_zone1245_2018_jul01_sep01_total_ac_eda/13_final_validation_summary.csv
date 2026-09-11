@@ -1,0 +1,2 @@
+final_dataset,rows,columns,floor,zones,min_timestamp,max_timestamp,key_columns,duplicate_key_rows,rolling_window_records,rolling_min_periods,figure_count,eda_table_count
+floor6_zone1245_cleaned_smoothed_2018_jul01_sep01.csv.gz,362880,35,6,"1,2,4,5",2018-07-01,2018-09-01 23:59:00,"timestamp, floor, zone",0,15,5,16,16

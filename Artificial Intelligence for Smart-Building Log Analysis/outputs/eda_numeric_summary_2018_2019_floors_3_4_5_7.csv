@@ -1,8 +1,0 @@
-analysis_step,column_name,non_missing_count,missing_count,missing_pct,mean,std,min,q25,median,q75,max
-EDA Step 06 - numeric measurement distributions,ac_power_kw,794847.0,259233,24.5933,4.0986,8.7577,0.0,0.0,0.0,0.07,50.765
-EDA Step 06 - numeric measurement distributions,light_power_kw,1012134.0,41946,3.9794,1.1127,1.6088,0.0,0.0,0.09,2.096,78.5544
-EDA Step 06 - numeric measurement distributions,plug_power_kw,1015667.0,38413,3.6442,0.3041,0.4282,0.0,0.05,0.18,0.3847,33.94
-EDA Step 06 - numeric measurement distributions,total_power_kw,1020715.0,33365,3.1653,4.5924,9.1445,0.0,0.078,0.3913,3.108,51.6093
-EDA Step 06 - numeric measurement distributions,temperature_c,538541.0,515539,48.9089,24.9956,2.8746,10.9133,23.628,25.3673,26.92,35.046
-EDA Step 06 - numeric measurement distributions,humidity_pct,538541.0,515539,48.9089,65.9087,6.4217,37.3793,61.5536,66.184,70.4987,88.8473
-EDA Step 06 - numeric measurement distributions,lux,538537.0,515543,48.9093,17.3355,24.2623,0.0,0.0,0.9333,37.0,101.8

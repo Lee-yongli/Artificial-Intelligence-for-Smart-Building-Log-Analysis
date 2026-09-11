@@ -1,0 +1,2 @@
+year,file_name,rows,columns,invalid_timestamp_rows,min_timestamp,max_timestamp
+2018,2018Floor6.csv,264960,34,0,2018-07-01,2018-12-31 23:59:00

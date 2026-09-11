@@ -1,2 +1,0 @@
-step,action,duplicate_keys,rows_before,duplicate_rows_found,duplicate_rows_removed,duplicate_rows_after,rows_after
-03_remove_duplicates,Remove duplicate year-floor-timestamp records,year + floor + timestamp,3162240,0,0,0,3162240

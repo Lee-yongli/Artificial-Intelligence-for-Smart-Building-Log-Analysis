@@ -1,2 +1,0 @@
-step,action,rows,columns,floors,zones,min_timestamp,max_timestamp,duplicate_floor_zone_timestamp_rows,missing_time_windows,incomplete_15min_windows
-10_final_validation,Validate cleaned 15-minute zone-level table,1054080,61,"3,4,5,7","1,2,3,4,5",2018-07-01,2019-12-31 23:45:00,0,0,0

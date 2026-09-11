@@ -1,0 +1,7 @@
+column,invalid_rule,invalid_count,values_changed_to_nan
+total_AC_power_kw,negative,0,0
+light_power_kw,negative,0,0
+plug_power_kw,negative,0,0
+temperature_c,outside expected physical range,0,0
+humidity_pct,outside expected physical range,0,0
+lux,negative,0,0

@@ -1,9 +1,0 @@
-metric,value
-source_feature_rows,25581320
-cleaned_15min_rows,1705422
-floor_count,7
-zone_count,33
-start_timestamp,2018-07-01 00:00:00
-end_timestamp,2019-12-31 23:45:00
-windows_with_missing_time,5
-mean_record_coverage_rate_15min,0.9999996090899106

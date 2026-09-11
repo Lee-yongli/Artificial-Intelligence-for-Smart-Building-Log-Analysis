@@ -1,0 +1,7 @@
+variable,total_AC_power_kw,light_power_kw,plug_power_kw,temperature_c,humidity_pct,lux
+total_AC_power_kw,1.0,0.5271,0.6455,-0.6107,-0.3814,0.5065
+light_power_kw,0.5271,1.0,0.7594,-0.5868,-0.4083,0.8429
+plug_power_kw,0.6455,0.7594,1.0,-0.7137,-0.436,0.7049
+temperature_c,-0.6107,-0.5868,-0.7137,1.0,0.3557,-0.5364
+humidity_pct,-0.3814,-0.4083,-0.436,0.3557,1.0,-0.4183
+lux,0.5065,0.8429,0.7049,-0.5364,-0.4183,1.0

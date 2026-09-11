@@ -1,0 +1,7 @@
+column,missing_before_imputation,filled_by_short_gap_linear_interpolation,filled_by_zone_day_type_hour_median,filled_by_zone_hour_median,filled_by_zone_median,missing_after_imputation,was_missing_flag_column
+total_AC_power_kw,1267,120,1147,0,0,0,total_AC_power_kw_was_missing
+light_power_kw,2804,1646,1158,0,0,0,light_power_kw_was_missing
+plug_power_kw,1974,816,1158,0,0,0,plug_power_kw_was_missing
+temperature_c,16540,13733,2807,0,0,0,temperature_c_was_missing
+humidity_pct,16540,13733,2807,0,0,0,humidity_pct_was_missing
+lux,16540,13733,2807,0,0,0,lux_was_missing

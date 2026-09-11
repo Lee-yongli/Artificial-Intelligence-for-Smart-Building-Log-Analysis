@@ -1,0 +1,2 @@
+key_columns,duplicate_rows_found,duplicate_key_groups,rows_before_deduplication,rows_after_deduplication
+"timestamp, floor, zone",0,0,362880,362880

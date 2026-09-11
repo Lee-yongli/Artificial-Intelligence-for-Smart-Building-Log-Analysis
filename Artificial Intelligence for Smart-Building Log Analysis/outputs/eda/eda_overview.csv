@@ -1,6 +1,0 @@
-metric,value
-total_rows,25581320
-start_timestamp,2018-07-01 00:00:00
-end_timestamp,2019-12-31 23:59:00
-floor_count,see floor_summary.csv
-zone_count,see zone_summary.csv

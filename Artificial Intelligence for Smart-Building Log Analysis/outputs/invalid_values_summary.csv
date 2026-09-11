@@ -1,8 +1,0 @@
-invalid_flag,invalid_window_count,invalid_window_pct
-invalid_ac_power_flag,0,0.0
-invalid_light_power_flag,0,0.0
-invalid_plug_power_flag,0,0.0
-invalid_total_power_flag,0,0.0
-invalid_temperature_flag,0,0.0
-invalid_humidity_flag,0,0.0
-invalid_lux_flag,0,0.0

@@ -1,8 +1,0 @@
-analysis_step,day_of_week,day_name,is_weekend,ac_power_kw,light_power_kw,plug_power_kw,total_power_kw,temperature_c,humidity_pct,lux
-EDA Step 10 - weekday and weekend patterns,0,Monday,False,5.2862,1.2905,0.3408,5.7148,25.3828,65.9062,19.8923
-EDA Step 10 - weekday and weekend patterns,1,Tuesday,False,5.6644,1.436,0.3727,6.1989,24.6184,64.6222,23.0952
-EDA Step 10 - weekday and weekend patterns,2,Wednesday,False,5.6915,1.5197,0.3864,6.325,24.2355,64.9309,23.9264
-EDA Step 10 - weekday and weekend patterns,3,Thursday,False,5.7184,1.5168,0.379,6.3271,24.0027,65.1777,23.706
-EDA Step 10 - weekday and weekend patterns,4,Friday,False,5.5734,1.4827,0.3662,6.1644,23.9046,65.5437,23.2594
-EDA Step 10 - weekday and weekend patterns,5,Saturday,True,0.6277,0.3623,0.15,0.9961,25.8281,66.8541,5.1256
-EDA Step 10 - weekday and weekend patterns,6,Sunday,True,0.1515,0.1844,0.1344,0.4345,26.9693,68.318,2.3738

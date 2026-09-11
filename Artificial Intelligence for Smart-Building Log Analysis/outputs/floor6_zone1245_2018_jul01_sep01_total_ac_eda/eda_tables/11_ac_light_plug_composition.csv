@@ -1,0 +1,13 @@
+zone,component,mean_power_kw
+1,total_AC_power_kw,3.9869
+2,total_AC_power_kw,3.3915
+4,total_AC_power_kw,3.4386
+5,total_AC_power_kw,1.215
+1,light_power_kw,1.3022
+2,light_power_kw,2.977
+4,light_power_kw,1.5458
+5,light_power_kw,0.8646
+1,plug_power_kw,0.458
+2,plug_power_kw,0.4031
+4,plug_power_kw,0.411
+5,plug_power_kw,0.2288

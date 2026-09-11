@@ -1,0 +1,14 @@
+column,missing_count,missing_pct
+timestamp,0,0.0
+year,0,0.0
+floor,0,0.0
+zone,0,0.0
+source_file,0,0.0
+total_AC_power_kw,1267,0.3492
+light_power_kw,2804,0.7727
+plug_power_kw,1974,0.544
+temperature_c,16540,4.558
+humidity_pct,16540,4.558
+lux,16540,4.558
+ac_meter_count,0,0.0
+has_ac_meter,0,0.0

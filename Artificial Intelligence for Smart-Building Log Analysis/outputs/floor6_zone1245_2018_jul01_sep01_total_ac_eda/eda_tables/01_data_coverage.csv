@@ -1,0 +1,5 @@
+zone,expected_records,observed_records,missing_records,coverage_pct
+1,90720,90720,0,100.0
+2,90720,90720,0,100.0
+4,90720,90720,0,100.0
+5,90720,90720,0,100.0

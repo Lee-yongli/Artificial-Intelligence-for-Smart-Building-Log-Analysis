@@ -1,2 +1,0 @@
-rows,columns,expected_rows_from_sources,invalid_datetime_rows,duplicate_year_floor_date_rows,min_date,max_date
-3162240,33,3162240,0,0,2018-07-01,2019-12-31 23:59:00
