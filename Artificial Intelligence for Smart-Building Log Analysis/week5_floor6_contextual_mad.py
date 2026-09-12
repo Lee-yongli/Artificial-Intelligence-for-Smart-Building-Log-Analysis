@@ -344,6 +344,107 @@ def make_mad_diagnostics(contexts: pd.DataFrame) -> dict[str, pd.DataFrame]:
     }
 
 
+def make_mad_zero_diagnostics(data: pd.DataFrame) -> dict[str, pd.DataFrame]:
+    """Describe MAD=0 contexts without changing their fallback rule."""
+    valid = data[TARGET_COLUMN].notna()
+    zero_mad = valid & data["contextual_mad"].eq(0)
+    subset = data.loc[zero_mad].copy()
+    context_columns = CONTEXT_COLUMNS + ["baseline_median"]
+    zero_contexts = subset[context_columns].drop_duplicates(CONTEXT_COLUMNS)
+    positive = subset.loc[subset[TARGET_COLUMN].gt(0), TARGET_COLUMN]
+
+    def quantile_or_nan(values: pd.Series, quantile: float) -> float:
+        return float(values.quantile(quantile)) if not values.empty else np.nan
+
+    summary = pd.DataFrame(
+        [
+            {
+                "contexts": len(zero_contexts),
+                "valid_observations": len(subset),
+                "valid_observations_pct": 100 * len(subset) / int(valid.sum()),
+                "baseline_median_min_kw": zero_contexts["baseline_median"].min(),
+                "baseline_median_p01_kw": zero_contexts["baseline_median"].quantile(0.01),
+                "baseline_median_p05_kw": zero_contexts["baseline_median"].quantile(0.05),
+                "baseline_median_p10_kw": zero_contexts["baseline_median"].quantile(0.10),
+                "baseline_median_p25_kw": zero_contexts["baseline_median"].quantile(0.25),
+                "baseline_median_median_kw": zero_contexts["baseline_median"].median(),
+                "baseline_median_p75_kw": zero_contexts["baseline_median"].quantile(0.75),
+                "baseline_median_p95_kw": zero_contexts["baseline_median"].quantile(0.95),
+                "baseline_median_max_kw": zero_contexts["baseline_median"].max(),
+                "raw_ac_zero_observations": int(subset[RAW_TARGET_COLUMN].eq(0).sum()),
+                "raw_ac_zero_pct": 100 * subset[RAW_TARGET_COLUMN].eq(0).mean(),
+                "rolling_ac_zero_observations": int(subset[TARGET_COLUMN].eq(0).sum()),
+                "rolling_ac_zero_pct": 100 * subset[TARGET_COLUMN].eq(0).mean(),
+                "positive_rolling_ac_observations": len(positive),
+                "positive_rolling_ac_pct": 100 * len(positive) / len(subset),
+                "positive_rolling_ac_p01_kw": quantile_or_nan(positive, 0.01),
+                "positive_rolling_ac_p05_kw": quantile_or_nan(positive, 0.05),
+                "positive_rolling_ac_p10_kw": quantile_or_nan(positive, 0.10),
+                "positive_rolling_ac_p25_kw": quantile_or_nan(positive, 0.25),
+                "positive_rolling_ac_median_kw": quantile_or_nan(positive, 0.50),
+                "positive_rolling_ac_p75_kw": quantile_or_nan(positive, 0.75),
+                "positive_rolling_ac_p95_kw": quantile_or_nan(positive, 0.95),
+                "positive_rolling_ac_max_kw": positive.max() if not positive.empty else np.nan,
+            }
+        ]
+    )
+
+    by_zone_rows = []
+    for zone, group in subset.groupby("zone", observed=True):
+        zone_positive = group.loc[group[TARGET_COLUMN].gt(0), TARGET_COLUMN]
+        by_zone_rows.append(
+            {
+                "zone": zone,
+                "contexts": group[CONTEXT_COLUMNS].drop_duplicates().shape[0],
+                "valid_observations": len(group),
+                "valid_observations_pct_within_all_mad_zero": 100 * len(group) / len(subset),
+                "baseline_median_min_kw": group["baseline_median"].min(),
+                "baseline_median_median_kw": group["baseline_median"].median(),
+                "baseline_median_max_kw": group["baseline_median"].max(),
+                "raw_ac_zero_observations": int(group[RAW_TARGET_COLUMN].eq(0).sum()),
+                "raw_ac_zero_pct": 100 * group[RAW_TARGET_COLUMN].eq(0).mean(),
+                "rolling_ac_zero_observations": int(group[TARGET_COLUMN].eq(0).sum()),
+                "rolling_ac_zero_pct": 100 * group[TARGET_COLUMN].eq(0).mean(),
+                "positive_rolling_ac_observations": len(zone_positive),
+                "positive_rolling_ac_pct": 100 * len(zone_positive) / len(group),
+                "positive_rolling_ac_p01_kw": quantile_or_nan(zone_positive, 0.01),
+                "positive_rolling_ac_p05_kw": quantile_or_nan(zone_positive, 0.05),
+                "positive_rolling_ac_p10_kw": quantile_or_nan(zone_positive, 0.10),
+                "positive_rolling_ac_p25_kw": quantile_or_nan(zone_positive, 0.25),
+                "positive_rolling_ac_median_kw": quantile_or_nan(zone_positive, 0.50),
+            }
+        )
+    by_zone = pd.DataFrame(by_zone_rows)
+
+    context_detail_rows = []
+    for key, group in subset.groupby(CONTEXT_COLUMNS, observed=True):
+        context_positive = group.loc[group[TARGET_COLUMN].gt(0), TARGET_COLUMN]
+        context_detail_rows.append(
+            {
+                **dict(zip(CONTEXT_COLUMNS, key, strict=True)),
+                "observations": len(group),
+                "baseline_median_kw": group["baseline_median"].iloc[0],
+                "raw_ac_zero_pct": 100 * group[RAW_TARGET_COLUMN].eq(0).mean(),
+                "rolling_ac_zero_pct": 100 * group[TARGET_COLUMN].eq(0).mean(),
+                "positive_rolling_ac_observations": len(context_positive),
+                "positive_rolling_ac_pct": 100 * len(context_positive) / len(group),
+                "positive_rolling_ac_p01_kw": quantile_or_nan(context_positive, 0.01),
+                "positive_rolling_ac_p05_kw": quantile_or_nan(context_positive, 0.05),
+                "positive_rolling_ac_p10_kw": quantile_or_nan(context_positive, 0.10),
+                "positive_rolling_ac_p25_kw": quantile_or_nan(context_positive, 0.25),
+                "positive_rolling_ac_median_kw": quantile_or_nan(context_positive, 0.50),
+            }
+        )
+    context_detail = pd.DataFrame(context_detail_rows).sort_values(
+        CONTEXT_COLUMNS, kind="stable"
+    )
+    return {
+        "mad_zero_summary": summary,
+        "mad_zero_by_zone": by_zone,
+        "mad_zero_context_detail": context_detail,
+    }
+
+
 def assign_anomaly_runs(anomalies: pd.DataFrame) -> pd.DataFrame:
     """Assign exact one-minute anomaly runs independently within each zone."""
     runs = anomalies.sort_values(["zone", "timestamp"], kind="stable").copy()
@@ -929,6 +1030,12 @@ def run_week5_analysis(input_file: Path = INPUT_FILE) -> dict[str, object]:
     mad_zero_observations = int(
         scored.loc[valid & scored["contextual_mad"].eq(0)].shape[0]
     )
+    standard_mad_anomalies = int(
+        scored["anomaly_detection_method"]
+        .eq("robust_z_contextual_mad")
+        .mul(scored["mad_anomaly_flag"].eq(1))
+        .sum()
+    )
     fallback_anomalies = int(
         scored["anomaly_detection_method"]
         .eq("mad_zero_empirical_resolution_fallback")
@@ -947,8 +1054,16 @@ def run_week5_analysis(input_file: Path = INPUT_FILE) -> dict[str, object]:
                 "context_grouping": "zone + day_type + hour",
                 "number_of_contexts": len(contexts),
                 "mad_zero_contexts": mad_zero_contexts,
+                "mad_zero_contexts_pct": 100 * mad_zero_contexts / len(contexts),
                 "mad_zero_context_observations": mad_zero_observations,
+                "mad_zero_context_observations_pct": 100
+                * mad_zero_observations
+                / valid.sum(),
+                "standard_robust_z_anomalies": standard_mad_anomalies,
                 "fallback_anomalies": fallback_anomalies,
+                "fallback_anomalies_pct_of_all_anomalies": 100
+                * fallback_anomalies
+                / anomaly.sum(),
                 "robust_z_threshold": ROBUST_Z_THRESHOLD,
                 "estimated_empirical_resolution_kw": empirical_resolution_kw,
                 "empirical_resolution_source": resolution_source,
@@ -1014,6 +1129,7 @@ def run_week5_analysis(input_file: Path = INPUT_FILE) -> dict[str, object]:
     validation = validate_results(scored, contexts, spot_checks)
     mean_median_tables = make_mean_median_summaries(contexts)
     mad_tables = make_mad_diagnostics(contexts)
+    mad_zero_tables = make_mad_zero_diagnostics(scored)
     figure_index = make_figures(scored, contexts, by_zone)
 
     output_columns = [
@@ -1064,6 +1180,7 @@ def run_week5_analysis(input_file: Path = INPUT_FILE) -> dict[str, object]:
         "figure_index": figure_index,
         **mean_median_tables,
         **mad_tables,
+        **mad_zero_tables,
     }
     output_paths = write_outputs(scored_output, contexts, tables)
 
@@ -1105,6 +1222,9 @@ def run_week5_analysis(input_file: Path = INPUT_FILE) -> dict[str, object]:
         "smallest_nonzero_mad_contexts": mad_tables[
             "smallest_nonzero_mad_contexts"
         ],
+        "mad_zero_summary": mad_zero_tables["mad_zero_summary"],
+        "mad_zero_by_zone": mad_zero_tables["mad_zero_by_zone"],
+        "mad_zero_context_detail": mad_zero_tables["mad_zero_context_detail"],
         "figure_index": figure_index,
         "output_paths": output_paths,
     }
