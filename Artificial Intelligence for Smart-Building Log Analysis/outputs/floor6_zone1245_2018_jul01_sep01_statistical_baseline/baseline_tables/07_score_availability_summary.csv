@@ -1,0 +1,7 @@
+variable,rows,robust_score_available_pct,zero_aware_rows_pct,median_abs_deviation_from_baseline,p95_abs_deviation_from_baseline
+humidity_pct,362864,100.0,0.0,2.1333,7.7416
+light_power_kw,362864,49.5558,39.5818,0.0213,2.158
+lux,362864,50.151,49.849,0.1867,34.6667
+plug_power_kw,362864,100.0,0.0,0.04,0.3283
+temperature_c,362864,100.0,0.0,0.446,1.9877
+total_AC_power_kw,362864,23.8106,76.1894,0.0,8.4623

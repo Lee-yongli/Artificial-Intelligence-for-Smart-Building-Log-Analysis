@@ -1,0 +1,2 @@
+input_dataset,rows_input_wide,rows_input_long,baseline_profile_rows,anomaly_score_rows,anomaly_points,anomaly_events,robust_z_threshold,min_persistence_minutes,baseline_grouping,operating_periods,table_count,figure_count
+floor6_zone1245_baseline_ready_2018_jul01_sep01.csv.gz,362864,2177184,4608,2177184,84116,1248,3.5,15,zone + day_type + fifteen_minute_slot + variable,"core_work,evening_off,night_off,ramp_down,ramp_up,weekend",18,11

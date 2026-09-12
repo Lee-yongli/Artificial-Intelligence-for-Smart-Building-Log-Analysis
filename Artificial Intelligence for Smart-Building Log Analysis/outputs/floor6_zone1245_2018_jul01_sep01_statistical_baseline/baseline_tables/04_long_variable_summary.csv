@@ -1,0 +1,7 @@
+variable,rows,min_value,median_value,max_value,was_missing_pct
+humidity_pct,362864,46.9833,64.122,75.3407,4.5582
+light_power_kw,362864,0.0,0.01,8.1927,0.7727
+lux,362864,0.0,0.2,72.2,4.5582
+plug_power_kw,362864,0.0067,0.1713,2.8013,0.544
+temperature_c,362864,19.68,27.253,32.2616,4.5582
+total_AC_power_kw,362864,0.0,0.0,36.1247,0.3492

@@ -1,0 +1,7 @@
+operating_period,v1 hourly,v2a 15min slot,v2b operation-aware
+core_work,36201,40490,28691
+ramp_up,2453,2350,1290
+ramp_down,5495,6074,4287
+evening_off,8224,10227,3882
+night_off,7117,6879,6899
+weekend,17283,18096,3170

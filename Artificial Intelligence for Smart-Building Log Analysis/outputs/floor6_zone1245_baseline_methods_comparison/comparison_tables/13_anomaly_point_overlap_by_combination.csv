@@ -1,0 +1,8 @@
+combination,anomaly_points
+v1_hourly + v2a_15min_slot + v2b_operation_aware,43113
+v1_hourly + v2a_15min_slot,24610
+v2a_15min_slot,15984
+v1_hourly,7037
+v2b_operation_aware,2684
+v1_hourly + v2b_operation_aware,2013
+v2a_15min_slot + v2b_operation_aware,409

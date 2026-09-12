@@ -1,0 +1,7 @@
+variable,core_work,ramp_up,ramp_down,evening_off,night_off,weekend
+humidity_pct,1018,115,300,800,1029,2086
+light_power_kw,7387,887,1194,2321,608,4578
+lux,9240,1203,2795,3126,851,8040
+plug_power_kw,6027,70,408,1407,855,2592
+temperature_c,6905,60,1268,2564,3536,447
+total_AC_power_kw,9913,15,109,9,0,353

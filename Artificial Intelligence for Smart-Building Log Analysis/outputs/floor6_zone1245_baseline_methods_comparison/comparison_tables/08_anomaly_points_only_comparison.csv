@@ -1,0 +1,4 @@
+method,method_label,rows_input_long,anomaly_points,anomaly_point_pct
+v1_hourly,v1 hourly,2177184,76773,3.526252259799815
+v2a_15min_slot,v2a 15min slot,2177184,84116,3.863522789070653
+v2b_operation_aware,v2b operation-aware,2177184,48219,2.214741611182151

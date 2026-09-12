@@ -1,0 +1,19 @@
+variable,events,total_duration_minutes,median_duration_minutes,max_score_for_ranking,method,method_label
+light_power_kw,252,15028,24.0,2334.1073,v1_hourly,v1 hourly
+lux,214,24061,41.5,83.4694,v1_hourly,v1 hourly
+total_AC_power_kw,190,8219,27.0,32.7158,v1_hourly,v1 hourly
+plug_power_kw,178,11419,32.5,23.5015,v1_hourly,v1 hourly
+temperature_c,76,13327,55.5,23.9559,v1_hourly,v1 hourly
+humidity_pct,30,4719,60.0,8.0929,v1_hourly,v1 hourly
+light_power_kw,349,16975,15.0,9523.2655,v2a_15min_slot,v2a 15min slot
+lux,289,25255,34.0,1178.3515,v2a_15min_slot,v2a 15min slot
+total_AC_power_kw,269,10399,25.0,1882.5295,v2a_15min_slot,v2a 15min slot
+plug_power_kw,181,11359,30.0,22.6135,v2a_15min_slot,v2a 15min slot
+temperature_c,106,14780,35.0,36.5934,v2a_15min_slot,v2a 15min slot
+humidity_pct,54,5348,30.0,9.6359,v2a_15min_slot,v2a 15min slot
+total_AC_power_kw,78,5416,51.5,32.7158,v2b_operation_aware,v2b operation-aware
+lux,67,11532,97.0,35.6165,v2b_operation_aware,v2b operation-aware
+light_power_kw,44,6874,54.0,41.7191,v2b_operation_aware,v2b operation-aware
+temperature_c,43,13908,240.0,23.9559,v2b_operation_aware,v2b operation-aware
+plug_power_kw,30,5128,61.0,11.0474,v2b_operation_aware,v2b operation-aware
+humidity_pct,19,5361,150.0,8.0929,v2b_operation_aware,v2b operation-aware

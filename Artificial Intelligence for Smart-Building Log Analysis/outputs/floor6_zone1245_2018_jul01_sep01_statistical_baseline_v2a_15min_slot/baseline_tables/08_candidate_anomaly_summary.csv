@@ -1,0 +1,16 @@
+variable,candidate_method,candidate_points,rows,candidate_pct
+humidity_pct,none,0,357251,0.0
+humidity_pct,robust_z_score,5613,5613,100.0
+light_power_kw,none,0,343095,0.0
+light_power_kw,robust_z_score,17724,17724,100.0
+light_power_kw,zero_aware_threshold,2045,2045,100.0
+lux,none,0,336312,0.0
+lux,robust_z_score,24815,24815,100.0
+lux,zero_aware_threshold,1737,1737,100.0
+plug_power_kw,none,0,349501,0.0
+plug_power_kw,robust_z_score,13363,13363,100.0
+temperature_c,none,0,347527,0.0
+temperature_c,robust_z_score,15337,15337,100.0
+total_AC_power_kw,none,0,349337,0.0
+total_AC_power_kw,robust_z_score,12274,12274,100.0
+total_AC_power_kw,zero_aware_threshold,1253,1253,100.0

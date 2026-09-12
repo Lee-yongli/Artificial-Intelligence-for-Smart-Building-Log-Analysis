@@ -1,0 +1,19 @@
+operating_period,anomaly_points,method,method_label
+core_work,36201,v1_hourly,v1 hourly
+weekend,17283,v1_hourly,v1 hourly
+evening_off,8224,v1_hourly,v1 hourly
+night_off,7117,v1_hourly,v1 hourly
+ramp_down,5495,v1_hourly,v1 hourly
+ramp_up,2453,v1_hourly,v1 hourly
+core_work,40490,v2a_15min_slot,v2a 15min slot
+weekend,18096,v2a_15min_slot,v2a 15min slot
+evening_off,10227,v2a_15min_slot,v2a 15min slot
+night_off,6879,v2a_15min_slot,v2a 15min slot
+ramp_down,6074,v2a_15min_slot,v2a 15min slot
+ramp_up,2350,v2a_15min_slot,v2a 15min slot
+core_work,28691,v2b_operation_aware,v2b operation-aware
+night_off,6899,v2b_operation_aware,v2b operation-aware
+ramp_down,4287,v2b_operation_aware,v2b operation-aware
+evening_off,3882,v2b_operation_aware,v2b operation-aware
+weekend,3170,v2b_operation_aware,v2b operation-aware
+ramp_up,1290,v2b_operation_aware,v2b operation-aware

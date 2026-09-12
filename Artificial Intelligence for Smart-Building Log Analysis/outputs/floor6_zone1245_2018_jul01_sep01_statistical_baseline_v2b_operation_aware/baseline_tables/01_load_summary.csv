@@ -1,0 +1,2 @@
+rows,columns,min_timestamp,max_timestamp,zones,missing_values
+362864,32,2018-07-01 00:04:00,2018-09-01 23:59:00,"1,2,4,5",0

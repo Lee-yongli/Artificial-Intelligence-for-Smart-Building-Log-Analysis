@@ -1,0 +1,7 @@
+variable,groups,min_group_size,median_group_size,zero_median_group_pct,zero_mad_group_pct
+humidity_pct,768,266,472.5,0.0,0.0
+light_power_kw,768,266,472.5,42.9688,54.1667
+lux,768,266,472.5,51.4323,51.4323
+plug_power_kw,768,266,472.5,0.0,0.0
+temperature_c,768,266,472.5,0.0,0.0
+total_AC_power_kw,768,266,472.5,83.3333,83.3333

@@ -1,0 +1,13 @@
+zone,events,total_duration_minutes,median_duration_minutes,max_score_for_ranking,method,method_label
+1,257,24652,35.0,73.535,v1_hourly,v1 hourly
+2,249,17943,30.0,39.4807,v1_hourly,v1 hourly
+5,247,21335,34.0,83.4694,v1_hourly,v1 hourly
+4,187,12843,22.0,2334.1073,v1_hourly,v1 hourly
+1,344,27422,31.5,459.0454,v2a_15min_slot,v2a 15min slot
+2,341,20037,28.0,5967.3015,v2a_15min_slot,v2a 15min slot
+5,318,22856,30.0,1988.0888,v2a_15min_slot,v2a 15min slot
+4,245,13801,16.0,9523.2655,v2a_15min_slot,v2a 15min slot
+1,111,15870,68.0,32.7158,v2b_operation_aware,v2b operation-aware
+2,61,9336,60.0,35.6165,v2b_operation_aware,v2b operation-aware
+5,56,13681,152.5,30.0133,v2b_operation_aware,v2b operation-aware
+4,53,9332,102.0,41.7191,v2b_operation_aware,v2b operation-aware
