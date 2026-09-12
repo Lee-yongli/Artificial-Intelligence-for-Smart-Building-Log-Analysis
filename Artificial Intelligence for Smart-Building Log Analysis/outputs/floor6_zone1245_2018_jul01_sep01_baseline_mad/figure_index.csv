@@ -1,0 +1,7 @@
+figure_number,file_name,description
+1,week5_01_smoothed_ac_vs_contextual_baseline.png,Smoothed AC compared with its contextual median baseline
+2,week5_02_smoothed_ac_baseline_with_mad_anomalies.png,"Smoothed AC, baseline and MAD anomaly points"
+3,week5_03_contextual_residual_over_time.png,Residuals for the same high-scoring anomaly window
+4,week5_04_mad_anomaly_rate_by_zone.png,"Statistical anomaly rates for Zones 1, 2, 4 and 5"
+5,week5_05_mean_vs_median_contextual_baseline.png,Mean and median comparison across 192 Floor 6 contexts
+6,week5_06_mad_explanation_case_study.png,Two-panel explanation of the Floor 6 contextual baseline and MAD rule

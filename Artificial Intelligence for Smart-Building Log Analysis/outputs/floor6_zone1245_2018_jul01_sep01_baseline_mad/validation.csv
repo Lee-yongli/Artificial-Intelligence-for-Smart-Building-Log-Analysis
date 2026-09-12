@@ -1,0 +1,21 @@
+check,passed,detail
+floor_is_exactly_6,True,floors=[6]
+zones_are_exactly_1_2_4_5,True,"zones=[1, 2, 4, 5]"
+zone_3_absent,True,Zone 3 rows=0
+wrong_floors_absent,True,Floors 3/4/5/7 rows=0
+analysis_period_matches_week4,True,2018-07-01 00:00:00 through 2018-09-01 23:59:00
+one_minute_frequency_and_complete_zone_grids,True,"expected timestamps per zone=90,720"
+timestamp_floor_zone_key_unique,True,duplicate keys=0
+rolling_ac_target_exists,True,total_AC_power_kw_rolling_mean_15min
+raw_ac_field_exists,True,total_AC_power_kw
+baseline_counts_use_valid_targets_only,True,"baseline count sum=361,621; valid=361,621"
+context_keys_are_unique,True,contexts=192
+no_cross_zone_baseline_mixing,True,Every valid row matched one zone-day_type-hour baseline
+residual_calculation_correct,True,residual = rolling AC target - contextual median
+contextual_mad_calculation_correct,True,MAD recomputed independently inside zone-day_type-hour contexts
+mad_zero_has_no_division_by_zero,True,"MAD=0 observations=276,181"
+no_infinite_robust_z_scores,True,No positive or negative infinity
+threshold_and_fallback_decisions_correct,True,abs(robust z)>3.5; MAD=0 uses empirical resolution
+missing_smoothed_targets_excluded,True,"excluded rows=1,259"
+interleaved_zone_run_segmentation,True,"Z1 runs=1, length=3; Z2 runs=1, length=2"
+manual_formula_spot_checks,True,spot checks=8

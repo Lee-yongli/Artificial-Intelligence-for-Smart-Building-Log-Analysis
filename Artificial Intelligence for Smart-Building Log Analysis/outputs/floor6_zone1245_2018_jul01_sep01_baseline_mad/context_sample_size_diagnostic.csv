@@ -1,0 +1,3 @@
+context_design,contexts,minimum_valid_observations,percentile_05_valid_observations,median_valid_observations,maximum_valid_observations,selected_for_v1
+zone + day_type + hour,192,1076,1080.0,1860.0,2700,True
+zone + day_type + 15-minute time slot,768,266,270.0,465.0,675,False
