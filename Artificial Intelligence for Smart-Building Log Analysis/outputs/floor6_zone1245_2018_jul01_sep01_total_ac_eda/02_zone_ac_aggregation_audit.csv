@@ -1,0 +1,5 @@
+step,source_zone,raw_ac_columns_summed,raw_ac_columns,new_ac_total_column,missing_aggregated_ac_values,columns_before,columns_after,rows,original_ac_columns_retained_after_aggregation
+aggregate_zone_ac_before_long_merge,1,1,z1_AC1(kW),z1_AC_total(kW),473,34,31,264960,0
+aggregate_zone_ac_before_long_merge,2,1,z2_AC1(kW),z2_AC_total(kW),474,34,31,264960,0
+aggregate_zone_ac_before_long_merge,4,4,"z4_AC1(kW), z4_AC2(kW), z4_AC3(kW), z4_AC4(kW)",z4_AC_total(kW),395,34,31,264960,0
+aggregate_zone_ac_before_long_merge,5,1,z5_AC1(kW),z5_AC_total(kW),473,34,31,264960,0

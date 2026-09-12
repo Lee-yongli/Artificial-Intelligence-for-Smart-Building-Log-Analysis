@@ -1,0 +1,2 @@
+rows,key_columns,duplicate_key_rows,duplicate_rate_pct
+362880,"timestamp, floor, zone",0,0.0

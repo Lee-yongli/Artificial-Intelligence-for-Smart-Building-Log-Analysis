@@ -1,0 +1,9 @@
+zone,day_type,mean_total_AC_power_kw,median_total_AC_power_kw,std_total_AC_power_kw,n
+1,Weekday,5.5816,0.0,9.1574,64800
+1,Weekend,0.0,0.0,0.0,25920
+2,Weekday,4.6183,0.0,7.8517,64800
+2,Weekend,0.3245,0.0,2.3087,25920
+4,Weekday,4.814,0.0,10.2929,64800
+4,Weekend,0.0001,0.0,0.0014,25920
+5,Weekday,1.701,0.0,4.1397,64800
+5,Weekend,0.0,0.0,0.0026,25920

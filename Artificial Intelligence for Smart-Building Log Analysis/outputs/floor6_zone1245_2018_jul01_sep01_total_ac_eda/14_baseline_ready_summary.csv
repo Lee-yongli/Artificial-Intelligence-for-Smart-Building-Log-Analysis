@@ -1,0 +1,2 @@
+source_file,baseline_ready_file,rows_before,rows_after,rows_removed_due_to_incomplete_rolling_features,columns,min_timestamp,max_timestamp,zones,remaining_missing_values
+floor6_zone1245_cleaned_smoothed_2018_jul01_sep01.csv.gz,floor6_zone1245_baseline_ready_2018_jul01_sep01.csv.gz,362880,362864,16,32,2018-07-01 00:04:00,2018-09-01 23:59:00,"1,2,4,5",0
