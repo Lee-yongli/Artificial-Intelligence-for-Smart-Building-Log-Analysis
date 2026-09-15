@@ -1,0 +1,2 @@
+method,method_label,baseline_grouping,rule_type,rows_input_wide,rows_input_long,baseline_profile_rows,anomaly_score_rows,anomaly_points,anomaly_events,default_robust_z_threshold,default_min_persistence_minutes
+v1_hourly,v1 hourly,zone + day_type + hour + variable,standard,362864,2177184,1152,2177184,76773,940,3.5,15

@@ -1,0 +1,5 @@
+method,method_label,anomaly_points,anomaly_events,baseline_profile_rows,threshold_rule,persistence_rule,main_purpose
+v1_hourly,v1 hourly,76773,940,1152,统一 robust z >= 3.5；zero-aware rule 用于零值密集变量,固定 15 分钟,建立稳定、可解释的第一版 statistical baseline
+v2a_15min_slot,v2a 15min slot,84116,1248,4608,仍使用统一 robust z >= 3.5；zero-aware rule 与 v1 一致,固定 15 分钟,测试更细时间粒度是否能捕捉小时内部变化
+v2b_operation_aware,v2b operation-aware,47469,246,1152,按运行时段调整阈值；非工作时间能源变量加强 zero-aware rule,所有 operation-aware 异常均要求至少持续 30 分钟,减少误报并突出更值得人工审查的异常事件
+v3_15min_operation_aware,v3 15min operation-aware,51998,342,4608,15 分钟 baseline profile + 按运行时段调整阈值；非工作时间能源变量加强 zero-aware rule,所有 operation-aware 异常均要求至少持续 30 分钟,结合 v2a 的细时间粒度和 v2b 的运行逻辑，作为更优化的对比 baseline

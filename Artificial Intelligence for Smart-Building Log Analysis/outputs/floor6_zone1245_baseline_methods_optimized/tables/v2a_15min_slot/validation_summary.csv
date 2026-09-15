@@ -1,0 +1,2 @@
+method,method_label,baseline_grouping,rule_type,rows_input_wide,rows_input_long,baseline_profile_rows,anomaly_score_rows,anomaly_points,anomaly_events,default_robust_z_threshold,default_min_persistence_minutes
+v2a_15min_slot,v2a 15min slot,zone + day_type + fifteen_minute_slot + variable,standard,362864,2177184,4608,2177184,84116,1248,3.5,15

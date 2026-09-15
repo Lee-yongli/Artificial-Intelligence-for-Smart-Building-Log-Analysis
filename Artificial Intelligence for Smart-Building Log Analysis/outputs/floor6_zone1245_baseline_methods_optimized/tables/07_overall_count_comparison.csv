@@ -1,0 +1,5 @@
+method,method_label,anomaly_points,anomaly_events,baseline_profile_rows
+v1_hourly,v1 hourly,76773,940,1152
+v2a_15min_slot,v2a 15min slot,84116,1248,4608
+v2b_operation_aware,v2b operation-aware,47469,246,1152
+v3_15min_operation_aware,v3 15min operation-aware,51998,342,4608

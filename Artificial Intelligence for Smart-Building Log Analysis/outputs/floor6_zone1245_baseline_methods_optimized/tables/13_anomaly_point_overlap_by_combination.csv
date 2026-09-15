@@ -1,0 +1,15 @@
+combination,anomaly_points
+v1_hourly + v2a_15min_slot + v2b_operation_aware + v3_15min_operation_aware,41759
+v1_hourly + v2a_15min_slot,22636
+v2a_15min_slot,11564
+v1_hourly,7096
+v2a_15min_slot + v3_15min_operation_aware,4420
+v1_hourly + v2a_15min_slot + v3_15min_operation_aware,2448
+v2b_operation_aware + v3_15min_operation_aware,2048
+v1_hourly + v2b_operation_aware,1577
+v1_hourly + v2a_15min_slot + v2b_operation_aware,880
+v3_15min_operation_aware,538
+v2b_operation_aware,419
+v2a_15min_slot + v2b_operation_aware + v3_15min_operation_aware,408
+v1_hourly + v2b_operation_aware + v3_15min_operation_aware,377
+v2a_15min_slot + v2b_operation_aware,1

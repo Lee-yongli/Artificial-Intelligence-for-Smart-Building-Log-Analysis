@@ -1,0 +1,7 @@
+variable,v1 hourly,v2a 15min slot,v2b operation-aware,v3 15min operation-aware
+humidity_pct,30,54,19,30
+light_power_kw,252,349,30,36
+lux,214,289,57,87
+plug_power_kw,178,181,21,25
+temperature_c,76,106,43,64
+total_AC_power_kw,190,269,76,100

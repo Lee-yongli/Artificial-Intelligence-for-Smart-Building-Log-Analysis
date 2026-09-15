@@ -1,0 +1,5 @@
+method,baseline_grouping,threshold_rule,persistence_rule,main_purpose
+v1_hourly,zone + day_type + hour + variable,统一 robust z >= 3.5；zero-aware rule 用于零值密集变量,固定 15 分钟,建立稳定、可解释的第一版 statistical baseline
+v2a_15min_slot,zone + day_type + 15min_slot + variable,仍使用统一 robust z >= 3.5；zero-aware rule 与 v1 一致,固定 15 分钟,测试更细时间粒度是否能捕捉小时内部变化
+v2b_operation_aware,zone + day_type + hour + variable,按运行时段调整阈值；非工作时间能源变量加强 zero-aware rule,所有 operation-aware 异常均要求至少持续 30 分钟,减少误报并突出更值得人工审查的异常事件
+v3_15min_operation_aware,zone + day_type + 15min_slot + variable,15 分钟 baseline profile + 按运行时段调整阈值；非工作时间能源变量加强 zero-aware rule,所有 operation-aware 异常均要求至少持续 30 分钟,结合 v2a 的细时间粒度和 v2b 的运行逻辑，作为更优化的对比 baseline

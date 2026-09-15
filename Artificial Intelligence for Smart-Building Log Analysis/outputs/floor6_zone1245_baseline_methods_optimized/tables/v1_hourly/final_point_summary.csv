@@ -1,0 +1,7 @@
+variable,rows,anomaly_points,anomaly_point_pct
+humidity_pct,362864,4719,1.3005
+light_power_kw,362864,15028,4.1415
+lux,362864,24061,6.6309
+plug_power_kw,362864,11419,3.1469
+temperature_c,362864,13327,3.6727
+total_AC_power_kw,362864,8219,2.265
