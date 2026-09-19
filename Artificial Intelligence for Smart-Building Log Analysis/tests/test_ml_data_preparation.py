@@ -1,5 +1,4 @@
 import json
-import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -9,16 +8,29 @@ import pandas as pd
 
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(PROJECT_DIR))
+NOTEBOOK_PATH = PROJECT_DIR / "ML_Data_Preparation_Feature_Engineering.ipynb"
 
-from ml_data_preparation import (  # noqa: E402
-    BASELINE_LABEL_COLUMN,
-    IDENTIFIER_COLUMNS,
-    NUMERICAL_FEATURE_COLUMNS,
-    RAW_MEASUREMENT_COLUMNS,
-    ROLLING_MEASUREMENT_COLUMNS,
-    run_pipeline,
-)
+
+def load_notebook_definitions():
+    notebook = json.loads(NOTEBOOK_PATH.read_text(encoding="utf-8"))
+    namespace = {"__name__": "ml_data_preparation_notebook"}
+    for cell in notebook["cells"]:
+        if cell["cell_type"] != "code":
+            continue
+        if "pipeline-definition" not in cell.get("metadata", {}).get("tags", []):
+            continue
+        source = "".join(cell["source"])
+        exec(compile(source, str(NOTEBOOK_PATH), "exec"), namespace)
+    return namespace
+
+
+NOTEBOOK_DEFINITIONS = load_notebook_definitions()
+BASELINE_LABEL_COLUMN = NOTEBOOK_DEFINITIONS["BASELINE_LABEL_COLUMN"]
+IDENTIFIER_COLUMNS = NOTEBOOK_DEFINITIONS["IDENTIFIER_COLUMNS"]
+NUMERICAL_FEATURE_COLUMNS = NOTEBOOK_DEFINITIONS["NUMERICAL_FEATURE_COLUMNS"]
+RAW_MEASUREMENT_COLUMNS = NOTEBOOK_DEFINITIONS["RAW_MEASUREMENT_COLUMNS"]
+ROLLING_MEASUREMENT_COLUMNS = NOTEBOOK_DEFINITIONS["ROLLING_MEASUREMENT_COLUMNS"]
+run_pipeline = NOTEBOOK_DEFINITIONS["run_pipeline"]
 
 
 class MLDataPreparationTest(unittest.TestCase):
