@@ -60,3 +60,19 @@ The project currently includes:
 - Checking NaN values in the cleaned 15-minute dataset.
 
 Next steps are EDA on the cleaned selected-floor dataset, feature engineering, rolling-window features, train/test splitting, and anomaly detection experiments.
+
+## Week 6 ML Data Preparation
+
+The reusable Floor 6 ML preprocessing pipeline is documented in:
+
+```text
+Artificial Intelligence for Smart-Building Log Analysis/ML_DATA_PREPARATION.md
+```
+
+Run it from the repository root:
+
+```bash
+python3 "Artificial Intelligence for Smart-Building Log Analysis/ml_data_preparation.py"
+```
+
+The generated feature list separates model inputs from identifiers, raw reference values, and the v3 statistical baseline label.
