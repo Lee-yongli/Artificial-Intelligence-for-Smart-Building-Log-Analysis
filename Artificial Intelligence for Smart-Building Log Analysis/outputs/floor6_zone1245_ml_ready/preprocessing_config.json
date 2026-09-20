@@ -1,12 +1,12 @@
 {
   "baseline_label_definition": "1 when any v3 variable-level is_anomaly flag is true for the timestamp/floor/zone row; otherwise 0",
-  "baseline_scores_dataset": "outputs/floor6_zone1245_2018_jul01_sep01_statistical_baseline_v3_15min_operation_aware/baseline_tables/09_baseline_anomaly_scores_long.csv.gz",
+  "baseline_scores_dataset": "outputs\\floor6_zone1245_2018_jul01_sep01_statistical_baseline_v3_15min_operation_aware\\baseline_tables\\09_baseline_anomaly_scores_long.csv.gz",
   "categorical_pipeline": [
     "most-frequent imputation",
     "OneHotEncoder(handle_unknown='ignore')"
   ],
   "data_leakage_control": "Baseline labels, baseline counts, raw identifiers, and reference columns are excluded from model_feature_columns.",
-  "input_dataset": "outputs/floor6_zone1245_2018_jul01_sep01_total_ac_eda/floor6_zone1245_baseline_ready_2018_jul01_sep01.csv.gz",
+  "input_dataset": "outputs\\floor6_zone1245_2018_jul01_sep01_total_ac_eda\\floor6_zone1245_baseline_ready_2018_jul01_sep01.csv.gz",
   "numerical_pipeline": [
     "median imputation",
     "StandardScaler"
@@ -19,7 +19,7 @@
     "ramp_up": "weekday hour 07:00-07:59",
     "weekend": "all weekend rows"
   },
-  "output_dataset": "outputs/floor6_zone1245_ml_ready/floor6_zone1245_ml_ready_2018_jul01_sep01.csv.gz",
-  "pipeline_file": "outputs/floor6_zone1245_ml_ready/preprocessing_pipeline.pkl",
+  "output_dataset": "outputs\\floor6_zone1245_ml_ready\\floor6_zone1245_ml_ready_2018_jul01_sep01.csv.gz",
+  "pipeline_file": "outputs\\floor6_zone1245_ml_ready\\preprocessing_pipeline.pkl",
   "random_state": 42
 }

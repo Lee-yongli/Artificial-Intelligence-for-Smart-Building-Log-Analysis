@@ -8,7 +8,7 @@ import pandas as pd
 
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
-NOTEBOOK_PATH = PROJECT_DIR / "ML_Data_Preparation_Feature_Engineering.ipynb"
+NOTEBOOK_PATH = PROJECT_DIR / "ml" / "ML_Data_Preparation_Feature_Engineering.ipynb"
 
 
 def load_notebook_definitions():

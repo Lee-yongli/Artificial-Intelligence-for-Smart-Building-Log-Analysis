@@ -1,0 +1,25 @@
+{
+  "input_dataset": "outputs\\floor6_zone1245_ml_ready\\floor6_zone1245_ml_ready_2018_jul01_sep01.csv.gz",
+  "feature_list": "outputs\\floor6_zone1245_ml_ready\\feature_list.json",
+  "output_results": "outputs\\floor6_zone1245_lof_modelling_gavin\\lof_anomaly_results_full.csv.gz",
+  "output_parameter_comparison": "outputs\\floor6_zone1245_lof_modelling_gavin\\lof_parameter_comparison.csv",
+  "sample_size": null,
+  "rows_available": 362864,
+  "rows_modelled": 362864,
+  "model_feature_count": 42,
+  "n_neighbors_tested": [
+    20,
+    50,
+    100
+  ],
+  "contamination_tested": [
+    0.03,
+    0.05,
+    0.09
+  ],
+  "selected_n_neighbors": 100,
+  "selected_contamination": 0.05,
+  "baseline_anomaly_rate": 0.09032860796331407,
+  "baseline_label_used_as_feature": false,
+  "identifier_columns_used_as_features": false
+}

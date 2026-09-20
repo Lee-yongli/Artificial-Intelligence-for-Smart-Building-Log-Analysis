@@ -66,13 +66,13 @@ Next steps are EDA on the cleaned selected-floor dataset, feature engineering, r
 The reusable Floor 6 ML preprocessing pipeline is implemented in:
 
 ```text
-Artificial Intelligence for Smart-Building Log Analysis/ML_Data_Preparation_Feature_Engineering.ipynb
+Artificial Intelligence for Smart-Building Log Analysis/ml/ML_Data_Preparation_Feature_Engineering.ipynb
 ```
 
 Open it from the repository root:
 
 ```bash
-jupyter notebook "Artificial Intelligence for Smart-Building Log Analysis/ML_Data_Preparation_Feature_Engineering.ipynb"
+jupyter notebook "Artificial Intelligence for Smart-Building Log Analysis/ml/ML_Data_Preparation_Feature_Engineering.ipynb"
 ```
 
 The generated feature list separates model inputs from identifiers, raw reference values, and the v3 statistical baseline label.
