@@ -134,9 +134,9 @@
       "evidence": "keys=362,864"
     },
     {
-      "check": "all_expected_outputs",
+      "check": "all_generated_data_outputs",
       "passed": true,
-      "evidence": "files=10"
+      "evidence": "files=9"
     },
     {
       "check": "notebook_reached_final_output_stage",
