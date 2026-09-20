@@ -143,5 +143,71 @@
       "passed": true,
       "evidence": "final output cell executed"
     }
-  ]
+  ],
+  "period_specific_sensitivity_analysis": {
+    "grouping_column": "operating_period",
+    "physical_features": [
+      "numerical__total_AC_power_kw_rolling_mean_15min",
+      "numerical__light_power_kw_rolling_mean_15min",
+      "numerical__plug_power_kw_rolling_mean_15min",
+      "numerical__temperature_c_rolling_mean_15min",
+      "numerical__humidity_pct_rolling_mean_15min",
+      "numerical__lux_rolling_mean_15min"
+    ],
+    "feature_count": 6,
+    "contamination_settings": [
+      0.03,
+      0.05,
+      0.09
+    ],
+    "primary_contamination": 0.05,
+    "output_files": {
+      "period_specific_results": "outputs\\isolation_forest_huaye\\if_period_specific_results_full.csv.gz",
+      "period_specific_parameter_comparison": "outputs\\isolation_forest_huaye\\if_period_specific_parameter_comparison.csv",
+      "period_specific_summary": "outputs\\isolation_forest_huaye\\if_period_specific_summary.csv",
+      "period_specific_comparison": "outputs\\isolation_forest_huaye\\if_period_specific_comparison.csv"
+    },
+    "validation": [
+      {
+        "check": "period_result_rows",
+        "passed": true,
+        "evidence": "rows=362,864"
+      },
+      {
+        "check": "physical_feature_count",
+        "passed": true,
+        "evidence": "features=6"
+      },
+      {
+        "check": "period_score_complete",
+        "passed": true,
+        "evidence": "missing=0"
+      },
+      {
+        "check": "period_keys_preserved",
+        "passed": true,
+        "evidence": "keys=362,864"
+      },
+      {
+        "check": "period_outputs_exist",
+        "passed": true,
+        "evidence": "files=4"
+      },
+      {
+        "check": "period_contamination_c030",
+        "passed": true,
+        "evidence": "{'core_work': 0.02999, 'evening_off': 0.03, 'night_off': 0.029987, 'ramp_down': 0.03, 'ramp_up': 0.03, 'weekend': 0.029914}"
+      },
+      {
+        "check": "period_contamination_c050",
+        "passed": true,
+        "evidence": "{'core_work': 0.05, 'evening_off': 0.05, 'night_off': 0.05, 'ramp_down': 0.05, 'ramp_up': 0.05, 'weekend': 0.049998}"
+      },
+      {
+        "check": "period_contamination_c090",
+        "passed": true,
+        "evidence": "{'core_work': 0.089949, 'evening_off': 0.09, 'night_off': 0.09, 'ramp_down': 0.089676, 'ramp_up': 0.09, 'weekend': 0.090002}"
+      }
+    ]
+  }
 }
