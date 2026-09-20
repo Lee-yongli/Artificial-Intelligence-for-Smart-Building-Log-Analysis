@@ -1,0 +1,2 @@
+contamination,rows_aligned,if_anomaly_count,lof_anomaly_count,overlap_count,if_only_count,lof_only_count,union_count,jaccard_overlap
+0.05,362864,18143,18143,1049,17094,17094,35237,0.029769844197860204

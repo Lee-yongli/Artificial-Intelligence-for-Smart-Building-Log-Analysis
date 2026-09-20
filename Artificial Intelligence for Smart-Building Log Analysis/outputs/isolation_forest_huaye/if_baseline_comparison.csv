@@ -1,0 +1,2 @@
+if_contamination,if_anomaly_count,baseline_anomaly_count,overlap_count,if_only_count,baseline_only_count,union_count,jaccard_overlap
+0.05,18143,32777,2744,15399,30033,48176,0.05695782132181999
