@@ -200,21 +200,34 @@ def build_summaries(results: pd.DataFrame) -> dict[str, pd.DataFrame]:
         .reindex(PERIOD_ORDER)
         .reset_index()
     )
-    period_summary["anomaly_rate_pct"] = 100 * period_summary["anomaly_count"] / period_summary["rows"]
+    period_count_columns = [
+        "rows",
+        "anomaly_count",
+        "lof_anomaly_count",
+        "baseline_anomaly_count",
+        "lof_overlap",
+        "baseline_overlap",
+    ]
+    period_summary[period_count_columns] = period_summary[period_count_columns].astype("int64")
+    period_summary["anomaly_rate_pct"] = (
+        100.0 * period_summary["anomaly_count"] / period_summary["rows"]
+    )
 
     zone_summary = (
         results.groupby("zone", observed=True)
         .agg(rows=("period_if_anomaly_label", "size"), anomaly_count=("period_if_anomaly_label", "sum"))
         .reset_index()
     )
-    zone_summary["anomaly_rate_pct"] = 100 * zone_summary["anomaly_count"] / zone_summary["rows"]
+    zone_summary[["rows", "anomaly_count"]] = zone_summary[["rows", "anomaly_count"]].astype("int64")
+    zone_summary["anomaly_rate_pct"] = 100.0 * zone_summary["anomaly_count"] / zone_summary["rows"]
 
     hour_summary = (
         results.groupby("hour", observed=True)
         .agg(rows=("period_if_anomaly_label", "size"), anomaly_count=("period_if_anomaly_label", "sum"))
         .reset_index()
     )
-    hour_summary["anomaly_rate_pct"] = 100 * hour_summary["anomaly_count"] / hour_summary["rows"]
+    hour_summary[["rows", "anomaly_count"]] = hour_summary[["rows", "anomaly_count"]].astype("int64")
+    hour_summary["anomaly_rate_pct"] = 100.0 * hour_summary["anomaly_count"] / hour_summary["rows"]
 
     comparisons: list[dict[str, Any]] = []
     for name, column, note in [
@@ -247,10 +260,11 @@ def validate_results(
     results: pd.DataFrame,
     summaries: dict[str, pd.DataFrame],
     models: dict[str, IsolationForest],
+    expected_row_count: int = 362_864,
 ) -> list[dict[str, Any]]:
     checks: list[tuple[str, bool, str]] = [
         ("row_count_preserved", len(results) == len(source), f"rows={len(results):,}"),
-        ("expected_row_count", len(results) == 362_864, f"rows={len(results):,}"),
+        ("expected_row_count", len(results) == expected_row_count, f"rows={len(results):,}"),
         ("unique_row_key", not results.duplicated(KEY_COLUMNS).any(), "timestamp + floor + zone"),
         ("six_period_models", set(models) == set(PERIOD_ORDER), f"models={sorted(models)}"),
         ("six_physical_features", len(MODEL_FEATURES) == 6, f"features={MODEL_FEATURES}"),
