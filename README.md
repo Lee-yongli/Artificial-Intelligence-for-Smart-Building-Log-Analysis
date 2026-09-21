@@ -42,6 +42,12 @@ Install the Python dependencies:
 pip install -r requirements.txt
 ```
 
+On Windows, enable long path support before cloning or pulling this repository because some generated analysis outputs live in deeply nested folders:
+
+```bash
+git config --global core.longpaths true
+```
+
 Open the notebook:
 
 ```bash
