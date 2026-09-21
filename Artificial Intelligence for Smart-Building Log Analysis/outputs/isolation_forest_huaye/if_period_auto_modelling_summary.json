@@ -1,0 +1,188 @@
+{
+  "author": "huaye",
+  "analysis": "period-specific Isolation Forest with automatic threshold",
+  "source_dataset": "outputs\\floor6_zone1245_ml_ready\\floor6_zone1245_ml_ready_2018_jul01_sep01.csv.gz",
+  "physical_reference_dataset": "outputs\\floor6_zone1245_2018_jul01_sep01_total_ac_eda\\floor6_zone1245_baseline_ready_2018_jul01_sep01.csv.gz",
+  "feature_manifest": "outputs\\floor6_zone1245_ml_ready\\feature_list.json",
+  "row_count": 362864,
+  "operating_periods": [
+    "night_off",
+    "ramp_up",
+    "core_work",
+    "ramp_down",
+    "evening_off",
+    "weekend"
+  ],
+  "model_count": 6,
+  "model_features": [
+    "numerical__total_AC_power_kw_rolling_mean_15min",
+    "numerical__light_power_kw_rolling_mean_15min",
+    "numerical__plug_power_kw_rolling_mean_15min",
+    "numerical__temperature_c_rolling_mean_15min",
+    "numerical__humidity_pct_rolling_mean_15min",
+    "numerical__lux_rolling_mean_15min"
+  ],
+  "feature_count": 6,
+  "model": "sklearn.ensemble.IsolationForest",
+  "model_parameters": {
+    "n_estimators": 100,
+    "max_samples": "auto",
+    "contamination": "auto",
+    "max_features": 1.0,
+    "bootstrap": false,
+    "random_state": 42,
+    "n_jobs": -1
+  },
+  "label_definition": "period_if_anomaly_label = 1 when model.predict(X_period) == -1, equivalently decision_function < 0",
+  "score_definition": "period_if_anomaly_score = -model.score_samples(X_period); higher means more anomalous within the same period",
+  "threshold_definition": "contamination='auto' uses sklearn offset -0.5; no fixed anomaly percentage is imposed",
+  "anomaly_count": 54419,
+  "anomaly_rate_pct": 14.997078795361348,
+  "period_results": [
+    {
+      "operating_period": "night_off",
+      "rows": 75600,
+      "anomaly_count": 5980,
+      "mean_anomaly_score": 0.4036683920081923,
+      "min_decision_function": -0.2832936199440851,
+      "max_anomaly_score": 0.7832936199440851,
+      "lof_anomaly_count": 1907,
+      "baseline_anomaly_count": 5875,
+      "lof_overlap": 579,
+      "baseline_overlap": 824,
+      "anomaly_rate_pct": 7.91005291005291
+    },
+    {
+      "operating_period": "ramp_up",
+      "rows": 10800,
+      "anomaly_count": 2455,
+      "mean_anomaly_score": 0.4658019110534381,
+      "min_decision_function": -0.19828921115436726,
+      "max_anomaly_score": 0.6982892111543673,
+      "lof_anomaly_count": 707,
+      "baseline_anomaly_count": 1065,
+      "lof_overlap": 340,
+      "baseline_overlap": 298,
+      "anomaly_rate_pct": 22.73148148148148
+    },
+    {
+      "operating_period": "core_work",
+      "rows": 97200,
+      "anomaly_count": 17430,
+      "mean_anomaly_score": 0.4622736231700481,
+      "min_decision_function": -0.1690877007127377,
+      "max_anomaly_score": 0.6690877007127377,
+      "lof_anomaly_count": 4452,
+      "baseline_anomaly_count": 16245,
+      "lof_overlap": 1401,
+      "baseline_overlap": 7884,
+      "anomaly_rate_pct": 17.932098765432098
+    },
+    {
+      "operating_period": "ramp_down",
+      "rows": 21600,
+      "anomaly_count": 3010,
+      "mean_anomaly_score": 0.44859042828658613,
+      "min_decision_function": -0.20601134013292033,
+      "max_anomaly_score": 0.7060113401329203,
+      "lof_anomaly_count": 897,
+      "baseline_anomaly_count": 3556,
+      "lof_overlap": 169,
+      "baseline_overlap": 1564,
+      "anomaly_rate_pct": 13.935185185185185
+    },
+    {
+      "operating_period": "evening_off",
+      "rows": 54000,
+      "anomaly_count": 11559,
+      "mean_anomaly_score": 0.4213781308333121,
+      "min_decision_function": -0.19952156035580038,
+      "max_anomaly_score": 0.6995215603558004,
+      "lof_anomaly_count": 2988,
+      "baseline_anomaly_count": 2767,
+      "lof_overlap": 1029,
+      "baseline_overlap": 1385,
+      "anomaly_rate_pct": 21.405555555555555
+    },
+    {
+      "operating_period": "weekend",
+      "rows": 103664,
+      "anomaly_count": 13985,
+      "mean_anomaly_score": 0.41416824186740236,
+      "min_decision_function": -0.2997838280193116,
+      "max_anomaly_score": 0.7997838280193116,
+      "lof_anomaly_count": 7192,
+      "baseline_anomaly_count": 3269,
+      "lof_overlap": 1115,
+      "baseline_overlap": 2012,
+      "anomaly_rate_pct": 13.49070072542059
+    }
+  ],
+  "comparison_limitations": [
+    "LOF retains its existing fixed contamination 0.05 label.",
+    "The statistical baseline is a comparison reference, not ground truth.",
+    "Detected rows are candidate anomalies, not confirmed equipment faults.",
+    "Raw scores from separately fitted period models should not be compared directly across periods."
+  ],
+  "output_files": {
+    "full_results": "outputs\\isolation_forest_huaye\\if_period_auto_results_full.csv.gz",
+    "anomalies": "outputs\\isolation_forest_huaye\\if_period_auto_anomalies.csv.gz",
+    "period_summary": "outputs\\isolation_forest_huaye\\if_period_auto_summary.csv",
+    "zone_summary": "outputs\\isolation_forest_huaye\\if_period_auto_summary_by_zone.csv",
+    "hour_summary": "outputs\\isolation_forest_huaye\\if_period_auto_summary_by_hour.csv",
+    "comparison": "outputs\\isolation_forest_huaye\\if_period_auto_comparison.csv",
+    "modelling_summary": "outputs\\isolation_forest_huaye\\if_period_auto_modelling_summary.json"
+  },
+  "validation": [
+    {
+      "check": "row_count_preserved",
+      "passed": true,
+      "evidence": "rows=362,864"
+    },
+    {
+      "check": "expected_row_count",
+      "passed": true,
+      "evidence": "rows=362,864"
+    },
+    {
+      "check": "unique_row_key",
+      "passed": true,
+      "evidence": "timestamp + floor + zone"
+    },
+    {
+      "check": "six_period_models",
+      "passed": true,
+      "evidence": "models=['core_work', 'evening_off', 'night_off', 'ramp_down', 'ramp_up', 'weekend']"
+    },
+    {
+      "check": "six_physical_features",
+      "passed": true,
+      "evidence": "features=['numerical__total_AC_power_kw_rolling_mean_15min', 'numerical__light_power_kw_rolling_mean_15min', 'numerical__plug_power_kw_rolling_mean_15min', 'numerical__temperature_c_rolling_mean_15min', 'numerical__humidity_pct_rolling_mean_15min', 'numerical__lux_rolling_mean_15min']"
+    },
+    {
+      "check": "scores_complete",
+      "passed": true,
+      "evidence": "missing=0"
+    },
+    {
+      "check": "decision_threshold_consistent",
+      "passed": true,
+      "evidence": "label=1 exactly when decision_function < 0"
+    },
+    {
+      "check": "not_fixed_five_percent",
+      "passed": true,
+      "evidence": "{'night_off': 7.910053, 'ramp_up': 22.731481, 'core_work': 17.932099, 'ramp_down': 13.935185, 'evening_off': 21.405556, 'weekend': 13.490701}"
+    },
+    {
+      "check": "reference_labels_excluded",
+      "passed": true,
+      "evidence": "baseline and LOF labels are comparison-only"
+    },
+    {
+      "check": "all_anomaly_rows_exportable",
+      "passed": true,
+      "evidence": "anomalies=54,419"
+    }
+  ]
+}

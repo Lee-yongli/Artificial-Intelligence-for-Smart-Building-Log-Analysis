@@ -1,4 +1,0 @@
-comparison,period_if_anomaly_count,comparison_anomaly_count,overlap_count,union_count,jaccard_overlap
-global_42_feature_if,18143,18143,1300,34986,0.03715772023094952
-lof_k100,18143,18143,1742,34544,0.0504284390921723
-statistical_baseline,18143,32777,6125,44795,0.13673401049224243

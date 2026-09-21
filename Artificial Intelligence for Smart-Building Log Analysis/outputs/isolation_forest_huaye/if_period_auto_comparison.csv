@@ -1,0 +1,3 @@
+comparison,if_anomaly_count,comparison_anomaly_count,overlap_count,union_count,jaccard_overlap,note
+lof_k100_c050,54419,18143,4633,67929,0.06820356548749429,LOF uses its existing fixed contamination 0.05 label
+statistical_baseline_v3,54419,32777,13967,73229,0.19073044831965477,"Statistical baseline is a reference, not ground truth"
