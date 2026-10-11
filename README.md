@@ -32,7 +32,7 @@ Expected files:
 2019Floor1.csv ... 2019Floor7.csv
 ```
 
-Large generated `.csv.gz` outputs are also excluded from Git. They can be regenerated from the notebook.
+Most large generated `.csv.gz` outputs are excluded from Git. The Week 6 ML-ready dataset is committed so the LOF and Isolation Forest experiments can run immediately after cloning.
 
 ## Environment
 
@@ -40,6 +40,12 @@ Install the Python dependencies:
 
 ```bash
 pip install -r requirements.txt
+```
+
+On Windows, enable long path support before cloning or pulling this repository because some generated analysis outputs live in deeply nested folders:
+
+```bash
+git config --global core.longpaths true
 ```
 
 Open the notebook:
@@ -76,3 +82,21 @@ jupyter notebook "Artificial Intelligence for Smart-Building Log Analysis/ml/ML_
 ```
 
 The generated feature list separates model inputs from identifiers, raw reference values, and the v3 statistical baseline label.
+
+The current repository includes the generated Week 6 ML-ready dataset:
+
+```text
+Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_ml_ready/floor6_zone1245_ml_ready_2018_jul01_sep01.csv.gz
+```
+
+After installing dependencies, the Isolation Forest experiment can be run from the repository root:
+
+```bash
+python "Artificial Intelligence for Smart-Building Log Analysis/ml/isolation_forest_period_auto_huaye.py"
+```
+
+Run the test suite with:
+
+```bash
+python -m unittest discover "Artificial Intelligence for Smart-Building Log Analysis/tests"
+```

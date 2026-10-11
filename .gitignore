@@ -12,6 +12,8 @@ Artificial Intelligence for Smart-Building Log Analysis/outputs/*.csv.gz
 # Week 6 ML-ready data and fitted preprocessing artifact are reproducible locally.
 Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_ml_ready/*.csv.gz
 Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_ml_ready/*.pkl
+!Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_ml_ready/floor6_zone1245_ml_ready_2018_jul01_sep01.csv.gz
+!Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_ml_ready/preprocessing_pipeline.pkl
 
 # Local runtime artifacts.
 __pycache__/
