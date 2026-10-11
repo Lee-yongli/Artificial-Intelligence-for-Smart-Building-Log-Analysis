@@ -110,8 +110,13 @@ def load_and_validate_source(
             f"Expected a complete one-minute grid; found {non_minute_intervals} irregular intervals"
         )
 
+    try:
+        report_source_path = path.resolve().relative_to(PROJECT_DIR.resolve()).as_posix()
+    except ValueError:
+        report_source_path = path.name
+
     quality: dict[str, Any] = {
-        "source_path": str(path.resolve()),
+        "source_path": report_source_path,
         "rows": int(len(frame)),
         "columns": int(len(frame.columns)),
         "floor_values": ",".join(map(str, sorted(frame["floor"].unique().tolist()))),

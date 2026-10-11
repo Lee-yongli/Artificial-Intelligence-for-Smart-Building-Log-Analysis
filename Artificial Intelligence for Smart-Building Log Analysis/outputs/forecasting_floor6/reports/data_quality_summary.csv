@@ -1,5 +1,5 @@
 metric,value
-source_path,/Users/yonglijiang/Documents/Adelaide University/AU Course/AU Course - 2026 Semester 2/Industry Research Project/Industry Research Project-week7-lee/Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_2018_jul01_sep01_total_ac_eda/floor6_zone1245_cleaned_smoothed_2018_jul01_sep01.csv.gz
+source_path,outputs/floor6_zone1245_2018_jul01_sep01_total_ac_eda/floor6_zone1245_cleaned_smoothed_2018_jul01_sep01.csv.gz
 rows,362880
 columns,35
 floor_values,6
