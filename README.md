@@ -100,3 +100,22 @@ Run the test suite with:
 ```bash
 python -m unittest discover "Artificial Intelligence for Smart-Building Log Analysis/tests"
 ```
+
+## Week 7 Prediction-ready Dataset
+
+Build the leakage-safe Floor 6 datasets for predicting each zone's AC power 15
+minutes ahead:
+
+```bash
+python "Artificial Intelligence for Smart-Building Log Analysis/ml/forecasting_data_preparation.py"
+```
+
+The workflow creates zone-specific lag and trailing rolling features, applies
+chronological splits with target-boundary purging, and fits remaining feature
+imputation values on the training split only. It does not train a forecasting
+model or alter the anomaly-detection pipeline. Outputs and the leakage audit are
+written to:
+
+```text
+Artificial Intelligence for Smart-Building Log Analysis/outputs/forecasting_floor6/
+```

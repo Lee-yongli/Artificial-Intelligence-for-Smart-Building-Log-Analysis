@@ -15,6 +15,9 @@ Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_
 !Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_ml_ready/floor6_zone1245_ml_ready_2018_jul01_sep01.csv.gz
 !Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_ml_ready/preprocessing_pipeline.pkl
 
+# Week 7 full prediction-ready datasets are reproducible local artifacts.
+Artificial Intelligence for Smart-Building Log Analysis/outputs/forecasting_floor6/data/*.csv.gz
+
 # Local runtime artifacts.
 __pycache__/
 *.pyc

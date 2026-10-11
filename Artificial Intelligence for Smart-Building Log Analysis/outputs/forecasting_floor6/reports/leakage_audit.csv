@@ -1,0 +1,15 @@
+check,passed,details
+unique_source_keys,True,timestamp/floor/zone is unique
+one_minute_sampling,True,all within-zone intervals are one minute
+upstream_imputation_masked,True,masked 55665 source values using missingness flags
+zone_specific_lags,True,lag features reset at every zone boundary
+causal_rolling,True,rolling windows are trailing and include no future rows
+upstream_rolls_excluded,True,upstream rolling columns were not reused
+anomaly_references_excluded,True,forbidden features: []
+target_excluded_from_features,True,future target is output-only
+train_only_imputation,True,medians were fitted on Train and applied unchanged to Validation/Test
+no_global_scaling,True,no scaler or encoder was fitted during dataset preparation
+exact_forecast_horizon,True,every target timestamp is exactly prediction timestamp + 15 minutes
+purged_split_boundaries,True,no target crosses into the next split
+aligned_feature_schema,True,all splits have the same 46 ordered features
+complete_prediction_ready_values,True,features and targets contain no NaN after Train-only imputation

@@ -1,0 +1,19 @@
+metric,value
+source_path,/Users/yonglijiang/Documents/Adelaide University/AU Course/AU Course - 2026 Semester 2/Industry Research Project/Industry Research Project-week7-lee/Artificial Intelligence for Smart-Building Log Analysis/outputs/floor6_zone1245_2018_jul01_sep01_total_ac_eda/floor6_zone1245_cleaned_smoothed_2018_jul01_sep01.csv.gz
+rows,362880
+columns,35
+floor_values,6
+zone_values,"1,2,4,5"
+zone_count,4
+min_timestamp,2018-07-01 00:00:00
+max_timestamp,2018-09-01 23:59:00
+unique_timestamps,90720
+duplicate_key_rows,0
+non_one_minute_intervals,0
+source_nan_values,96
+originally_missing_total_AC_power_kw,1267
+originally_missing_light_power_kw,2804
+originally_missing_plug_power_kw,1974
+originally_missing_temperature_c,16540
+originally_missing_humidity_pct,16540
+originally_missing_lux,16540
