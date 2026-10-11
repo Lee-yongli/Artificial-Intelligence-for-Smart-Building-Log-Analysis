@@ -3,10 +3,11 @@
   "feature_list": "outputs\\floor6_zone1245_ml_ready\\feature_list.json",
   "output_results": "outputs\\floor6_zone1245_lof_modelling_gavin\\lof_anomaly_results_full.csv.gz",
   "output_parameter_comparison": "outputs\\floor6_zone1245_lof_modelling_gavin\\lof_parameter_comparison.csv",
+  "output_baseline_method_overlap": "outputs\\floor6_zone1245_lof_modelling_gavin\\lof_baseline_method_overlap.csv",
   "sample_size": null,
-  "rows_available": 362864,
-  "rows_modelled": 362864,
-  "model_feature_count": 42,
+  "rows_available": 362880,
+  "rows_modelled": 362880,
+  "model_feature_count": 47,
   "n_neighbors_tested": [
     20,
     50,
@@ -19,7 +20,14 @@
   ],
   "selected_n_neighbors": 100,
   "selected_contamination": 0.05,
-  "baseline_anomaly_rate": 0.09032860796331407,
+  "baseline_anomaly_rate": 0.12857969576719577,
+  "baseline_method_label_columns": {
+    "high_quantile_threshold": "baseline_high_quantile_label",
+    "low_quantile_threshold": "baseline_low_quantile_label",
+    "operational_schedule_mismatch": "baseline_operational_label",
+    "robust_z_score": "baseline_robust_z_score_label",
+    "zero_aware_threshold": "baseline_zero_aware_label"
+  },
   "baseline_label_used_as_feature": false,
   "identifier_columns_used_as_features": false
 }

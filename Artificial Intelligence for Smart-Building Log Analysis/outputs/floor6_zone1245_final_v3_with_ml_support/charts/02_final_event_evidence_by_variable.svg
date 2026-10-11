@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="428" viewBox="0 0 960 428" role="img" aria-label="Final V3 event evidence by variable">
+<rect width="100%" height="100%" fill="white"/>
+<text x="480.0" y="34" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#1f2937">Final V3 event evidence by variable</text>
+<text x="138" y="103" text-anchor="end" font-family="Arial" font-size="13" fill="#374151">total_AC_power_kw</text>
+<rect x="150.0" y="85" width="3.5" height="24" fill="#1f7a4d"/>
+<rect x="153.5" y="85" width="3.5" height="24" fill="#2f6fed"/>
+<rect x="157.0" y="85" width="10.5" height="24" fill="#e07a24"/>
+<rect x="167.6" y="85" width="35.2" height="24" fill="#6b7280"/>
+<text x="185.2" y="102" text-anchor="middle" font-family="Arial" font-size="11" fill="white">10</text>
+<text x="798" y="103" font-family="Arial" font-size="13" fill="#374151">15</text>
+<text x="138" y="147" text-anchor="end" font-family="Arial" font-size="13" fill="#374151">plug_power_kw</text>
+<rect x="150.0" y="129" width="56.3" height="24" fill="#2f6fed"/>
+<text x="178.1" y="146" text-anchor="middle" font-family="Arial" font-size="11" fill="white">16</text>
+<rect x="206.3" y="129" width="10.5" height="24" fill="#e07a24"/>
+<rect x="216.8" y="129" width="21.1" height="24" fill="#6b7280"/>
+<text x="798" y="147" font-family="Arial" font-size="13" fill="#374151">25</text>
+<text x="138" y="191" text-anchor="end" font-family="Arial" font-size="13" fill="#374151">humidity_pct</text>
+<rect x="150.0" y="173" width="3.5" height="24" fill="#1f7a4d"/>
+<rect x="153.5" y="173" width="28.1" height="24" fill="#2f6fed"/>
+<text x="167.6" y="190" text-anchor="middle" font-family="Arial" font-size="11" fill="white">8</text>
+<rect x="181.6" y="173" width="24.6" height="24" fill="#e07a24"/>
+<text x="194.0" y="190" text-anchor="middle" font-family="Arial" font-size="11" fill="white">7</text>
+<rect x="206.3" y="173" width="49.2" height="24" fill="#6b7280"/>
+<text x="230.9" y="190" text-anchor="middle" font-family="Arial" font-size="11" fill="white">14</text>
+<text x="798" y="191" font-family="Arial" font-size="13" fill="#374151">30</text>
+<text x="138" y="235" text-anchor="end" font-family="Arial" font-size="13" fill="#374151">temperature_c</text>
+<rect x="150.0" y="217" width="7.0" height="24" fill="#1f7a4d"/>
+<rect x="157.0" y="217" width="87.9" height="24" fill="#2f6fed"/>
+<text x="201.0" y="234" text-anchor="middle" font-family="Arial" font-size="11" fill="white">25</text>
+<rect x="244.9" y="217" width="42.2" height="24" fill="#e07a24"/>
+<text x="266.0" y="234" text-anchor="middle" font-family="Arial" font-size="11" fill="white">12</text>
+<rect x="287.1" y="217" width="87.9" height="24" fill="#6b7280"/>
+<text x="331.1" y="234" text-anchor="middle" font-family="Arial" font-size="11" fill="white">25</text>
+<text x="798" y="235" font-family="Arial" font-size="13" fill="#374151">64</text>
+<text x="138" y="279" text-anchor="end" font-family="Arial" font-size="13" fill="#374151">lux</text>
+<rect x="150.0" y="261" width="31.6" height="24" fill="#1f7a4d"/>
+<text x="165.8" y="278" text-anchor="middle" font-family="Arial" font-size="11" fill="white">9</text>
+<rect x="181.6" y="261" width="94.9" height="24" fill="#2f6fed"/>
+<text x="229.1" y="278" text-anchor="middle" font-family="Arial" font-size="11" fill="white">27</text>
+<rect x="276.6" y="261" width="116.0" height="24" fill="#e07a24"/>
+<text x="334.6" y="278" text-anchor="middle" font-family="Arial" font-size="11" fill="white">33</text>
+<rect x="392.6" y="261" width="316.5" height="24" fill="#6b7280"/>
+<text x="550.9" y="278" text-anchor="middle" font-family="Arial" font-size="11" fill="white">90</text>
+<text x="798" y="279" font-family="Arial" font-size="13" fill="#374151">159</text>
+<text x="138" y="323" text-anchor="end" font-family="Arial" font-size="13" fill="#374151">light_power_kw</text>
+<rect x="150.0" y="305" width="24.6" height="24" fill="#1f7a4d"/>
+<text x="162.3" y="322" text-anchor="middle" font-family="Arial" font-size="11" fill="white">7</text>
+<rect x="174.6" y="305" width="63.3" height="24" fill="#2f6fed"/>
+<text x="206.3" y="322" text-anchor="middle" font-family="Arial" font-size="11" fill="white">18</text>
+<rect x="237.9" y="305" width="151.2" height="24" fill="#e07a24"/>
+<text x="313.5" y="322" text-anchor="middle" font-family="Arial" font-size="11" fill="white">43</text>
+<rect x="389.1" y="305" width="400.9" height="24" fill="#6b7280"/>
+<text x="589.6" y="322" text-anchor="middle" font-family="Arial" font-size="11" fill="white">114</text>
+<text x="798" y="323" font-family="Arial" font-size="13" fill="#374151">182</text>
+<rect x="150" y="369" width="14" height="14" fill="#1f7a4d"/>
+<text x="170" y="382" font-family="Arial" font-size="12" fill="#374151">v3_with_if_and_lof_support</text>
+<rect x="510" y="369" width="14" height="14" fill="#2f6fed"/>
+<text x="530" y="382" font-family="Arial" font-size="12" fill="#374151">v3_with_if_support</text>
+<rect x="150" y="393" width="14" height="14" fill="#e07a24"/>
+<text x="170" y="406" font-family="Arial" font-size="12" fill="#374151">v3_with_lof_support</text>
+<rect x="510" y="393" width="14" height="14" fill="#6b7280"/>
+<text x="530" y="406" font-family="Arial" font-size="12" fill="#374151">v3_primary_only</text>
+</svg>

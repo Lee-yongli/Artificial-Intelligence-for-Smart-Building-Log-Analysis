@@ -1,7 +1,7 @@
 variable,events,total_duration_minutes,median_duration_minutes,max_score_for_ranking
-total_AC_power_kw,100,6869,42.0,1882.5295
-lux,87,11554,58.0,39.6991
+light_power_kw,182,20667,58.0,37.5667
+lux,159,20997,61.0,25.6533
 temperature_c,64,15476,112.5,36.5934
-light_power_kw,36,6988,64.0,459.0454
 humidity_pct,30,5847,82.0,9.6359
-plug_power_kw,25,5264,50.0,18.6876
+plug_power_kw,25,5263,50.0,18.6876
+total_AC_power_kw,15,1344,49.0,10.8357

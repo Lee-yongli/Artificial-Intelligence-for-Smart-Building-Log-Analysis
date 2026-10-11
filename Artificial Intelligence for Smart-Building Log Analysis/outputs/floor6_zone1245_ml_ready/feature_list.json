@@ -1,11 +1,49 @@
 {
   "baseline_count_column": "baseline_anomaly_count",
+  "baseline_detail_columns": [
+    "baseline_anomaly_methods",
+    "baseline_anomaly_variables",
+    "baseline_anomaly_directions"
+  ],
   "baseline_label_column": "baseline_anomaly_label",
   "baseline_label_is_model_feature": false,
+  "baseline_method_count_columns": {
+    "high_quantile_threshold": "baseline_high_quantile_count",
+    "low_quantile_threshold": "baseline_low_quantile_count",
+    "operational_schedule_mismatch": "baseline_operational_count",
+    "robust_z_score": "baseline_robust_z_score_count",
+    "zero_aware_threshold": "baseline_zero_aware_count"
+  },
+  "baseline_method_label_columns": {
+    "high_quantile_threshold": "baseline_high_quantile_label",
+    "low_quantile_threshold": "baseline_low_quantile_label",
+    "operational_schedule_mismatch": "baseline_operational_label",
+    "robust_z_score": "baseline_robust_z_score_label",
+    "zero_aware_threshold": "baseline_zero_aware_label"
+  },
+  "baseline_reference_columns": [
+    "baseline_anomaly_label",
+    "baseline_anomaly_count",
+    "baseline_anomaly_methods",
+    "baseline_anomaly_variables",
+    "baseline_anomaly_directions",
+    "baseline_robust_z_score_count",
+    "baseline_high_quantile_count",
+    "baseline_low_quantile_count",
+    "baseline_zero_aware_count",
+    "baseline_operational_count",
+    "baseline_robust_z_score_label",
+    "baseline_high_quantile_label",
+    "baseline_low_quantile_label",
+    "baseline_zero_aware_label",
+    "baseline_operational_label"
+  ],
   "categorical_source_features": [
     "zone",
     "hour",
-    "operating_period"
+    "day_type",
+    "operating_period",
+    "ac_state"
   ],
   "encoded_categorical_features": [
     "categorical__zone_1",
@@ -36,12 +74,17 @@
     "categorical__hour_21",
     "categorical__hour_22",
     "categorical__hour_23",
+    "categorical__day_type_Weekday",
+    "categorical__day_type_Weekend",
     "categorical__operating_period_core_work",
     "categorical__operating_period_evening_off",
     "categorical__operating_period_night_off",
     "categorical__operating_period_ramp_down",
     "categorical__operating_period_ramp_up",
-    "categorical__operating_period_weekend"
+    "categorical__operating_period_weekend",
+    "categorical__ac_state_OFF",
+    "categorical__ac_state_ON_stable",
+    "categorical__ac_state_Transition"
   ],
   "identifier_columns": [
     "timestamp",
@@ -86,12 +129,17 @@
     "categorical__hour_21",
     "categorical__hour_22",
     "categorical__hour_23",
+    "categorical__day_type_Weekday",
+    "categorical__day_type_Weekend",
     "categorical__operating_period_core_work",
     "categorical__operating_period_evening_off",
     "categorical__operating_period_night_off",
     "categorical__operating_period_ramp_down",
     "categorical__operating_period_ramp_up",
-    "categorical__operating_period_weekend"
+    "categorical__operating_period_weekend",
+    "categorical__ac_state_OFF",
+    "categorical__ac_state_ON_stable",
+    "categorical__ac_state_Transition"
   ],
   "numerical_source_features": [
     "total_AC_power_kw_rolling_mean_15min",
@@ -112,6 +160,9 @@
     "is_weekend",
     "is_work_hour",
     "operating_period",
+    "ac_state",
+    "transition_type",
+    "ac_off_threshold_kw",
     "total_AC_power_kw",
     "light_power_kw",
     "plug_power_kw",

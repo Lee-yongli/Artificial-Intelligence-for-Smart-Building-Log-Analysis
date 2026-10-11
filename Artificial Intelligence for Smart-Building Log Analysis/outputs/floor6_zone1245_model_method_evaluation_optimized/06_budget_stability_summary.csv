@@ -1,0 +1,4 @@
+method_key,method_name,method_family,mean_quantitative_rank,best_quantitative_rank,worst_quantitative_rank,mean_quantitative_score,quantitative_rank_1_count,mean_practical_rank,best_practical_rank,worst_practical_rank,mean_practical_score,practical_rank_1_count,budgets_tested
+v3_budgeted,V3 budgeted baseline,statistical_profile,1.0,1,1,0.9337366478384607,3,1.0,1,1,0.9925,3,3
+optimized_if,Optimized Isolation Forest,unsupervised_ml,2.0,2,2,0.8901811858946608,0,2.0,2,2,0.9041666302369787,0,3
+lof,LOF,unsupervised_ml,3.0,3,3,0.730817599507084,0,3.0,3,3,0.6737766458482115,0,3

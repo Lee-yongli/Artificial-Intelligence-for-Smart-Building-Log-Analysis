@@ -1,7 +1,7 @@
 operating_period,anomaly_points
-core_work,31935
-night_off,6792
-ramp_down,5045
-evening_off,3322
-weekend,3269
-ramp_up,1635
+core_work,44272
+ramp_down,8191
+night_off,6799
+weekend,3725
+evening_off,3315
+ramp_up,3292

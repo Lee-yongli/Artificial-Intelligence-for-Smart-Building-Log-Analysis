@@ -1,0 +1,10 @@
+budget_pct,left_key,right_key,left_label_col,right_label_col,overlap_count,union_count,jaccard_overlap
+3.0,v3_budgeted,lof,v3_budget_label_c030,lof_budget_label_c030,458,21315,0.021487215575885527
+3.0,v3_budgeted,optimized_if,v3_budget_label_c030,if_budget_label_c030,1740,20034,0.0868523510032944
+3.0,lof,optimized_if,lof_budget_label_c030,if_budget_label_c030,561,21212,0.026447293984537053
+5.0,v3_budgeted,lof,v3_budget_label_c050,lof_budget_label_c050,1183,35105,0.03369890329012961
+5.0,v3_budgeted,optimized_if,v3_budget_label_c050,if_budget_label_c050,3458,32830,0.10533049040511727
+5.0,lof,optimized_if,lof_budget_label_c050,if_budget_label_c050,1253,35035,0.03576423576423576
+9.0,v3_budgeted,lof,v3_budget_label_c090,lof_budget_label_c090,4855,60464,0.08029571315162741
+9.0,v3_budgeted,optimized_if,v3_budget_label_c090,if_budget_label_c090,9193,56127,0.16378926363425803
+9.0,lof,optimized_if,lof_budget_label_c090,if_budget_label_c090,3609,61710,0.05848322800194458

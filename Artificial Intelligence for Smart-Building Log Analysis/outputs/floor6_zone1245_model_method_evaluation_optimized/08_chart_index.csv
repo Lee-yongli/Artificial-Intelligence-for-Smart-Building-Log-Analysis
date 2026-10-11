@@ -1,0 +1,4 @@
+chart,path,use
+Quantitative proxy score,outputs\floor6_zone1245_model_method_evaluation_optimized\charts\01_quantitative_proxy_score.svg,Compare methods under fair budget-controlled proxy metrics.
+Practical selection score,outputs\floor6_zone1245_model_method_evaluation_optimized\charts\02_practical_selection_score.svg,Support the final project-model decision with interpretability and output readiness included.
+Persistent anomaly share,outputs\floor6_zone1245_model_method_evaluation_optimized\charts\03_persistent_event_share.svg,Show whether point anomalies form sustained operational events.

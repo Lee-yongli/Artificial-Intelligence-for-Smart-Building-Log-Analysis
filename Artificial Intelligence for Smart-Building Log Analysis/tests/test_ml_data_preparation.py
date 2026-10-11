@@ -26,6 +26,13 @@ def load_notebook_definitions():
 
 NOTEBOOK_DEFINITIONS = load_notebook_definitions()
 BASELINE_LABEL_COLUMN = NOTEBOOK_DEFINITIONS["BASELINE_LABEL_COLUMN"]
+BASELINE_COUNT_COLUMN = NOTEBOOK_DEFINITIONS["BASELINE_COUNT_COLUMN"]
+BASELINE_METHOD_COLUMN = NOTEBOOK_DEFINITIONS["BASELINE_METHOD_COLUMN"]
+BASELINE_VARIABLE_COLUMN = NOTEBOOK_DEFINITIONS["BASELINE_VARIABLE_COLUMN"]
+BASELINE_DIRECTION_COLUMN = NOTEBOOK_DEFINITIONS["BASELINE_DIRECTION_COLUMN"]
+BASELINE_METHOD_COUNT_COLUMNS = NOTEBOOK_DEFINITIONS["BASELINE_METHOD_COUNT_COLUMNS"]
+BASELINE_METHOD_LABEL_COLUMNS = NOTEBOOK_DEFINITIONS["BASELINE_METHOD_LABEL_COLUMNS"]
+BASELINE_REFERENCE_COLUMNS = NOTEBOOK_DEFINITIONS["BASELINE_REFERENCE_COLUMNS"]
 IDENTIFIER_COLUMNS = NOTEBOOK_DEFINITIONS["IDENTIFIER_COLUMNS"]
 NUMERICAL_FEATURE_COLUMNS = NOTEBOOK_DEFINITIONS["NUMERICAL_FEATURE_COLUMNS"]
 RAW_MEASUREMENT_COLUMNS = NOTEBOOK_DEFINITIONS["RAW_MEASUREMENT_COLUMNS"]
@@ -79,6 +86,18 @@ class MLDataPreparationTest(unittest.TestCase):
                 "day_type": np.where(timestamps.dayofweek >= 5, "Weekend", "Weekday"),
                 "is_work_hour": (timestamps.dayofweek < 5) & (hours >= 8) & (hours <= 17),
                 "minute_of_day": hours * 60 + timestamps.minute,
+                "ac_state": ["OFF", "Transition", "ON_stable", "ON_stable", "ON_stable", "OFF", "OFF", "OFF"],
+                "transition_type": [
+                    "steady_off",
+                    "off_to_on",
+                    "stable_on",
+                    "stable_on",
+                    "stable_on",
+                    "on_to_off",
+                    "steady_off",
+                    "steady_off",
+                ],
+                "ac_off_threshold_kw": 0.1,
             }
         )
         for index, column in enumerate(RAW_MEASUREMENT_COLUMNS, start=1):
@@ -109,6 +128,20 @@ class MLDataPreparationTest(unittest.TestCase):
                         "zone": row["zone"],
                         "variable": variable,
                         "is_anomaly": source_index == 2 and variable_index in {0, 1},
+                        "anomaly_method": (
+                            "high_quantile_threshold"
+                            if source_index == 2 and variable_index == 0
+                            else "low_quantile_threshold"
+                            if source_index == 2 and variable_index == 1
+                            else "none"
+                        ),
+                        "anomaly_direction": (
+                            "high"
+                            if source_index == 2 and variable_index == 0
+                            else "low"
+                            if source_index == 2 and variable_index == 1
+                            else "none"
+                        ),
                     }
                 )
         return pd.DataFrame(rows)
@@ -133,18 +166,32 @@ class MLDataPreparationTest(unittest.TestCase):
         self.assertNotIn(BASELINE_LABEL_COLUMN, model_features)
         self.assertFalse(set(IDENTIFIER_COLUMNS).intersection(model_features))
         self.assertEqual(int(output[BASELINE_LABEL_COLUMN].sum()), 1)
-        self.assertEqual(int(output.loc[2, "baseline_anomaly_count"]), 2)
+        self.assertEqual(int(output.loc[2, BASELINE_COUNT_COLUMN]), 2)
+        self.assertEqual(output.loc[2, BASELINE_METHOD_COLUMN], "high_quantile_threshold,low_quantile_threshold")
+        self.assertEqual(output.loc[2, BASELINE_VARIABLE_COLUMN], "light_power_kw,total_AC_power_kw")
+        self.assertEqual(output.loc[2, BASELINE_DIRECTION_COLUMN], "high,low")
+        self.assertEqual(int(output.loc[2, BASELINE_METHOD_COUNT_COLUMNS["high_quantile_threshold"]]), 1)
+        self.assertEqual(int(output.loc[2, BASELINE_METHOD_COUNT_COLUMNS["low_quantile_threshold"]]), 1)
+        self.assertEqual(int(output.loc[2, BASELINE_METHOD_COUNT_COLUMNS["robust_z_score"]]), 0)
+        self.assertEqual(int(output.loc[2, BASELINE_METHOD_LABEL_COLUMNS["high_quantile_threshold"]]), 1)
+        self.assertEqual(int(output.loc[2, BASELINE_METHOD_LABEL_COLUMNS["low_quantile_threshold"]]), 1)
+        self.assertEqual(int(output.loc[2, BASELINE_METHOD_LABEL_COLUMNS["robust_z_score"]]), 0)
+        self.assertEqual(output.loc[0, BASELINE_METHOD_COLUMN], "none")
         self.assertFalse(output[model_features].isna().any().any())
         self.assertTrue(np.isfinite(output[model_features].to_numpy()).all())
+        self.assertFalse(set(BASELINE_REFERENCE_COLUMNS).intersection(model_features))
         self.assertTrue(any(name.startswith("categorical__zone_") for name in model_features))
         self.assertTrue(any(name.startswith("categorical__hour_") for name in model_features))
+        self.assertTrue(any(name.startswith("categorical__day_type_") for name in model_features))
         self.assertTrue(any(name.startswith("categorical__operating_period_") for name in model_features))
+        self.assertTrue(any(name.startswith("categorical__ac_state_") for name in model_features))
 
         scaled_features = feature_list["scaled_numerical_features"]
         np.testing.assert_allclose(output[scaled_features].mean().to_numpy(), 0, atol=1e-6)
         self.assertEqual(len(scaled_features), len(NUMERICAL_FEATURE_COLUMNS))
         self.assertEqual(summary["feature_nan_count"], 0)
         self.assertEqual(summary["feature_infinite_count"], 0)
+        self.assertIn(BASELINE_METHOD_LABEL_COLUMNS["high_quantile_threshold"], summary["baseline_method_positive_counts"])
         self.assertEqual(summary["ml_ready_nan_count"], 0)
         self.assertEqual(summary["ml_ready_infinite_count"], 0)
         self.assertEqual(summary["duplicate_rows"], 0)

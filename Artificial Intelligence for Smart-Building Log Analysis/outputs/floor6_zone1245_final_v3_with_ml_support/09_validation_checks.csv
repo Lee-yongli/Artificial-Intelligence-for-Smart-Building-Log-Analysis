@@ -1,0 +1,6 @@
+check,passed,evidence
+v3_events_preserved,True,events=475
+all_final_events_are_v3,True,final_anomaly_label=1 for every event
+row_labels_available,True,rows=362880
+lof_alignment,True,agreement=1.000000
+chart_files_created,True,2 SVG charts

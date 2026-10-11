@@ -1,0 +1,7 @@
+point_evidence_level,rows,zones,row_pct
+normal,290072,4,79.93606701940035
+v3_point_only,37773,4,10.40922619047619
+ml_candidate_only_not_final,26149,4,7.20596340388007
+v3_point_with_if_support,6012,4,1.6567460317460319
+v3_point_with_lof_support,2649,4,0.7299933862433863
+v3_point_with_if_and_lof_support,225,4,0.062003968253968256

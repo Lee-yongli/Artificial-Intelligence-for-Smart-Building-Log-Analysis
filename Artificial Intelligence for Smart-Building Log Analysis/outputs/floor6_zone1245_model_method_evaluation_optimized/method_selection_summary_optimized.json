@@ -1,0 +1,31 @@
+{
+  "overall_practical_selected_method": "V3 budgeted baseline",
+  "overall_practical_selected_key": "v3_budgeted",
+  "overall_practical_mean_rank": 1.0,
+  "overall_quantitative_proxy_selected_method": "V3 budgeted baseline",
+  "overall_quantitative_proxy_selected_key": "v3_budgeted",
+  "overall_quantitative_proxy_mean_rank": 1.0,
+  "primary_unsupervised_ml_method": "Optimized Isolation Forest",
+  "primary_unsupervised_ml_key": "optimized_if",
+  "primary_unsupervised_ml_mean_practical_rank": 2.0,
+  "budgets_tested_pct": [
+    3.0,
+    5.0,
+    9.0
+  ],
+  "quantitative_weights": {
+    "budget_adherence_score": 0.2,
+    "persistence_score": 0.25,
+    "consensus_score": 0.25,
+    "period_coverage_score": 0.15,
+    "zone_coverage_score": 0.15
+  },
+  "practical_weights": {
+    "quantitative_proxy_score_normalized": 0.5,
+    "context_score": 0.2,
+    "explainability_score": 0.15,
+    "output_readiness_score": 0.15
+  },
+  "selection_basis": "Budget-controlled proxy evaluation using 3%, 5%, and 9% anomaly budgets. V3 full-baseline overlap is reported as a reference-only diagnostic and is not scored in the quantitative proxy ranking. No human-confirmed fault label is available, so this is not an accuracy/F1 evaluation.",
+  "recommended_use": "Use the selected unsupervised ML method for candidate detection. Use the V3 baseline as the main explanatory and diagnostic reference, especially for variable-level causes and operating-state context."
+}

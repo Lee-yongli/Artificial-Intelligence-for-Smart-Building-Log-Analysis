@@ -1,0 +1,13 @@
+file,width,height,bytes,gray_min,gray_max,gray_std,looks_blank
+01_anomaly_events_by_variable.png,1420,747,63880,0,255,67.8141,False
+02_anomaly_events_by_zone.png,1100,697,30043,0,255,70.6823,False
+03_anomaly_points_by_operating_period.png,1420,747,53137,0,255,47.5211,False
+04_anomaly_heatmap_variable_hour.png,1923,746,61145,0,255,112.606,False
+05_anomaly_heatmap_variable_operating_period.png,1600,891,112172,0,255,49.1918,False
+06_anomaly_heatmap_zone_operating_period.png,1562,715,90997,0,255,64.8132,False
+07_anomaly_events_by_severity.png,1100,697,33633,0,255,66.9092,False
+event_001_zone1_light_power_kw.png,2061,746,69208,0,255,31.8557,False
+event_002_zone1_light_power_kw.png,2061,746,88669,0,255,33.2631,False
+event_003_zone5_temperature_c.png,2060,746,95179,0,255,33.1,False
+event_004_zone2_light_power_kw.png,2061,746,73336,0,255,31.8699,False
+event_005_zone5_temperature_c.png,2060,746,89887,0,255,32.3904,False

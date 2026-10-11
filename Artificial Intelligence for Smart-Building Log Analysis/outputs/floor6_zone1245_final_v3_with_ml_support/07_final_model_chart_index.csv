@@ -1,0 +1,3 @@
+chart,path,use
+Final event evidence levels,outputs\floor6_zone1245_final_v3_with_ml_support\charts\01_final_event_evidence_levels.svg,Shows how many final V3 events are supported by IF and/or LOF.
+Final event evidence by variable,outputs\floor6_zone1245_final_v3_with_ml_support\charts\02_final_event_evidence_by_variable.svg,Shows which sensor variables drive final V3 events and their ML support level.

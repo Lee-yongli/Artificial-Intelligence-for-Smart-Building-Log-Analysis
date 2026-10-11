@@ -1,0 +1,6 @@
+baseline_method,baseline_rows,lof_overlap_rows,lof_overlap_share
+high_quantile_threshold,4983,460,0.025352733686067018
+low_quantile_threshold,28929,1605,0.08845899470899471
+operational_schedule_mismatch,456,0,0.0
+robust_z_score,20011,870,0.04794973544973545
+zero_aware_threshold,46,0,0.0

@@ -1,3 +1,8 @@
 comparison,if_anomaly_count,comparison_anomaly_count,overlap_count,union_count,jaccard_overlap,note
-lof_k100_c050,54419,18143,4633,67929,0.06820356548749429,LOF uses its existing fixed contamination 0.05 label
-statistical_baseline_v3,54419,32777,13967,73229,0.19073044831965477,"Statistical baseline is a reference, not ground truth"
+lof_k100_c050,18144,18144,1253,35035,0.03576423576423576,LOF uses its existing fixed contamination 0.05 label
+statistical_baseline_v3,18144,46659,6237,58566,0.10649523614383773,"Statistical baseline is a reference, not ground truth"
+statistical_baseline_v3_robust_z_score,18144,20011,5386,32769,0.16436265983093779,"Method-specific statistical baseline reference, not ground truth"
+statistical_baseline_v3_high_quantile,18144,4983,97,23030,0.004211897524967434,"Method-specific statistical baseline reference, not ground truth"
+statistical_baseline_v3_low_quantile,18144,28929,4950,42123,0.11751299764974005,"Method-specific statistical baseline reference, not ground truth"
+statistical_baseline_v3_zero_aware,18144,46,7,18183,0.0003849749766265193,"Method-specific statistical baseline reference, not ground truth"
+statistical_baseline_v3_operational,18144,456,456,18144,0.02513227513227513,"Method-specific statistical baseline reference, not ground truth"
