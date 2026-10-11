@@ -21,3 +21,6 @@ __pycache__/
 .env
 .venv/
 venv/
+
+# Week 7 prediction-ready datasets are reproducible and too large for Git.
+Artificial Intelligence for Smart-Building Log Analysis/outputs/week7_prediction_ready_dataset/data/

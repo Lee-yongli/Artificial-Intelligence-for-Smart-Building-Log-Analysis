@@ -1,0 +1,73 @@
+{
+  "forecast_horizon_minutes": 15,
+  "causal_forward_fill_limit": 15,
+  "lag_minutes": [
+    1,
+    5,
+    15,
+    30,
+    60,
+    1440
+  ],
+  "rolling_mean_minutes": [
+    15,
+    30,
+    60
+  ],
+  "rolling_std_minutes": [
+    15,
+    60
+  ],
+  "numeric_features": [
+    "total_AC_power_kw",
+    "light_power_kw",
+    "plug_power_kw",
+    "temperature_c",
+    "humidity_pct",
+    "lux",
+    "total_AC_power_kw_was_missing",
+    "light_power_kw_was_missing",
+    "plug_power_kw_was_missing",
+    "temperature_c_was_missing",
+    "humidity_pct_was_missing",
+    "lux_was_missing",
+    "total_AC_power_kw_lag_1",
+    "total_AC_power_kw_lag_5",
+    "total_AC_power_kw_lag_15",
+    "total_AC_power_kw_lag_30",
+    "total_AC_power_kw_lag_60",
+    "total_AC_power_kw_lag_1440",
+    "total_AC_power_kw_rolling_mean_15",
+    "total_AC_power_kw_rolling_mean_30",
+    "total_AC_power_kw_rolling_mean_60",
+    "total_AC_power_kw_rolling_std_15",
+    "total_AC_power_kw_rolling_std_60",
+    "hour",
+    "day_of_week",
+    "is_weekend",
+    "hour_sin",
+    "hour_cos"
+  ],
+  "categorical_features": [
+    "zone_category"
+  ],
+  "target": "target_total_AC_power_kw_t_plus_15",
+  "splits": [
+    {
+      "name": "train",
+      "prediction_start": "2018-07-01",
+      "target_end_exclusive": "2018-08-14"
+    },
+    {
+      "name": "validation",
+      "prediction_start": "2018-08-14",
+      "target_end_exclusive": "2018-08-24"
+    },
+    {
+      "name": "test",
+      "prediction_start": "2018-08-24",
+      "target_end_exclusive": "2018-09-02"
+    }
+  ],
+  "model_training_performed": false
+}
