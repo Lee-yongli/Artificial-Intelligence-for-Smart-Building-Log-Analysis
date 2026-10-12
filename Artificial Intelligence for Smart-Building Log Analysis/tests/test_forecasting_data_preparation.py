@@ -52,11 +52,13 @@ class ForecastingDataPreparationTest(unittest.TestCase):
         self.assertTrue(first_by_zone["total_AC_power_kw_lag_1"].isna().all())
         zone_one = featured.loc[featured["zone"].eq(1)].reset_index(drop=True)
         zone_two = featured.loc[featured["zone"].eq(2)].reset_index(drop=True)
-        self.assertEqual(zone_one.loc[0, TARGET_COLUMN], 15.0)
-        self.assertEqual(zone_two.loc[0, TARGET_COLUMN], 1015.0)
-        self.assertFalse(audit["target_is_interval_average"])
+        self.assertEqual(zone_one.loc[0, TARGET_COLUMN], np.mean(np.arange(1, 16)))
+        self.assertEqual(zone_two.loc[0, TARGET_COLUMN], 1000.0 + np.mean(np.arange(1, 16)))
+        self.assertTrue(audit["target_is_interval_average"])
+        self.assertEqual(audit["target_window_start_offset_minutes"], 1)
+        self.assertEqual(audit["target_window_end_offset_minutes"], 15)
 
-    def test_originally_missing_target_is_not_ground_truth(self) -> None:
+    def test_originally_missing_target_window_value_is_not_ground_truth(self) -> None:
         frame = self._frame("2018-07-01")
         target_row = frame.index[
             frame["zone"].eq(1)

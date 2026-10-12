@@ -2,7 +2,7 @@
 
 The workflow uses the final cleaned dataset produced by
 ``Data_pre/Floor6_Zone1245_Data_Preparation_EDA_executed.ipynb``. It creates
-strictly causal features, defines a same-zone 15-minute-ahead point target,
+strictly causal features, defines a same-zone future 15-minute average target,
 performs purged chronological splits, fits median imputation on training data
 only, and exports prediction-ready datasets plus a leakage audit.
 
@@ -45,7 +45,7 @@ ROLLING_MEAN_MINUTES = [15, 30, 60]
 ROLLING_STD_MINUTES = [15, 60]
 FORECAST_HORIZON_MINUTES = 15
 CAUSAL_FORWARD_FILL_LIMIT = 15
-TARGET_COLUMN = "target_total_AC_power_kw_t_plus_15"
+TARGET_COLUMN = "target_total_AC_power_kw_next_15min_mean"
 TARGET_TIMESTAMP_COLUMN = "target_timestamp"
 FORBIDDEN_FEATURE_COLUMNS = {
     "baseline_anomaly_label",
@@ -171,7 +171,9 @@ def build_causal_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, 
         data.loc[data[flag], column] = np.nan
 
     zone_ac = data.groupby("zone", sort=False)["total_AC_power_kw"]
-    data[TARGET_COLUMN] = zone_ac.shift(-FORECAST_HORIZON_MINUTES)
+    future_values = [zone_ac.shift(-offset) for offset in range(1, FORECAST_HORIZON_MINUTES + 1)]
+    future_window = pd.concat(future_values, axis=1)
+    data[TARGET_COLUMN] = future_window.mean(axis=1, skipna=False)
     data[TARGET_TIMESTAMP_COLUMN] = data.groupby("zone", sort=False)["timestamp"].shift(
         -FORECAST_HORIZON_MINUTES
     )
@@ -220,9 +222,11 @@ def build_causal_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, 
     audit = {
         "forecast_horizon_minutes": FORECAST_HORIZON_MINUTES,
         "target_definition": (
-            "same-zone total_AC_power_kw exactly 15 minutes after prediction timestamp"
+            "same-zone mean total_AC_power_kw from t+1 to t+15 after prediction timestamp"
         ),
-        "target_is_interval_average": False,
+        "target_is_interval_average": True,
+        "target_window_start_offset_minutes": 1,
+        "target_window_end_offset_minutes": FORECAST_HORIZON_MINUTES,
         "causal_forward_fill_limit_minutes": CAUSAL_FORWARD_FILL_LIMIT,
         "invalid_or_unavailable_target_rows": int(data[TARGET_COLUMN].isna().sum()),
         "non_exact_horizon_rows": int((~exact_horizon).sum()),
@@ -321,7 +325,7 @@ def validate_prediction_ready(
         "categorical_feature_count": len(categorical),
         "forbidden_feature_columns_present": False,
         "anomaly_reference_columns_present": False,
-        "all_targets_exactly_15_minutes_ahead": True,
+        "all_target_window_end_timestamps_exactly_15_minutes_ahead": True,
         "all_splits_sorted_within_zone": True,
         "duplicate_output_keys": 0,
         "missing_output_feature_values": 0,
@@ -330,7 +334,7 @@ def validate_prediction_ready(
     for name, split in splits.items():
         horizon = split[TARGET_TIMESTAMP_COLUMN] - split["timestamp"]
         if not horizon.eq(pd.Timedelta(minutes=FORECAST_HORIZON_MINUTES)).all():
-            raise AssertionError(f"{name} contains a target that is not exactly 15 minutes ahead")
+            raise AssertionError(f"{name} contains a target window end that is not exactly 15 minutes ahead")
         if not all(group["timestamp"].is_monotonic_increasing for _, group in split.groupby("zone")):
             raise AssertionError(f"{name} is not chronological within each zone")
         duplicates = int(split.duplicated(KEY_COLUMNS).sum())
@@ -423,22 +427,22 @@ def _write_leakage_report(
 
 - Source: `{source_quality['source_file']}`, the final main dataset written by `{source_quality['source_notebook']}`.
 - Source rows: {source_quality['rows']:,}; zones: {source_quality['zone_values']}; coverage: {source_quality['min_timestamp']} to {source_quality['max_timestamp']}.
-- Target: same-zone `total_AC_power_kw` exactly {FORECAST_HORIZON_MINUTES} minutes after the prediction timestamp.
-- The target is a point forecast, not the mean over the next 15-minute interval.
+- Target: same-zone mean `total_AC_power_kw` from t+1 to t+{FORECAST_HORIZON_MINUTES} after the prediction timestamp.
+- The target is an interval-average forecast over the next 15 minutes, not a single future-minute point value.
 - Logical feature count: {validation_audit['feature_count']}.
 
 ## Chronological splits
 
 {split_lines}
 
-Both prediction and target timestamps must be inside the same split. The final 15 prediction minutes before each split boundary are therefore purged.
+Both prediction timestamps and target-window end timestamps must be inside the same split. The final 15 prediction minutes before each split boundary are therefore purged.
 
 ## Leakage controls
 
 | Check | Result |
 | --- | --- |
 | Target and lags calculated within zone | PASS |
-| Every retained target exactly 15 minutes ahead | PASS |
+| Every retained target-window end exactly 15 minutes ahead | PASS |
 | Trailing, non-centred rolling windows | PASS |
 | Source bidirectional/global imputations masked using `_was_missing` flags | PASS |
 | Forward-fill causal, within zone, limited to {CAUSAL_FORWARD_FILL_LIMIT} minutes | PASS |
@@ -502,6 +506,10 @@ def run_preparation(
     numeric, categorical = feature_columns()
     config = {
         "forecast_horizon_minutes": FORECAST_HORIZON_MINUTES,
+        "target_definition": "same-zone mean total_AC_power_kw from t+1 to t+15 after prediction timestamp",
+        "target_is_interval_average": True,
+        "target_window_start_offset_minutes": 1,
+        "target_window_end_offset_minutes": FORECAST_HORIZON_MINUTES,
         "causal_forward_fill_limit": CAUSAL_FORWARD_FILL_LIMIT,
         "lag_minutes": LAG_MINUTES,
         "rolling_mean_minutes": ROLLING_MEAN_MINUTES,
