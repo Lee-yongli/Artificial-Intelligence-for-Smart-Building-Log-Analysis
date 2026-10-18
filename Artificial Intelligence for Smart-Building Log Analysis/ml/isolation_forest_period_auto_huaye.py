@@ -370,7 +370,7 @@ def build_if_events(results: pd.DataFrame) -> pd.DataFrame:
     events["required_duration_minutes"] = IF_EVENT_MIN_DURATION_MINUTES
     events["max_gap_minutes"] = IF_EVENT_MAX_GAP_MINUTES
     events["baseline_overlap_pct"] = (
-        100 * events["baseline_overlap_points"] / events["anomaly_points"].replace(0, np.nan)
+        100.0 * events["baseline_overlap_points"] / events["anomaly_points"].replace(0, np.nan)
     ).fillna(0)
     events = events.sort_values(
         ["max_anomaly_score", "duration_minutes", "anomaly_points"],
@@ -416,8 +416,15 @@ def build_summaries(results: pd.DataFrame) -> dict[str, pd.DataFrame]:
         .reindex(PERIOD_ORDER)
         .reset_index()
     )
-    period_summary["anomaly_rate_pct"] = 100 * period_summary["anomaly_count"] / period_summary["rows"]
-    period_summary["auto_anomaly_rate_pct"] = 100 * period_summary["auto_anomaly_count"] / period_summary["rows"]
+    count_columns = [
+        "rows", "anomaly_count", "auto_anomaly_count", "lof_anomaly_count",
+        "baseline_anomaly_count", "lof_overlap", "baseline_overlap", *method_period_aggs,
+    ]
+    # pandas can retain int8 when all grouped counts fit in it; multiplying such
+    # counts by 100 overflows even when the percentage itself is valid.
+    period_summary[count_columns] = period_summary[count_columns].astype(np.int64)
+    period_summary["anomaly_rate_pct"] = 100.0 * period_summary["anomaly_count"] / period_summary["rows"]
+    period_summary["auto_anomaly_rate_pct"] = 100.0 * period_summary["auto_anomaly_count"] / period_summary["rows"]
     if events.empty:
         period_summary["if_event_count"] = 0
     else:
@@ -502,14 +509,16 @@ def build_summaries(results: pd.DataFrame) -> dict[str, pd.DataFrame]:
         .agg(rows=("period_if_anomaly_label", "size"), anomaly_count=("period_if_anomaly_label", "sum"))
         .reset_index()
     )
-    zone_summary["anomaly_rate_pct"] = 100 * zone_summary["anomaly_count"] / zone_summary["rows"]
+    zone_summary["anomaly_count"] = zone_summary["anomaly_count"].astype(np.int64)
+    zone_summary["anomaly_rate_pct"] = 100.0 * zone_summary["anomaly_count"] / zone_summary["rows"]
 
     hour_summary = (
         results.groupby("hour", observed=True)
         .agg(rows=("period_if_anomaly_label", "size"), anomaly_count=("period_if_anomaly_label", "sum"))
         .reset_index()
     )
-    hour_summary["anomaly_rate_pct"] = 100 * hour_summary["anomaly_count"] / hour_summary["rows"]
+    hour_summary["anomaly_count"] = hour_summary["anomaly_count"].astype(np.int64)
+    hour_summary["anomaly_rate_pct"] = 100.0 * hour_summary["anomaly_count"] / hour_summary["rows"]
 
     comparisons: list[dict[str, Any]] = []
     for name, column, note in [
@@ -558,10 +567,29 @@ def validate_results(
     results: pd.DataFrame,
     summaries: dict[str, pd.DataFrame],
     models: dict[str, IsolationForest],
+    *,
+    expected_row_count: int = 362_880,
 ) -> list[dict[str, Any]]:
+    """Validate production results or a caller-specified synthetic dataset size.
+
+    Calibration selects ceil(period_rows * rate), with at least one row. Compare
+    exact counts so rounding on small datasets is checked without weakening the
+    default production row-count requirement.
+    """
+    period_rows = results.groupby("operating_period", observed=True).size().reindex(PERIOD_ORDER, fill_value=0)
+    selected_counts = (
+        results.groupby("operating_period", observed=True)["period_if_anomaly_label"]
+        .sum()
+        .reindex(PERIOD_ORDER, fill_value=0)
+    )
+    expected_counts = np.maximum(1, np.ceil(period_rows * IF_CALIBRATED_ANOMALY_RATE)).astype(int)
+    summary_counts = (
+        summaries["period_summary"].set_index("operating_period")["anomaly_count"]
+        .reindex(PERIOD_ORDER)
+    )
     checks: list[tuple[str, bool, str]] = [
         ("row_count_preserved", len(results) == len(source), f"rows={len(results):,}"),
-        ("expected_row_count", len(results) == 362_880, f"rows={len(results):,}"),
+        ("expected_row_count", len(results) == expected_row_count, f"rows={len(results):,}; expected={expected_row_count:,}"),
         ("unique_row_key", not results.duplicated(KEY_COLUMNS).any(), "timestamp + floor + zone"),
         ("six_period_models", set(models) == set(PERIOD_ORDER), f"models={sorted(models)}"),
         ("six_physical_features", len(MODEL_FEATURES) == 6, f"features={MODEL_FEATURES}"),
@@ -576,12 +604,9 @@ def validate_results(
         ),
         (
             "calibrated_period_rate",
-            np.allclose(
-                summaries["period_summary"]["anomaly_rate_pct"].to_numpy(dtype=float),
-                100 * IF_CALIBRATED_ANOMALY_RATE,
-                atol=0.01,
-            ),
-            str(summaries["period_summary"].set_index("operating_period")["anomaly_rate_pct"].round(6).to_dict()),
+            np.array_equal(selected_counts.to_numpy(), expected_counts.to_numpy())
+            and np.array_equal(summary_counts.to_numpy(), expected_counts.to_numpy()),
+            f"selected={selected_counts.to_dict()}; expected={expected_counts.to_dict()}",
         ),
         (
             "reference_labels_excluded",

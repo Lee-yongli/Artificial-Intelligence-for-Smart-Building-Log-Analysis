@@ -1,12 +1,8 @@
-"""Prepare leakage-safe Week 7 forecasting datasets for Floor 6.
+"""
+定义同一区域未来 15 分钟平均 AC 功率作为预测目标，
+按时间顺序划分训练集、验证集和测试集，只使用训练集统计量进行中位数填补，
+并输出 prediction-ready 数据集
 
-The workflow uses the final cleaned dataset produced by
-``Data_pre/Floor6_Zone1245_Data_Preparation_EDA_executed.ipynb``. It creates
-strictly causal features, defines a same-zone future 15-minute average target,
-performs purged chronological splits, fits median imputation on training data
-only, and exports prediction-ready datasets plus a leakage audit.
-
-No forecasting model is trained by this module.
 """
 
 from __future__ import annotations
@@ -22,15 +18,23 @@ import numpy as np
 import pandas as pd
 
 
+# 项目根目录，用于构建默认输入和输出路径。
 PROJECT_DIR = Path(__file__).resolve().parents[1]
+
+# 输入数据：来自前面 EDA / cleaning 阶段生成的清洗后 Floor 6 数据。
 DEFAULT_INPUT = (
     PROJECT_DIR
     / "outputs/floor6_zone1245_2018_jul01_sep01_total_ac_eda"
     / "floor6_zone1245_cleaned_features_2018_jul01_sep01.csv.gz"
 )
+
+# 输出目录：保存 Week 7 预测任务的数据集、配置文件和检查报告。
 DEFAULT_OUTPUT = PROJECT_DIR / "outputs/week7_prediction_ready_dataset"
 
+# 每一行数据的身份字段。
 KEY_COLUMNS = ["timestamp", "floor", "zone"]
+
+# 主要能耗和环境变量。
 SENSOR_COLUMNS = [
     "total_AC_power_kw",
     "light_power_kw",
@@ -39,14 +43,24 @@ SENSOR_COLUMNS = [
     "humidity_pct",
     "lux",
 ]
+
+# 缺失值标记列，用来识别哪些传感器值在清洗阶段曾经被填补过。
 MISSING_FLAG_COLUMNS = [f"{column}_was_missing" for column in SENSOR_COLUMNS]
+
+# lag features：使用过去不同时间点的 AC 功率。
 LAG_MINUTES = [1, 5, 15, 30, 60, 1440]
+
+# rolling features：描述过去一段时间的平均水平和波动情况。
 ROLLING_MEAN_MINUTES = [15, 30, 60]
 ROLLING_STD_MINUTES = [15, 60]
+
+# 预测未来 15 分钟的平均 AC 功率。
 FORECAST_HORIZON_MINUTES = 15
 CAUSAL_FORWARD_FILL_LIMIT = 15
 TARGET_COLUMN = "target_total_AC_power_kw_next_15min_mean"
 TARGET_TIMESTAMP_COLUMN = "target_timestamp"
+
+# 这些列不允许进入预测特征，避免把异常检测结果或后验运行状态作为输入。
 FORBIDDEN_FEATURE_COLUMNS = {
     "baseline_anomaly_label",
     "baseline_anomaly_count",
@@ -63,6 +77,7 @@ class SplitDefinition:
     target_end_exclusive: str
 
 
+# 按时间顺序定义训练集、验证集和测试集，而不是随机划分。
 SPLITS = (
     SplitDefinition("train", "2018-07-01", "2018-08-14"),
     SplitDefinition("validation", "2018-08-14", "2018-08-24"),
@@ -71,7 +86,7 @@ SPLITS = (
 
 
 def _as_bool(series: pd.Series, column: str) -> pd.Series:
-    """Convert common boolean encodings while rejecting ambiguous values."""
+    """将常见布尔编码统一转换为 True/False，并拒绝含义不明确的值。"""
     if pd.api.types.is_bool_dtype(series):
         return series.fillna(False).astype(bool)
     if pd.api.types.is_numeric_dtype(series):
@@ -88,7 +103,10 @@ def _as_bool(series: pd.Series, column: str) -> pd.Series:
 
 
 def load_source(path: Path = DEFAULT_INPUT) -> tuple[pd.DataFrame, dict[str, Any]]:
-    """Load, validate, sort, and audit the EDA notebook's final dataset."""
+    """读取源数据，并进行基础质量检查和审计记录。
+
+    这里检查必须字段、时间戳、重复 key、缺失值标记和采样间隔。
+    """
     path = Path(path)
     if not path.exists():
         raise FileNotFoundError(f"Forecasting source dataset not found: {path}")
@@ -149,7 +167,7 @@ def load_source(path: Path = DEFAULT_INPUT) -> tuple[pd.DataFrame, dict[str, Any
 
 
 def feature_columns() -> tuple[list[str], list[str]]:
-    """Return logical numeric and categorical feature columns."""
+    """定义预测模型最终使用的数值特征和类别特征。"""
     numeric = (
         SENSOR_COLUMNS
         + MISSING_FLAG_COLUMNS
@@ -162,14 +180,20 @@ def feature_columns() -> tuple[list[str], list[str]]:
 
 
 def build_causal_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, Any]]:
-    """Create target and predictors using only information available at time t."""
+    """构建预测目标和因果特征。
+
+    因果特征表示模型输入只使用当前时间点和过去的信息，不使用未来信息。
+    """
     data = frame.copy()
 
-    # The EDA source used bidirectional interpolation and whole-period medians.
-    # Restore every flagged measurement to missing before target/feature creation.
+    # EDA 源数据曾经使用双向插值和全时段中位数。
+    # 为了避免未来信息进入特征，先把所有被标记为原本缺失的传感器值恢复为 NaN。
     for column, flag in zip(SENSOR_COLUMNS, MISSING_FLAG_COLUMNS):
         data.loc[data[flag], column] = np.nan
 
+    # 构建预测目标：
+    # 对同一个 zone，取当前时间之后 1 到 15 分钟的 total_AC_power_kw，
+    # 计算平均值作为未来 15 分钟平均 AC 功率。
     zone_ac = data.groupby("zone", sort=False)["total_AC_power_kw"]
     future_values = [zone_ac.shift(-offset) for offset in range(1, FORECAST_HORIZON_MINUTES + 1)]
     future_window = pd.concat(future_values, axis=1)
@@ -183,22 +207,27 @@ def build_causal_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, 
     exact_horizon = data[TARGET_TIMESTAMP_COLUMN].eq(expected_target_timestamp)
     data.loc[~exact_horizon, TARGET_COLUMN] = np.nan
 
-    # Forward-fill only short gaps and never across a zone boundary. Any
-    # remaining feature gaps are filled later with training-only medians.
+    # 只对短时间缺失做 forward fill，并且绝不跨越 zone 边界。
+    # 剩余缺失值后面只用训练集的中位数填补。
     for column in SENSOR_COLUMNS:
         data[column] = data.groupby("zone", sort=False)[column].ffill(
             limit=CAUSAL_FORWARD_FILL_LIMIT
         )
 
+    # 构建 lag features，表示过去不同时间点的 AC 功率。
     zone_ac = data.groupby("zone", sort=False)["total_AC_power_kw"]
     for minutes in LAG_MINUTES:
         data[f"total_AC_power_kw_lag_{minutes}"] = zone_ac.shift(minutes)
+
+    # 构建 rolling mean，表示最近一段时间的平均运行水平。
     for minutes in ROLLING_MEAN_MINUTES:
         data[f"total_AC_power_kw_rolling_mean_{minutes}"] = (
             zone_ac.rolling(window=minutes, min_periods=1)
             .mean()
             .reset_index(level=0, drop=True)
         )
+
+    # 构建 rolling standard deviation，表示最近一段时间 AC 功率是否稳定。
     for minutes in ROLLING_STD_MINUTES:
         data[f"total_AC_power_kw_rolling_std_{minutes}"] = (
             zone_ac.rolling(window=minutes, min_periods=2)
@@ -206,6 +235,7 @@ def build_causal_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, 
             .reset_index(level=0, drop=True)
         )
 
+    # 构建时间特征和周期编码，让模型理解一天内的循环规律。
     data["hour"] = data["timestamp"].dt.hour.astype("int8")
     data["day_of_week"] = data["timestamp"].dt.dayofweek.astype("int8")
     data["is_weekend"] = (data["day_of_week"] >= 5).astype("int8")
@@ -240,7 +270,11 @@ def build_causal_features(frame: pd.DataFrame) -> tuple[pd.DataFrame, dict[str, 
 
 
 def assign_splits(frame: pd.DataFrame) -> tuple[dict[str, pd.DataFrame], dict[str, Any]]:
-    """Create chronological splits based on both prediction and target time."""
+    """按时间顺序划分训练集、验证集和测试集。
+
+    prediction timestamp 和 target window 的结束时间都必须落在同一个 split 内，
+    这样可以避免训练集目标跨入验证集或测试集。
+    """
     supervised = frame.loc[
         frame[TARGET_COLUMN].notna() & frame[TARGET_TIMESTAMP_COLUMN].notna()
     ].copy()
@@ -277,7 +311,10 @@ def assign_splits(frame: pd.DataFrame) -> tuple[dict[str, pd.DataFrame], dict[st
 def fit_and_apply_training_imputation(
     splits: dict[str, pd.DataFrame],
 ) -> tuple[dict[str, pd.DataFrame], pd.DataFrame, dict[str, Any]]:
-    """Fit feature medians on training only and apply them to every split."""
+    """只在训练集上计算特征中位数，并应用到所有 split。
+
+    这样可以避免验证集或测试集的信息泄露到训练阶段。
+    """
     numeric, categorical = feature_columns()
     train_medians = splits["train"][numeric].median(numeric_only=True)
     unavailable = sorted(set(numeric).difference(train_medians.index))
@@ -311,7 +348,10 @@ def fit_and_apply_training_imputation(
 def validate_prediction_ready(
     splits: dict[str, pd.DataFrame],
 ) -> dict[str, Any]:
-    """Run runtime assertions for alignment, ordering, leakage, and completeness."""
+    """对最终 prediction-ready 数据集进行运行时检查。
+
+    检查内容包括时间对齐、排序、重复 key、缺失值和禁止特征。
+    """
     numeric, categorical = feature_columns()
     features = numeric + categorical
     forbidden_present = sorted(FORBIDDEN_FEATURE_COLUMNS.intersection(features))
@@ -358,7 +398,7 @@ def _sha256(path: Path) -> str:
 def save_prediction_ready(
     splits: dict[str, pd.DataFrame], data_dir: Path
 ) -> pd.DataFrame:
-    """Write compressed prediction-ready splits and return a file manifest."""
+    """保存压缩后的 train / validation / test 数据集，并返回文件清单。"""
     numeric, categorical = feature_columns()
     columns = (
         ["timestamp", TARGET_TIMESTAMP_COLUMN, "floor", "zone"]
@@ -470,7 +510,11 @@ def run_preparation(
     input_path: Path = DEFAULT_INPUT,
     output_dir: Path = DEFAULT_OUTPUT,
 ) -> dict[str, Any]:
-    """Run preparation, validation, and artifact export without model training."""
+    """运行完整数据准备流程，不进行模型训练。
+
+    流程包括读取源数据、构建目标和特征、时间顺序划分、训练集填补、
+    数据验证，以及导出数据集和审计报告。
+    """
     output_dir = Path(output_dir)
     data_dir = output_dir / "data"
     reports_dir = output_dir / "reports"

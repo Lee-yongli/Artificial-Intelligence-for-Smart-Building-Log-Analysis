@@ -100,3 +100,13 @@ Run the test suite with:
 ```bash
 python -m unittest discover "Artificial Intelligence for Smart-Building Log Analysis/tests"
 ```
+
+## Week 7 Forecasting — Gavin
+
+Lee's Week 7 preparation now builds prediction-ready train/validation/test datasets for `target_total_AC_power_kw_next_15min_mean`: the same-zone average `total_AC_power_kw` from t+1 through t+15. The lightweight configuration, manifest, training medians, and leakage audit are saved under `outputs/week7_prediction_ready_dataset/reports/`; the large reproducible split datasets remain under `outputs/week7_prediction_ready_dataset/data/` and are ignored by Git.
+
+Open [ML_Forecasting_Gavin.ipynb](<Artificial Intelligence for Smart-Building Log Analysis/ml/ML_Forecasting_Gavin.ipynb>) and run the cells in order. The notebook evaluates a persistence baseline, trains RandomForestRegressor candidates, selects by validation MAE, and reports MAE/RMSE/Bias for validation, test, and the 2018-09-06 actual table.
+
+Forecasting outputs are saved under `outputs/week7_forecasting_gavin_rf/`. The main comparison files are `data/validation_predictions.csv.gz`, `data/test_predictions.csv.gz`, and `data/sep6_2018_09_06_predictions.csv.gz`; each contains `actual_next15_mean_kW`, `persistence_kW`, `rf_kW`, and error columns. Reports include overall metrics plus error breakdowns by zone, hour, calendar operating period, and zone-period.
+
+The 2018-09-06 actual table is generated from `Raw data/2018Floor6.csv` with the same 34 columns as Lee's prediction-ready splits. It is stored under `outputs/week7_prediction_ready_dataset/data/` and uses the same future-15-minute average target.

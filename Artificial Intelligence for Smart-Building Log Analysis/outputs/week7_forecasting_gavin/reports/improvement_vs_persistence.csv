@@ -1,0 +1,3 @@
+split,MAE_kW_improvement_pct,RMSE_kW_improvement_pct
+validation,64.81813925117783,65.16604128983234
+test,63.09517392007917,63.62665747623382

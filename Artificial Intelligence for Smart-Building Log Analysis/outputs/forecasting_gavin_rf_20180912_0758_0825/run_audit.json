@@ -1,0 +1,55 @@
+{
+  "model_sha256": "99a3cd603b220fd81c5d2dd2310ed073164b233b59e8e399ba84e8045830407d",
+  "selected_model": "rf_2",
+  "target_start": "2018-09-12 07:58:00",
+  "target_end": "2018-09-12 08:25:00",
+  "origin_start": "2018-09-12 07:43:00",
+  "origin_end": "2018-09-12 08:10:00",
+  "history_start": "2018-09-11 06:43:00",
+  "raw_file": "D:\\IRP\\Artificial-Intelligence-for-Smart-Building-Log-Analysis\\Artificial Intelligence for Smart-Building Log Analysis\\Raw data\\2018Floor6.csv",
+  "AC_channels": {
+    "1": [
+      "z1_AC1(kW)"
+    ],
+    "2": [
+      "z2_AC1(kW)"
+    ],
+    "4": [
+      "z4_AC1(kW)",
+      "z4_AC2(kW)",
+      "z4_AC3(kW)",
+      "z4_AC4(kW)"
+    ],
+    "5": [
+      "z5_AC1(kW)"
+    ]
+  },
+  "duplicate_raw_times": 0,
+  "missing_raw_minutes": 0,
+  "channel_audit": [
+    {
+      "zone": 1,
+      "partial_channel_history_rows": 0,
+      "unavailable_target_rows": 0
+    },
+    {
+      "zone": 2,
+      "partial_channel_history_rows": 0,
+      "unavailable_target_rows": 0
+    },
+    {
+      "zone": 4,
+      "partial_channel_history_rows": 13,
+      "unavailable_target_rows": 0
+    },
+    {
+      "zone": 5,
+      "partial_channel_history_rows": 0,
+      "unavailable_target_rows": 0
+    }
+  ],
+  "training_median_filled_values": 0,
+  "causality_prefix_checks": 28,
+  "retrained": false,
+  "evaluated_rows": 112
+}

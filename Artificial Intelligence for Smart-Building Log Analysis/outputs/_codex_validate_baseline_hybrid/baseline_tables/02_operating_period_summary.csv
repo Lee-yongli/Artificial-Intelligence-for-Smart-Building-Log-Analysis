@@ -1,0 +1,7 @@
+day_type,operating_period,rows,min_hour,max_hour
+Weekday,night_off,75600,0,6
+Weekday,ramp_up,10800,7,7
+Weekday,core_work,97200,8,16
+Weekday,ramp_down,21600,17,18
+Weekday,evening_off,54000,19,23
+Weekend,weekend,103680,0,23

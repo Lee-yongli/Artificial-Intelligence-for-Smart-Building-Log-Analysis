@@ -1,5 +1,9 @@
 {
   "forecast_horizon_minutes": 15,
+  "target_definition": "same-zone mean total_AC_power_kw from t+1 to t+15 after prediction timestamp",
+  "target_is_interval_average": true,
+  "target_window_start_offset_minutes": 1,
+  "target_window_end_offset_minutes": 15,
   "causal_forward_fill_limit": 15,
   "lag_minutes": [
     1,
@@ -51,7 +55,7 @@
   "categorical_features": [
     "zone_category"
   ],
-  "target": "target_total_AC_power_kw_t_plus_15",
+  "target": "target_total_AC_power_kw_next_15min_mean",
   "splits": [
     {
       "name": "train",

@@ -21,21 +21,23 @@ source,originally_missing_temperature_c,16540
 source,originally_missing_humidity_pct,16540
 source,originally_missing_lux,16540
 feature_engineering,forecast_horizon_minutes,15
-feature_engineering,target_definition,same-zone total_AC_power_kw exactly 15 minutes after prediction timestamp
-feature_engineering,target_is_interval_average,False
+feature_engineering,target_definition,same-zone mean total_AC_power_kw from t+1 to t+15 after prediction timestamp
+feature_engineering,target_is_interval_average,True
+feature_engineering,target_window_start_offset_minutes,1
+feature_engineering,target_window_end_offset_minutes,15
 feature_engineering,causal_forward_fill_limit_minutes,15
-feature_engineering,invalid_or_unavailable_target_rows,1327
+feature_engineering,invalid_or_unavailable_target_rows,1383
 feature_engineering,non_exact_horizon_rows,60
 feature_engineering,source_rolling_columns_used,False
 feature_engineering,source_operating_state_columns_used,False
 feature_engineering,anomaly_reference_columns_used,False
 feature_engineering,lag_features_zone_specific,True
 feature_engineering,rolling_windows_centered,False
-feature_engineering,final_usable_rows_across_splits,361433
-feature_engineering,excluded_rows_total,1447
+feature_engineering,final_usable_rows_across_splits,361377
+feature_engineering,excluded_rows_total,1503
 imputation,imputer_fit_scope,training split only
 imputation,imputation_strategy,per-feature training median after limited causal forward-fill
-imputation,feature_missing_before_imputation,"{""test"": 1881, ""train"": 8657, ""validation"": 4703}"
+imputation,feature_missing_before_imputation,"{""test"": 1881, ""train"": 8657, ""validation"": 3807}"
 imputation,feature_missing_after_imputation,"{""test"": 0, ""train"": 0, ""validation"": 0}"
 imputation,scaling_applied,False
 validation,feature_count,29
@@ -43,7 +45,7 @@ validation,numeric_feature_count,28
 validation,categorical_feature_count,1
 validation,forbidden_feature_columns_present,False
 validation,anomaly_reference_columns_present,False
-validation,all_targets_exactly_15_minutes_ahead,True
+validation,all_target_window_end_timestamps_exactly_15_minutes_ahead,True
 validation,all_splits_sorted_within_zone,True
 validation,duplicate_output_keys,0
 validation,missing_output_feature_values,0
@@ -52,7 +54,7 @@ split_train,prediction_min,2018-07-01 00:00:00
 split_train,prediction_max,2018-08-13 23:44:00
 split_train,target_min,2018-07-01 00:15:00
 split_train,target_max,2018-08-13 23:59:00
-split_validation,rows,56273
+split_validation,rows,56217
 split_validation,prediction_min,2018-08-14 00:00:00
 split_validation,prediction_max,2018-08-23 23:44:00
 split_validation,target_min,2018-08-14 00:15:00
