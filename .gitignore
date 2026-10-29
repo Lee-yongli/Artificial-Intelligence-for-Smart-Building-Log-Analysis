@@ -2,9 +2,10 @@
 **/.DS_Store
 **/.ipynb_checkpoints/
 
-# Large or duplicated raw data files are not stored in Git.
+# Other raw or duplicated data remain local; the selected Floor 6 file is included.
 Date Resource/
-Artificial Intelligence for Smart-Building Log Analysis/Raw Data/
+Artificial Intelligence for Smart-Building Log Analysis/Raw [Dd]ata/*
+!Artificial Intelligence for Smart-Building Log Analysis/Raw data/2018Floor6.csv
 
 # Large generated datasets. Recreate these from the notebook.
 Artificial Intelligence for Smart-Building Log Analysis/outputs/*.csv.gz
@@ -22,5 +23,10 @@ __pycache__/
 .venv/
 venv/
 
-# Week 7 prediction-ready datasets are reproducible and too large for Git.
-Artificial Intelligence for Smart-Building Log Analysis/outputs/week7_prediction_ready_dataset/data/
+# Include the agreed Week 7 splits and September 6 data; ignore other generated data.
+Artificial Intelligence for Smart-Building Log Analysis/outputs/week7_prediction_ready_dataset/data/*
+!Artificial Intelligence for Smart-Building Log Analysis/outputs/week7_prediction_ready_dataset/data/prediction_ready_train.csv.gz
+!Artificial Intelligence for Smart-Building Log Analysis/outputs/week7_prediction_ready_dataset/data/prediction_ready_validation.csv.gz
+!Artificial Intelligence for Smart-Building Log Analysis/outputs/week7_prediction_ready_dataset/data/prediction_ready_test.csv.gz
+!Artificial Intelligence for Smart-Building Log Analysis/outputs/week7_prediction_ready_dataset/data/prediction_ready_2018-09-06_from_raw.csv
+!Artificial Intelligence for Smart-Building Log Analysis/outputs/week7_prediction_ready_dataset/data/prediction_ready_2018-09-06_from_raw.csv.gz

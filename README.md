@@ -13,26 +13,27 @@ This folder contains:
 - `Artificial_Intelligence_for_Smart_Building_Log_Analysis.ipynb`: main Jupyter notebook.
 - `merge_2018_2019_floors_3_4_5_7.ipynb`: focused notebook that only merges 2018-2019 data for floors 3, 4, 5, and 7.
 - `outputs/`: small reviewable summary files, EDA charts, and preview tables.
-- `Raw Data/`: local-only raw CSV folder. This folder is ignored by Git and is not uploaded.
+- `Raw data/2018Floor6.csv`: the original Floor 6 data used by the current analysis and the September 6 evaluation.
 
 ## Data Policy
 
-Raw CU-BEMS CSV files are not included in this GitHub repository because they are large and should be managed outside Git.
-
-To run the notebook locally, place the 14 raw CSV files here:
+The repository includes the original CU-BEMS Floor 6 file used by the current analysis:
 
 ```text
-Artificial Intelligence for Smart-Building Log Analysis/Raw Data/
+Artificial Intelligence for Smart-Building Log Analysis/Raw data/2018Floor6.csv
 ```
 
-Expected files:
+It also includes the prediction-ready train, validation and test splits, plus both CSV and compressed CSV versions of the September 6 actual table, under:
 
 ```text
-2018Floor1.csv ... 2018Floor7.csv
-2019Floor1.csv ... 2019Floor7.csv
+Artificial Intelligence for Smart-Building Log Analysis/outputs/week7_prediction_ready_dataset/data/
 ```
 
-Most large generated `.csv.gz` outputs are excluded from Git. The Week 6 ML-ready dataset is committed so the LOF and Isolation Forest experiments can run immediately after cloning.
+The September 6 table is `prediction_ready_2018-09-06_from_raw.csv` (or `.csv.gz`). It contains 5,760 zone-minute rows with actual measurements, engineered features and the same future-15-minute average AC-power target used for training. Of these, 5,625 have a valid future target; the remaining 135 targets are missing and are excluded from error metrics. Prediction outputs remain under `outputs/week7_forecasting_gavin_rf/data/`.
+
+The other 13 raw floor files used by the earlier multi-floor notebooks are not included. Running those historical notebooks still requires their original inputs; the supplied Floor 6 file supports the current four-zone analysis. Additional raw or generated files remain ignored unless explicitly included.
+
+Generated outputs are selectively included; other large intermediate files remain excluded from Git. The Week 6 ML-ready dataset is committed so the LOF and Isolation Forest experiments can run immediately after cloning.
 
 ## Environment
 
@@ -103,7 +104,7 @@ python -m unittest discover "Artificial Intelligence for Smart-Building Log Anal
 
 ## Week 7 Forecasting — Gavin
 
-Lee's Week 7 preparation now builds prediction-ready train/validation/test datasets for `target_total_AC_power_kw_next_15min_mean`: the same-zone average `total_AC_power_kw` from t+1 through t+15. The lightweight configuration, manifest, training medians, and leakage audit are saved under `outputs/week7_prediction_ready_dataset/reports/`; the large reproducible split datasets remain under `outputs/week7_prediction_ready_dataset/data/` and are ignored by Git.
+Lee's Week 7 preparation now builds prediction-ready train/validation/test datasets for `target_total_AC_power_kw_next_15min_mean`: the same-zone average `total_AC_power_kw` from t+1 through t+15. The lightweight configuration, manifest, training medians, and leakage audit are saved under `outputs/week7_prediction_ready_dataset/reports/`; the reproducible split datasets are committed under `outputs/week7_prediction_ready_dataset/data/` so the forecasting inputs are available after cloning.
 
 Open [ML_Forecasting_Gavin.ipynb](<Artificial Intelligence for Smart-Building Log Analysis/ml/ML_Forecasting_Gavin.ipynb>) and run the cells in order. The notebook evaluates a persistence baseline, trains RandomForestRegressor candidates, selects by validation MAE, and reports MAE/RMSE/Bias for validation, test, and the 2018-09-06 actual table.
 

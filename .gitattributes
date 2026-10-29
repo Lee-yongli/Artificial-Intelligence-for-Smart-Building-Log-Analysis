@@ -2,3 +2,6 @@ Artificial[[:space:]]Intelligence[[:space:]]for[[:space:]]Smart-Building[[:space
 Artificial[[:space:]]Intelligence[[:space:]]for[[:space:]]Smart-Building[[:space:]]Log[[:space:]]Analysis/outputs/week7_forecasting_gavin_rf/models/*.joblib filter=lfs diff=lfs merge=lfs -text
 Artificial[[:space:]]Intelligence[[:space:]]for[[:space:]]Smart-Building[[:space:]]Log[[:space:]]Analysis/outputs/week7_forecasting_gavin_rf_next15_mean/models/random_forest_next15_mean.joblib filter=lfs diff=lfs merge=lfs -text
 Artificial[[:space:]]Intelligence[[:space:]]for[[:space:]]Smart-Building[[:space:]]Log[[:space:]]Analysis/outputs/_codex_validate_baseline_hybrid/baseline_tables/09_baseline_anomaly_scores_long.csv.gz filter=lfs diff=lfs merge=lfs -text
+
+# Preserve the original Floor 6 CSV bytes across operating systems.
+"Artificial Intelligence for Smart-Building Log Analysis/Raw data/2018Floor6.csv" -text
