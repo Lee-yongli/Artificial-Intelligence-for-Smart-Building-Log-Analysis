@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Client-facing dashboard for smart-building anomaly detection and prediction.">
+  <title>Smart Building Dashboard</title>
+  <style>
+    :root {
+      --navy: #171356;
+      --navy-deep: #100d43;
+      --blue: #1479b8;
+      --blue-dark: #294b8f;
+      --purple: #52446f;
+      --red: #d92b12;
+      --ink: #222222;
+      --muted: #677080;
+      --line: #dfe3e8;
+      --surface: #ffffff;
+      --canvas: #f5f6f8;
+      --soft-blue: #edf6fb;
+      --soft-amber: #fff8e8;
+      --shadow: 0 2px 8px rgba(19, 27, 46, 0.08);
+      --radius: 6px;
+      --sidebar-width: 224px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    button, select { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 30;
+      display: flex;
+      width: var(--sidebar-width);
+      flex-direction: column;
+      color: #ffffff;
+      background: linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+      box-shadow: 4px 0 14px rgba(16, 13, 67, 0.12);
+    }
+
+    .brand {
+      display: flex;
+      min-height: 136px;
+      align-items: center;
+      gap: 13px;
+      padding: 28px 22px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 50px;
+      height: 50px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 2px solid rgba(255, 255, 255, 0.82);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-copy strong,
+    .brand-copy span { display: block; }
+    .brand-copy strong { font-size: 16px; letter-spacing: 0.01em; }
+    .brand-copy span { margin-top: 2px; color: #c7c8e4; font-size: 12px; }
+
+    .nav-list {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      padding: 22px 12px;
+      list-style: none;
+    }
+
+    .nav-button {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 13px;
+      padding: 12px 14px;
+      border: 0;
+      border-left: 3px solid transparent;
+      border-radius: 4px;
+      color: #d8d9ec;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+    }
+
+    .nav-button:hover { color: #ffffff; background: rgba(255, 255, 255, 0.09); }
+    .nav-button:focus-visible { outline: 3px solid #79bce4; outline-offset: 2px; }
+    .nav-button.active {
+      border-left-color: #66c0f0;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.15);
+      font-weight: 700;
+    }
+
+    .nav-icon {
+      display: grid;
+      width: 22px;
+      height: 22px;
+      flex: 0 0 auto;
+      place-items: center;
+    }
+
+    .nav-icon svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 20px 24px 24px;
+      color: #aeb1d2;
+      font-size: 12px;
+    }
+
+    .mobile-menu-button { display: none; }
+
+    .workspace {
+      grid-column: 2;
+      min-width: 0;
+    }
+
+    /* Header */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      min-height: 98px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px 34px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 1px 4px rgba(19, 27, 46, 0.04);
+    }
+
+    .header-title-wrap { min-width: 0; }
+    .header-title-wrap h1 {
+      margin: 0;
+      color: #171938;
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+    }
+
+    .header-title-wrap p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .header-meta {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .dataset-meta {
+      text-align: right;
+    }
+
+    .dataset-meta strong,
+    .dataset-meta span { display: block; }
+    .dataset-meta strong { color: #252c42; font-size: 14px; }
+    .dataset-meta span { margin-top: 2px; color: var(--muted); font-size: 12px; }
+
+    .content-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      padding: 30px 40px 42px;
+    }
+
+    .main-content { min-width: 0; }
+
+    .page-section[hidden] { display: none; }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 6px;
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      color: #171938;
+      font-size: 26px;
+      line-height: 1.2;
+      letter-spacing: -0.015em;
+    }
+
+    .section-heading p:not(.eyebrow) {
+      max-width: 680px;
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .section-chip {
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: #50586a;
+      background: #ffffff;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    /* Dashboard Cards */
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .module-card {
+      position: relative;
+      display: flex;
+      min-height: 248px;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid #d8dce3;
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      text-align: left;
+      transition: transform 170ms ease, box-shadow 170ms ease, border-color 170ms ease;
+    }
+
+    .module-card:hover {
+      transform: translateY(-3px);
+      border-color: #b7c2cf;
+      box-shadow: 0 8px 20px rgba(19, 27, 46, 0.12);
+    }
+
+    .module-card:focus-visible { outline: 3px solid rgba(20, 121, 184, 0.42); outline-offset: 3px; }
+
+    .module-card-header {
+      position: relative;
+      min-height: 102px;
+      padding: 22px 24px;
+      color: #ffffff;
+      background: var(--card-color, var(--blue));
+    }
+
+    .module-card-header::after {
+      position: absolute;
+      inset: auto 0 0;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.35);
+      content: "";
+    }
+
+    .module-card-header h3 { margin: 0; font-size: 21px; line-height: 1.2; }
+    .module-card-header p { margin: 6px 0 0; color: rgba(255, 255, 255, 0.85); font-size: 13px; }
+
+    .building-pattern {
+      background:
+        linear-gradient(135deg, rgba(23, 19, 86, 0.94), rgba(20, 121, 184, 0.82)),
+        repeating-linear-gradient(90deg, transparent 0 24px, rgba(255, 255, 255, 0.16) 24px 26px),
+        repeating-linear-gradient(0deg, transparent 0 19px, rgba(255, 255, 255, 0.14) 19px 21px);
+    }
+
+    .module-card-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 20px 24px 18px;
+    }
+
+    .module-card-body ul {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      color: #4b5363;
+      font-size: 14px;
+      list-style: none;
+    }
+
+    .module-card-body li { display: flex; align-items: center; gap: 9px; }
+    .module-card-body li::before {
+      width: 5px;
+      height: 5px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--blue);
+      content: "";
+    }
+
+    .card-link {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: auto;
+      padding-top: 14px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* KPI Section */
+    .kpi-section { margin-top: 26px; }
+    .kpi-section h3 { margin: 0 0 13px; color: #2d3242; font-size: 16px; }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .kpi-card {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--blue);
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: 0 1px 4px rgba(19, 27, 46, 0.05);
+    }
+
+    .kpi-label { display: block; color: var(--muted); font-size: 12px; }
+    .kpi-value { display: block; margin-top: 6px; color: #171938; font-size: 25px; font-weight: 750; line-height: 1.15; }
+    .kpi-caption { display: block; margin-top: 5px; color: #7a8190; font-size: 11px; }
+
+    .info-note,
+    .warning-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 16px 0 0;
+      padding: 13px 15px;
+      border-left: 4px solid var(--blue);
+      border-radius: 4px;
+      color: #415269;
+      background: var(--soft-blue);
+      font-size: 13px;
+    }
+
+    .warning-note {
+      border-left-color: #d08c00;
+      color: #665119;
+      background: var(--soft-amber);
+    }
+
+    .note-icon { flex: 0 0 auto; font-weight: 800; }
+
+    /* Shared panels */
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-header h3 { margin: 0; color: #2b3041; font-size: 16px; }
+    .panel-header span { color: var(--muted); font-size: 11px; }
+    .panel-body { padding: 20px; }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .field label { display: block; margin-bottom: 7px; color: #343a4a; font-size: 12px; font-weight: 700; }
+    .field select {
+      width: 100%;
+      height: 42px;
+      padding: 0 36px 0 12px;
+      border: 1px solid #cfd5dc;
+      border-radius: 4px;
+      color: #283142;
+      background: #ffffff;
+    }
+
+    .field select:focus { border-color: var(--blue); outline: 3px solid rgba(20, 121, 184, 0.12); }
+
+    .filter-summary {
+      margin: 0;
+      padding: 11px 20px;
+      border-top: 1px solid var(--line);
+      color: #586173;
+      background: #fafbfc;
+      font-size: 12px;
+    }
+
+    .filter-summary strong { color: #2b3041; }
+
+    .analysis-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .analysis-kpis .kpi-card { border-top-color: var(--blue-dark); }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .chart-panel { min-width: 0; }
+    .bar-chart { display: grid; gap: 15px; }
+    .bar-row {
+      display: grid;
+      grid-template-columns: minmax(92px, 0.9fr) minmax(120px, 3fr) 56px;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .bar-label { overflow: hidden; color: #444c5d; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+    .bar-track { height: 11px; overflow: hidden; border-radius: 999px; background: #e9edf2; }
+    .bar-fill {
+      display: block;
+      width: var(--bar-width);
+      height: 100%;
+      min-width: 2px;
+      border-radius: inherit;
+      background: var(--bar-color, var(--blue));
+      transform-origin: left;
+      animation: grow-bar 650ms ease both;
+    }
+
+    @keyframes grow-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; } }
+
+    .bar-value { color: #2e3545; font-size: 12px; font-weight: 700; text-align: right; }
+    .chart-axis-note { margin: 15px 0 0; color: #7a8190; font-size: 11px; text-align: right; }
+
+    .explanation-panel { margin-top: 20px; }
+    .explanation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .explanation-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #ffffff;
+    }
+    .explanation-card .explanation-value {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--blue-dark);
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .explanation-card h4 { margin: 0; color: #292f40; font-size: 14px; }
+    .explanation-card p { margin: 8px 0 0; color: #596273; font-size: 12px; }
+    .explanation-card strong { color: #343b4d; }
+    .explanation-summary {
+      margin: 15px 0 0;
+      padding: 14px 16px;
+      border-radius: 4px;
+      color: #34475f;
+      background: #f1f7fb;
+      font-size: 13px;
+    }
+
+    /* Prediction Section */
+    .prototype-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 18px;
+      padding: 7px 10px;
+      border-radius: 4px;
+      color: #175f43;
+      background: #e7f7ef;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .prediction-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 230px;
+      gap: 20px;
+    }
+
+    .prediction-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .prediction-explanation {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .interpretation-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .interpretation-list li { position: relative; padding-left: 18px; color: #596273; font-size: 13px; }
+    .interpretation-list li::before { position: absolute; left: 0; color: var(--blue); content: "→"; font-weight: 800; }
+
+    .prediction-kpis { display: grid; gap: 12px; }
+    .prediction-kpis .kpi-card { border-top-color: var(--purple); }
+    .demo-tag {
+      display: inline-block;
+      margin-left: 5px;
+      padding: 2px 5px;
+      border-radius: 3px;
+      color: #755500;
+      background: #fff0b5;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      vertical-align: 3px;
+    }
+
+    .line-chart-wrap { overflow-x: auto; }
+    .line-chart { display: block; width: 100%; min-width: 520px; height: auto; }
+    .line-chart .grid-line { stroke: #e4e7eb; stroke-width: 1; }
+    .line-chart .axis-text { fill: #7a8190; font-size: 10px; }
+    .line-chart .actual-line { fill: none; stroke: var(--blue); stroke-linecap: round; stroke-linejoin: round; stroke-width: 3; }
+    .line-chart .predicted-line { fill: none; stroke: var(--red); stroke-dasharray: 6 5; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.5; }
+    .chart-legend { display: flex; gap: 20px; margin-top: 10px; color: #555d6c; font-size: 12px; }
+    .legend-item { display: flex; align-items: center; gap: 7px; }
+    .legend-line { width: 24px; height: 3px; background: var(--blue); }
+    .legend-line.predicted { background: repeating-linear-gradient(90deg, var(--red) 0 6px, transparent 6px 10px); }
+
+    /* Comparison Section */
+    .comparison-models {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .model-card {
+      min-height: 124px;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--purple);
+      border-radius: var(--radius);
+      background: #ffffff;
+    }
+
+    .model-card h3 { margin: 0; color: #2e3344; font-size: 14px; line-height: 1.35; }
+    .model-card p { margin: 9px 0 0; color: var(--muted); font-size: 12px; }
+
+    .comparison-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.8fr);
+      gap: 20px;
+    }
+
+    .comparison-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .comparison-table th,
+    .comparison-table td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; }
+    .comparison-table th { color: #4a5364; background: #f7f8fa; font-size: 11px; letter-spacing: 0.03em; text-transform: uppercase; }
+    .comparison-table tbody tr:last-child td { border-bottom: 0; }
+    .comparison-table td:nth-child(n + 2) { font-variant-numeric: tabular-nums; }
+    .not-available { color: #8a919d; }
+
+    /* Priority review */
+    .priority-kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .priority-table-wrap { overflow-x: auto; }
+    .priority-table { width: 100%; min-width: 980px; border-collapse: collapse; font-size: 12px; }
+    .priority-table th,
+    .priority-table td { padding: 12px 13px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .priority-table th { color: #4a5364; background: #f7f8fa; font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; }
+    .priority-table tbody tr:last-child td { border-bottom: 0; }
+    .priority-table tbody tr:hover { background: #fafcff; }
+    .priority-table strong { color: #252b3b; }
+    .priority-table small { display: block; margin-top: 3px; color: var(--muted); line-height: 1.35; }
+    .priority-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+    .priority-badge.review-first { color: #8a1d0c; background: #ffe9e4; }
+    .priority-badge.review-next { color: #765200; background: #fff3cd; }
+    .priority-badge.monitor { color: #246047; background: #e7f5ee; }
+    .case-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .case-card { padding: 18px; border: 1px solid var(--line); border-top: 3px solid var(--blue-dark); border-radius: var(--radius); background: #ffffff; }
+    .case-card h3 { margin: 0; color: #292f40; font-size: 15px; }
+    .case-card p { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
+    .case-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+    .case-metric { padding: 9px; border-radius: 4px; background: #f5f7fa; }
+    .case-metric span { display: block; color: var(--muted); font-size: 10px; }
+    .case-metric strong { display: block; margin-top: 2px; color: #242b3a; font-size: 12px; }
+
+    /* Data Section */
+    .data-layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.75fr) minmax(0, 1.25fr);
+      gap: 20px;
+    }
+
+    .data-list { margin: 0; }
+    .data-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 1fr) minmax(100px, 1fr);
+      gap: 16px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .data-row:first-child { padding-top: 0; }
+    .data-row:last-child { padding-bottom: 0; border-bottom: 0; }
+    .data-row dt { color: var(--muted); font-size: 12px; }
+    .data-row dd { margin: 0; color: #252b3b; font-size: 13px; font-weight: 700; text-align: right; }
+
+    .workflow {
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+    }
+
+    .workflow-step {
+      padding: 11px 14px;
+      border: 1px solid #cbd6df;
+      border-radius: 4px;
+      color: #28364a;
+      background: #f7fbfd;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .workflow-arrow { height: 21px; color: var(--blue); font-size: 18px; line-height: 21px; text-align: center; }
+
+    .integration-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+    .integration-card { padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: #ffffff; box-shadow: var(--shadow); }
+    .integration-card span { display: grid; width: 30px; height: 30px; place-items: center; border-radius: 50%; color: #ffffff; background: var(--blue-dark); font-size: 12px; font-weight: 800; }
+    .integration-card h3 { margin: 12px 0 0; color: #2d3242; font-size: 14px; }
+    .integration-card p { margin: 7px 0 0; color: var(--muted); font-size: 12px; }
+    .limitations-list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+    .limitations-list li { position: relative; padding-left: 16px; color: #596273; font-size: 12px; }
+    .limitations-list li::before { position: absolute; left: 0; color: #d08c00; content: "•"; font-weight: 900; }
+
+    /* About Section */
+    .about-hero {
+      padding: 30px;
+      border-radius: var(--radius);
+      color: #ffffff;
+      background: linear-gradient(120deg, var(--navy), #244f91);
+      box-shadow: var(--shadow);
+    }
+
+    .about-hero .eyebrow { color: #91d0f2; }
+    .about-hero h3 { max-width: 720px; margin: 0; font-size: 27px; line-height: 1.25; }
+    .about-hero p { max-width: 720px; margin: 14px 0 0; color: #d5deed; font-size: 14px; }
+    .about-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 20px; }
+    .about-details h3 { margin: 0 0 10px; color: #2d3242; font-size: 16px; }
+    .about-details p { margin: 0; color: #596273; font-size: 14px; }
+
+    .sidebar-overlay { display: none; }
+
+    @media (max-width: 900px) {
+      :root { --sidebar-width: 196px; }
+      .top-header { align-items: flex-start; padding: 20px 24px; }
+      .content-layout { padding: 26px 24px 36px; }
+      .header-meta { align-items: flex-end; flex-direction: column-reverse; gap: 8px; }
+      .dataset-meta { padding: 0; border: 0; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chart-grid, .prediction-layout, .prediction-explanation, .comparison-layout, .data-layout { grid-template-columns: 1fr; }
+      .comparison-models { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .prediction-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .priority-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .case-grid, .integration-grid { grid-template-columns: 1fr; }
+      .explanation-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .app-shell { display: block; }
+      .workspace { width: 100%; }
+      .sidebar {
+        width: min(82vw, 286px);
+        transform: translateX(-105%);
+        transition: transform 190ms ease;
+      }
+      body.menu-open { overflow: hidden; }
+      body.menu-open .sidebar { transform: translateX(0); }
+      .sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 25;
+        display: none;
+        border: 0;
+        background: rgba(11, 14, 28, 0.52);
+      }
+      body.menu-open .sidebar-overlay { display: block; }
+      .brand { min-height: 112px; }
+      .mobile-menu-button {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        place-items: center;
+        border: 1px solid #d6dbe2;
+        border-radius: 4px;
+        background: #ffffff;
+        cursor: pointer;
+      }
+      .mobile-menu-button svg { width: 21px; height: 21px; stroke: #282c44; stroke-width: 2; }
+      .top-header { position: static; min-height: auto; align-items: center; gap: 13px; padding: 16px 18px; }
+      .header-title-wrap { flex: 1; }
+      .header-title-wrap h1 { font-size: 21px; }
+      .header-title-wrap p { display: none; }
+      .header-meta { align-items: center; }
+      .dataset-meta { display: none; }
+      .content-layout { padding: 22px 16px 30px; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .module-grid, .filters, .analysis-kpis, .about-details { grid-template-columns: 1fr; }
+      .module-card { min-height: 228px; }
+      .kpi-grid, .comparison-models, .prediction-kpis { grid-template-columns: 1fr 1fr; }
+      .bar-row { grid-template-columns: 86px minmax(80px, 1fr) 52px; }
+      .comparison-table-wrap { overflow-x: auto; }
+      .comparison-table { min-width: 590px; }
+    }
+
+    @media (max-width: 430px) {
+      .kpi-grid, .comparison-models, .prediction-kpis, .priority-kpis { grid-template-columns: 1fr; }
+      .panel-body, .panel-header, .filters { padding-right: 15px; padding-left: 15px; }
+      .section-heading h2 { font-size: 23px; }
+      .about-hero { padding: 24px 20px; }
+      .data-row { grid-template-columns: 1fr; gap: 3px; }
+      .data-row dd { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">SB</div>
+        <div class="brand-copy">
+          <strong>Smart Building</strong>
+          <span>Research Dashboard</span>
+        </div>
+      </div>
+      <nav>
+        <ul class="nav-list">
+          <li><button class="nav-button active" type="button" data-section="dashboard" aria-current="page"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span><span>Dashboard</span></button></li>
+          <li><button class="nav-button" type="button" data-section="anomaly"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 2.8 20h18.4L12 3Z"/><path d="M12 9v5"/><path d="M12 17.5v.2"/></svg></span><span>Anomaly</span></button></li>
+          <li><button class="nav-button" type="button" data-section="priority"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><span>Priority Review</span></button></li>
+          <li><button class="nav-button" type="button" data-section="prediction"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 18 9 13l4 3 7-9"/><path d="M15 7h5v5"/></svg></span><span>Prediction</span></button></li>
+          <li><button class="nav-button" type="button" data-section="comparison"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 20V10"/><path d="M12 20V4"/><path d="M17 20v-7"/><path d="M3 20h18"/></svg></span><span>Comparison</span></button></li>
+          <li><button class="nav-button" type="button" data-section="data"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><span>Data</span></button></li>
+          <li><button class="nav-button" type="button" data-section="about"><span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10v6"/><path d="M12 7h.01"/></svg></span><span>About</span></button></li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">Smart Facilities SA<br>Building Analysis</div>
+    </aside>
+    <button class="sidebar-overlay" id="sidebar-overlay" type="button" aria-label="Close navigation menu"></button>
+
+    <div class="workspace">
+      <!-- Header -->
+      <header class="top-header">
+        <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="sidebar">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="header-title-wrap">
+          <h1 id="page-title">Smart Building Dashboard</h1>
+          <p>Artificial Intelligence for Smart-Building Log Analysis</p>
+        </div>
+        <div class="header-meta">
+          <div class="dataset-meta"><strong>Floor 6</strong><span>CU-BEMS Dataset</span></div>
+        </div>
+      </header>
+
+      <div class="content-layout">
+        <main class="main-content" id="main-content" tabindex="-1">
+          <!-- Dashboard Cards -->
+          <section class="page-section" id="dashboard-section" data-title="Smart Building Dashboard">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Floor 6 Research Overview</p>
+                <h2>Dashboard</h2>
+                <p>Explore a validated proof-of-concept workflow for anomaly screening, event prioritisation and supplementary energy forecasting.</p>
+              </div>
+              <span class="section-chip">CU-BEMS · Jul–Sep 2018</span>
+            </div>
+
+            <div class="module-grid">
+              <button class="module-card" type="button" data-target-section="anomaly" style="--card-color: #1479b8">
+                <div class="module-card-header"><h3>Anomaly Detection</h3><p>Isolation Forest / LOF</p></div>
+                <div class="module-card-body"><ul><li>Period-specific screening</li><li>5% alert budget per period</li></ul><span class="card-link">View anomaly analysis <span aria-hidden="true">→</span></span></div>
+              </button>
+              <button class="module-card" type="button" data-target-section="priority" style="--card-color: #a84a2a">
+                <div class="module-card-header"><h3>Priority Review</h3><p>134 sustained anomaly events</p></div>
+                <div class="module-card-body"><ul><li>Duration and model evidence</li><li>Investigation-first workflow</li></ul><span class="card-link">Review candidate events <span aria-hidden="true">→</span></span></div>
+              </button>
+              <button class="module-card" type="button" data-target-section="prediction" style="--card-color: #294b8f">
+                <div class="module-card-header"><h3>Prediction</h3><p>Supplementary RF Forecast</p></div>
+                <div class="module-card-body"><ul><li>Actual vs predicted AC power</li><li>Validated evaluation splits</li></ul><span class="card-link">View prediction results <span aria-hidden="true">→</span></span></div>
+              </button>
+              <button class="module-card" type="button" data-target-section="comparison" style="--card-color: #52446f">
+                <div class="module-card-header"><h3>Model Comparison</h3><p>IF / LOF / Statistical Baseline</p></div>
+                <div class="module-card-body"><ul><li>Method agreement</li><li>Jaccard comparison</li></ul><span class="card-link">View evaluation <span aria-hidden="true">→</span></span></div>
+              </button>
+              <button class="module-card" type="button" data-target-section="data">
+                <div class="module-card-header building-pattern"><h3>Data Overview</h3><p>Floor 6 — Zones 1, 2, 4, 5</p></div>
+                <div class="module-card-body"><ul><li>362,880 observations</li><li>Jul–Sep 2018</li><li>Energy + environmental variables</li></ul><span class="card-link">View dataset <span aria-hidden="true">→</span></span></div>
+              </button>
+            </div>
+
+            <!-- KPI Section -->
+            <div class="kpi-section">
+              <h3>Project Snapshot</h3>
+              <div class="kpi-grid" id="overview-kpis"></div>
+              <div class="info-note"><span class="note-icon" aria-hidden="true">i</span><span>This proof of concept uses the public CU-BEMS dataset because client operational logs were not available. Anomalies are investigation candidates, not confirmed equipment faults.</span></div>
+            </div>
+          </section>
+
+          <!-- Anomaly Section -->
+          <section class="page-section" id="anomaly-section" data-title="Anomaly Detection" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Analysis</p><h2>Anomaly Detection</h2><p>Review how unusual observations vary by zone and operating context.</p></div><span class="section-chip">Validated period-specific results</span></div>
+            <div class="panel">
+              <div class="filters">
+                <div class="field"><label for="zone-filter">Zone</label><select id="zone-filter"><option>All</option><option>Zone 1</option><option>Zone 2</option><option>Zone 4</option><option>Zone 5</option></select></div>
+                <div class="field"><label for="period-filter">Operating Period</label><select id="period-filter"><option value="All">All</option><option value="night_off">night_off</option><option value="ramp_up">ramp_up</option><option value="core_work">core_work</option><option value="ramp_down">ramp_down</option><option value="evening_off">evening_off</option><option value="weekend">weekend</option></select></div>
+                <div class="field"><label for="model-filter">Model</label><select id="model-filter"><option value="if_calibrated">Period-Specific IF</option><option value="lof">LOF</option><option value="if_auto_reference">IF Auto Threshold (Reference)</option><option value="baseline_reference">Statistical Baseline (Reference)</option></select></div>
+              </div>
+              <p class="filter-summary" id="filter-summary" aria-live="polite"></p>
+            </div>
+            <div class="analysis-kpis" id="anomaly-kpis"></div>
+            <div class="chart-grid">
+              <article class="panel chart-panel"><div class="panel-header"><h3>Anomaly Rate by Zone</h3><span id="zone-chart-model">Period-Specific IF</span></div><div class="panel-body"><div class="bar-chart" id="zone-chart" role="img" aria-label="Bar chart of anomaly rate by zone"></div><p class="chart-axis-note">Percentage of observations</p></div></article>
+              <article class="panel chart-panel"><div class="panel-header"><h3>Anomaly Rate by Operating Period</h3><span id="period-chart-model">Period-Specific IF</span></div><div class="panel-body"><div class="bar-chart" id="period-chart" role="img" aria-label="Bar chart of anomaly rate by operating period"></div><p class="chart-axis-note">Percentage of observations · independent scale</p></div></article>
+            </div>
+            <article class="panel explanation-panel">
+              <div class="panel-header"><h3>How to Read These Percentages</h3><span>Business interpretation</span></div>
+              <div class="panel-body" id="anomaly-explanation"></div>
+            </article>
+            <div class="warning-note"><span class="note-icon" aria-hidden="true">!</span><span>The 5% Isolation Forest label is a candidate-screening budget, not a confirmed equipment-fault rate. Scores are comparable only within the same operating-period model.</span></div>
+          </section>
+
+          <!-- Priority Review Section -->
+          <section class="page-section" id="priority-section" data-title="Priority Review" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Operational Triage</p><h2>Priority Review</h2><p>Turn isolated anomaly points into sustained events and decide what a facilities team should inspect first.</p></div><span class="section-chip">134 validated events</span></div>
+            <div class="panel">
+              <div class="filters">
+                <div class="field"><label for="priority-zone-filter">Zone</label><select id="priority-zone-filter"><option value="All">All zones</option><option value="1">Zone 1</option><option value="2">Zone 2</option><option value="4">Zone 4</option><option value="5">Zone 5</option></select></div>
+                <div class="field"><label for="priority-period-filter">Operating Period</label><select id="priority-period-filter"><option value="All">All periods</option><option value="night_off">night_off</option><option value="ramp_up">ramp_up</option><option value="core_work">core_work</option><option value="ramp_down">ramp_down</option><option value="evening_off">evening_off</option><option value="weekend">weekend</option></select></div>
+                <div class="field"><label for="priority-tier-filter">Review Tier</label><select id="priority-tier-filter"><option value="All">All tiers</option><option value="review-first">Review first</option><option value="review-next">Review next</option><option value="monitor">Monitor</option></select></div>
+              </div>
+              <p class="filter-summary" id="priority-filter-summary" aria-live="polite"></p>
+            </div>
+            <div class="analysis-kpis priority-kpis" id="priority-kpis"></div>
+            <article class="panel">
+              <div class="panel-header"><h3>Candidate Event Queue</h3><span id="priority-table-scope">Sorted for investigation</span></div>
+              <div class="priority-table-wrap"><table class="priority-table"><thead><tr><th scope="col">Review tier</th><th scope="col">Event</th><th scope="col">Start</th><th scope="col">Zone & context</th><th scope="col">Duration</th><th scope="col">Supporting evidence</th><th scope="col">Suggested next step</th></tr></thead><tbody id="priority-table-body"></tbody></table></div>
+            </article>
+            <div class="warning-note"><span class="note-icon" aria-hidden="true">!</span><span>Review tier is a transparent workflow heuristic based on event duration and cross-method support. It is not a fault probability and must be confirmed against schedules, equipment state and site knowledge.</span></div>
+            <div class="case-grid" id="representative-cases"></div>
+          </section>
+
+          <!-- Prediction Section -->
+          <section class="page-section" id="prediction-section" data-title="Prediction" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Test Set Result</p><h2>Prediction</h2><p>Compare observed AC power with the Random Forest estimate on unseen test data. Zone and operating-period filters help explain where the model is more or less reliable.</p></div><span class="section-chip">Test only · validated RF</span></div>
+            <div class="prototype-banner"><span aria-hidden="true">✓</span> Gavin schema 3.0 data connected</div>
+            <div class="panel">
+              <div class="filters prediction-filters">
+                <div class="field"><label for="prediction-zone-filter">Zone</label><select id="prediction-zone-filter"><option value="1">Zone 1</option><option value="2">Zone 2</option><option value="4">Zone 4</option><option value="5">Zone 5</option></select></div>
+                <div class="field"><label for="prediction-period-filter">Operating Period</label><select id="prediction-period-filter"><option value="All">All</option><option value="night_off">night_off</option><option value="ramp_up">ramp_up</option><option value="core_work">core_work</option><option value="ramp_down">ramp_down</option><option value="evening_off">evening_off</option><option value="weekend">weekend</option></select></div>
+              </div>
+              <p class="filter-summary" id="prediction-filter-summary" aria-live="polite"></p>
+            </div>
+            <div class="prediction-layout">
+              <article class="panel"><div class="panel-header"><h3>Actual vs Predicted</h3><span id="prediction-chart-scope">Test · Zone 1</span></div><div class="panel-body"><div class="line-chart-wrap" id="prediction-chart"></div><div class="chart-legend"><span class="legend-item"><span class="legend-line"></span>Actual</span><span class="legend-item"><span class="legend-line predicted"></span>Predicted</span></div></div></article>
+              <div class="prediction-kpis" id="prediction-kpis"></div>
+            </div>
+            <div class="prediction-explanation" id="prediction-explanation"></div>
+            <div class="info-note"><span class="note-icon" aria-hidden="true">i</span><span>Hourly means are shown for readability. MAE and RMSE are calculated from the underlying minute-level test errors for the same zone and period. Forecasting is decision support, not a production control signal or confirmed fault detector.</span></div>
+          </section>
+
+          <!-- Comparison Section -->
+          <section class="page-section" id="comparison-section" data-title="Model Comparison" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Evaluation</p><h2>Model Comparison</h2><p>Compare agreement between anomaly methods without treating agreement as predictive accuracy.</p></div><span class="section-chip">Validated overlaps</span></div>
+            <div class="comparison-models" id="model-cards"></div>
+            <div class="comparison-layout">
+              <article class="panel"><div class="panel-header"><h3>Pairwise Method Agreement</h3><span>Validated values</span></div><div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th scope="col">Comparison</th><th scope="col">Overlap</th><th scope="col">Jaccard</th></tr></thead><tbody id="comparison-table-body"></tbody></table></div></article>
+              <article class="panel"><div class="panel-header"><h3>Available Jaccard Values</h3><span>Agreement, not accuracy</span></div><div class="panel-body"><div class="bar-chart" id="jaccard-chart" role="img" aria-label="Bar chart of available Jaccard comparison values"></div><p class="chart-axis-note">Jaccard index</p></div></article>
+            </div>
+            <div class="info-note"><span class="note-icon" aria-hidden="true">i</span><span>Different anomaly detection methods identify different subsets of unusual observations.</span></div>
+          </section>
+
+          <!-- Data Section -->
+          <section class="page-section" id="data-section" data-title="Data Overview" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Dataset & Transfer</p><h2>Data Overview</h2><p>CU-BEMS supports the proof of concept; client deployment requires schema mapping, recalibration and operational validation.</p></div><span class="section-chip">Floor 6 · 4 zones</span></div>
+            <div class="data-layout">
+              <article class="panel"><div class="panel-header"><h3>Dataset Profile</h3><span>Validated scope</span></div><div class="panel-body"><dl class="data-list" id="data-profile"></dl></div></article>
+              <article class="panel"><div class="panel-header"><h3>Analysis Workflow</h3><span>Current pipeline</span></div><div class="panel-body"><div class="workflow" id="workflow"></div></div></article>
+            </div>
+            <div class="info-note"><span class="note-icon" aria-hidden="true">i</span><span><strong>Why public data?</strong> Smart Facilities SA operational logs were not available during development. CU-BEMS was selected as a structurally relevant smart-building dataset for developing and evaluating a transferable workflow; its learned thresholds do not describe the client's buildings.</span></div>
+            <div class="integration-grid" aria-label="Client data integration roadmap">
+              <article class="integration-card"><span>1</span><h3>Map and validate</h3><p>Connect client BMS exports, map timestamps, zones, equipment variables and units, then report missing or invalid fields.</p></article>
+              <article class="integration-card"><span>2</span><h3>Rebuild local baselines</h3><p>Learn normal operating patterns for each client building and period; do not reuse CU-BEMS thresholds as production settings.</p></article>
+              <article class="integration-card"><span>3</span><h3>Verify with operators</h3><p>Run a monitored pilot, collect facilities-team feedback and calibrate alert volume before operational use.</p></article>
+            </div>
+          </section>
+
+          <!-- About Section -->
+          <section class="page-section" id="about-section" data-title="About the Project" hidden>
+            <div class="section-heading"><div><p class="eyebrow">Industry Research Project</p><h2>About</h2><p>Project context, purpose and responsible interpretation.</p></div></div>
+            <div class="about-hero"><p class="eyebrow">Proof of Concept</p><h3>Artificial Intelligence for Smart-Building Log Analysis</h3><p>A transferable research workflow that prepares smart-building logs, learns operating context, identifies unusual behaviour and prioritises sustained events for human review.</p></div>
+            <div class="about-details">
+              <article class="panel"><div class="panel-body"><h3>Project Details</h3><dl class="data-list"><div class="data-row"><dt>Host</dt><dd>Smart Facilities SA</dd></div><div class="data-row"><dt>Data role</dt><dd>CU-BEMS public proxy</dd></div><div class="data-row"><dt>Analysis scope</dt><dd>Floor 6 · research evaluation</dd></div><div class="data-row"><dt>Current delivery</dt><dd>Decision-support prototype</dd></div></dl></div></article>
+              <article class="panel"><div class="panel-body"><h3>Responsible Interpretation</h3><ul class="limitations-list" id="limitations-list"></ul></div></article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/plain" id="legacy-prototype-source">
+    "use strict";
+
+    // Central prototype data object. Replace values here when real JSON/CSV output is connected.
+    const dashboardData = {
+      overview: {
+        totalRecords: 362864,
+        zones: 4,
+        globalIfAnomalies: 18143,
+        primaryContamination: 5
+      },
+      anomaly: {
+        zoneRates: {
+          "Zone 1": 6.05,
+          "Zone 2": 4.80,
+          "Zone 4": 5.84,
+          "Zone 5": 3.31
+        },
+        periodRates: {
+          night_off: 0.01,
+          ramp_up: 94.25,
+          core_work: 3.04,
+          ramp_down: 23.11,
+          evening_off: 0.00,
+          weekend: 0.01
+        },
+        globalModel: {
+          label: "Global IF",
+          anomalyCount: 18143,
+          anomalyRate: 5.00
+        }
+      },
+      prediction: {
+        isDemo: true,
+        zone: "Zone 1",
+        forecastHorizon: "24 hours",
+        mae: 4.82,
+        rmse: 6.37,
+        labels: ["00:00", "03:00", "06:00", "09:00", "12:00", "15:00", "18:00", "21:00", "24:00"],
+        actual: [31, 28, 30, 49, 67, 71, 62, 45, 34],
+        predicted: [30, 29, 33, 46, 64, 68, 60, 47, 36]
+      },
+      comparison: {
+        models: [
+          { name: "Global Isolation Forest", description: "Single model across all operating contexts." },
+          { name: "Period-Specific Isolation Forest", description: "Context-aware models by operating period." },
+          { name: "LOF", description: "Local density-based anomaly detection." },
+          { name: "Statistical Baseline", description: "Transparent operational reference method." }
+        ],
+        pairs: [
+          { label: "Global IF vs LOF", shortLabel: "Global IF / LOF", overlap: 1049, jaccard: 0.0298 },
+          { label: "Global IF vs Statistical Baseline", shortLabel: "Global IF / Baseline", overlap: 2744, jaccard: 0.0570 },
+          { label: "Period-Specific IF vs LOF", shortLabel: "Period IF / LOF", overlap: 1742, jaccard: null },
+          { label: "Period-Specific IF vs Statistical Baseline", shortLabel: "Period IF / Baseline", overlap: 6125, jaccard: null }
+        ]
+      },
+      data: {
+        dataset: "CU-BEMS",
+        floor: "6",
+        zones: "1, 2, 4, 5",
+        rows: 362864,
+        dateRange: "1 Jul 2018 – 1 Sep 2018",
+        modelFeatures: 42,
+        physicalFeatures: 6,
+        workflow: ["CU-BEMS", "Data Preparation", "ML-Ready Dataset", "Isolation Forest / LOF", "Prediction", "Dashboard"]
+      }
+    };
+
+    const formatInteger = value => new Intl.NumberFormat("en-AU").format(value);
+    const escapeHtml = value => String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+    function renderKpi(container, items) {
+      container.innerHTML = items.map(item => `
+        <article class="kpi-card">
+          <span class="kpi-label">${escapeHtml(item.label)}</span>
+          <strong class="kpi-value">${escapeHtml(item.value)}${item.demo ? '<span class="demo-tag">Demo value</span>' : ""}</strong>
+          ${item.caption ? `<span class="kpi-caption">${escapeHtml(item.caption)}</span>` : ""}
+        </article>`).join("");
+    }
+
+    function renderBarChart(container, values, options = {}) {
+      const entries = Object.entries(values);
+      const max = options.max ?? Math.max(...entries.map(([, value]) => value), 1);
+      const formatter = options.formatter ?? (value => `${value.toFixed(2)}%`);
+      container.innerHTML = entries.map(([label, value]) => {
+        const width = Math.max(0, Math.min(100, (value / max) * 100));
+        return `<div class="bar-row">
+          <span class="bar-label" title="${escapeHtml(label)}">${escapeHtml(label)}</span>
+          <span class="bar-track" aria-hidden="true"><span class="bar-fill" style="--bar-width: ${width}%; --bar-color: ${options.color || "#1479b8"}"></span></span>
+          <span class="bar-value">${escapeHtml(formatter(value))}</span>
+        </div>`;
+      }).join("");
+    }
+
+    function renderPredictionChart(container, data) {
+      const width = 700;
+      const height = 300;
+      const pad = { left: 44, right: 18, top: 16, bottom: 38 };
+      const allValues = [...data.actual, ...data.predicted];
+      const min = Math.floor(Math.min(...allValues) / 10) * 10;
+      const max = Math.ceil(Math.max(...allValues) / 10) * 10;
+      const x = index => pad.left + index * ((width - pad.left - pad.right) / (data.labels.length - 1));
+      const y = value => pad.top + (max - value) * ((height - pad.top - pad.bottom) / (max - min || 1));
+      const points = series => series.map((value, index) => `${x(index)},${y(value)}`).join(" ");
+      const yTicks = Array.from({ length: 5 }, (_, index) => min + ((max - min) * index / 4));
+
+      container.innerHTML = `<svg class="line-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="Demo line chart comparing actual and predicted energy values">
+        ${yTicks.map(value => `<line class="grid-line" x1="${pad.left}" x2="${width - pad.right}" y1="${y(value)}" y2="${y(value)}"></line><text class="axis-text" x="${pad.left - 9}" y="${y(value) + 3}" text-anchor="end">${Math.round(value)}</text>`).join("")}
+        ${data.labels.map((label, index) => `<text class="axis-text" x="${x(index)}" y="${height - 13}" text-anchor="middle">${escapeHtml(label)}</text>`).join("")}
+        <polyline class="actual-line" points="${points(data.actual)}"></polyline>
+        <polyline class="predicted-line" points="${points(data.predicted)}"></polyline>
+      </svg>`;
+    }
+
+    function initialiseContent() {
+      const overview = dashboardData.overview;
+      renderKpi(document.getElementById("overview-kpis"), [
+        { label: "Total Records", value: formatInteger(overview.totalRecords), caption: "Validated dataset total" },
+        { label: "Zones", value: overview.zones, caption: "Zones 1, 2, 4 and 5" },
+        { label: "Global IF Anomalies", value: formatInteger(overview.globalIfAnomalies), caption: "Unusual observations" },
+        { label: "Primary Contamination", value: `${overview.primaryContamination}%`, caption: "Global IF parameter" }
+      ]);
+
+      renderBarChart(document.getElementById("zone-chart"), dashboardData.anomaly.zoneRates, { max: 7 });
+      renderBarChart(document.getElementById("period-chart"), dashboardData.anomaly.periodRates, { max: 100, color: "#294b8f" });
+
+      renderPredictionChart(document.getElementById("prediction-chart"), dashboardData.prediction);
+      renderKpi(document.getElementById("prediction-kpis"), [
+        { label: "MAE", value: dashboardData.prediction.mae.toFixed(2), demo: true, caption: "Illustrative metric" },
+        { label: "RMSE", value: dashboardData.prediction.rmse.toFixed(2), demo: true, caption: "Illustrative metric" },
+        { label: "Selected Zone", value: dashboardData.prediction.zone, caption: "Illustrative selection" },
+        { label: "Forecast Horizon", value: dashboardData.prediction.forecastHorizon, caption: "Illustrative horizon" }
+      ]);
+
+      document.getElementById("model-cards").innerHTML = dashboardData.comparison.models.map(model => `<article class="model-card"><h3>${escapeHtml(model.name)}</h3><p>${escapeHtml(model.description)}</p></article>`).join("");
+      document.getElementById("comparison-table-body").innerHTML = dashboardData.comparison.pairs.map(pair => `<tr><td>${escapeHtml(pair.label)}</td><td>${formatInteger(pair.overlap)}</td><td class="${pair.jaccard === null ? "not-available" : ""}">${pair.jaccard === null ? "Not available" : pair.jaccard.toFixed(4)}</td></tr>`).join("");
+      const jaccardValues = Object.fromEntries(dashboardData.comparison.pairs.filter(pair => pair.jaccard !== null).map(pair => [pair.shortLabel, pair.jaccard]));
+      renderBarChart(document.getElementById("jaccard-chart"), jaccardValues, { max: 0.06, color: "#52446f", formatter: value => value.toFixed(4) });
+
+      const dataProfile = [
+        ["Dataset", dashboardData.data.dataset],
+        ["Floor", dashboardData.data.floor],
+        ["Zones", dashboardData.data.zones],
+        ["Rows", formatInteger(dashboardData.data.rows)],
+        ["Date range", dashboardData.data.dateRange],
+        ["Model feature matrix", `${dashboardData.data.modelFeatures} features`],
+        ["Period-specific physical features", dashboardData.data.physicalFeatures]
+      ];
+      document.getElementById("data-profile").innerHTML = dataProfile.map(([label, value]) => `<div class="data-row"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join("");
+      document.getElementById("workflow").innerHTML = dashboardData.data.workflow.map((step, index) => `${index ? '<div class="workflow-arrow" aria-hidden="true">↓</div>' : ""}<div class="workflow-step">${escapeHtml(step)}</div>`).join("");
+    }
+
+    function updateAnomalySummary() {
+      const zone = document.getElementById("zone-filter").value;
+      const period = document.getElementById("period-filter").value;
+      const model = document.getElementById("model-filter").value;
+      document.getElementById("filter-summary").innerHTML = `Current selection: <strong>${escapeHtml(zone)}</strong> · <strong>${escapeHtml(period)}</strong> · <strong>${escapeHtml(model)}</strong>`;
+
+      let count = "Not loaded";
+      let rate = "—";
+      let caption = "Detailed result not connected";
+      if (model === "Global IF" && zone === "All" && period === "All") {
+        count = formatInteger(dashboardData.anomaly.globalModel.anomalyCount);
+        rate = `${dashboardData.anomaly.globalModel.anomalyRate.toFixed(2)}%`;
+        caption = "Validated overall result";
+      } else if (model === "Global IF" && zone !== "All" && period === "All") {
+        rate = `${dashboardData.anomaly.zoneRates[zone].toFixed(2)}%`;
+        caption = "Validated zone rate; count not loaded";
+      } else if (model === "Global IF" && zone === "All" && period !== "All") {
+        rate = `${dashboardData.anomaly.periodRates[period].toFixed(2)}%`;
+        caption = "Validated period rate; count not loaded";
+      }
+
+      renderKpi(document.getElementById("anomaly-kpis"), [
+        { label: "Selected Model", value: model, caption: "Filter selection" },
+        { label: "Anomaly Count", value: count, caption },
+        { label: "Anomaly Rate", value: rate, caption }
+      ]);
+    }
+
+    function showSection(sectionName, options = {}) {
+      const requested = document.getElementById(`${sectionName}-section`);
+      if (!requested) return;
+
+      document.querySelectorAll(".page-section").forEach(section => { section.hidden = section !== requested; });
+      document.querySelectorAll(".nav-button").forEach(button => {
+        const isActive = button.dataset.section === sectionName;
+        button.classList.toggle("active", isActive);
+        if (isActive) button.setAttribute("aria-current", "page");
+        else button.removeAttribute("aria-current");
+      });
+
+      document.getElementById("page-title").textContent = requested.dataset.title;
+      document.title = `${requested.dataset.title} — Smart Building`;
+      document.body.classList.remove("menu-open");
+      document.getElementById("mobile-menu-button").setAttribute("aria-expanded", "false");
+      if (!options.skipHistory) history.replaceState(null, "", `#${sectionName}`);
+      if (!options.preserveScroll) window.scrollTo({ top: 0, behavior: "smooth" });
+      if (options.focus) document.getElementById("main-content").focus({ preventScroll: true });
+    }
+
+    function initialiseInteractions() {
+      document.querySelectorAll(".nav-button").forEach(button => button.addEventListener("click", () => showSection(button.dataset.section, { focus: true })));
+      document.querySelectorAll(".module-card").forEach(card => card.addEventListener("click", () => showSection(card.dataset.targetSection, { focus: true })));
+      ["zone-filter", "period-filter", "model-filter"].forEach(id => document.getElementById(id).addEventListener("change", updateAnomalySummary));
+
+      const menuButton = document.getElementById("mobile-menu-button");
+      menuButton.addEventListener("click", () => {
+        const isOpen = document.body.classList.toggle("menu-open");
+        menuButton.setAttribute("aria-expanded", String(isOpen));
+      });
+      document.getElementById("sidebar-overlay").addEventListener("click", () => {
+        document.body.classList.remove("menu-open");
+        menuButton.setAttribute("aria-expanded", "false");
+      });
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+          document.body.classList.remove("menu-open");
+          menuButton.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      const hashSection = location.hash.slice(1);
+      const initialSection = document.getElementById(`${hashSection}-section`) ? hashSection : "dashboard";
+      showSection(initialSection, { skipHistory: !location.hash, preserveScroll: true });
+    }
+
+    // Legacy prototype initialisation is intentionally disabled.
+    // dashboard_app.js below connects the validated Lee/Gavin data bundle.
+  </script>
+  <script src="./Lee_Week8_Dashboard_Data/dashboard_data.js"></script>
+  <script src="./Lee_Week8_Dashboard_Data/dashboard_display_values.js"></script>
+  <script src="./Lee_Week8_Dashboard_Data/dashboard_adapter.js"></script>
+  <script src="./dashboard_app.js"></script>
+</body>
+</html>

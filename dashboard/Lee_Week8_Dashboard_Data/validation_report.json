@@ -1,0 +1,65 @@
+{
+  "status": "pass",
+  "checks": [
+    {
+      "name": "required top-level sections",
+      "status": "pass"
+    },
+    {
+      "name": "prediction series fields",
+      "status": "pass"
+    },
+    {
+      "name": "anomaly summary fields",
+      "status": "pass"
+    },
+    {
+      "name": "official anomaly totals",
+      "status": "pass"
+    },
+    {
+      "name": "test Zone 1 prediction metrics",
+      "status": "pass"
+    },
+    {
+      "name": "prediction chart filter",
+      "status": "pass"
+    },
+    {
+      "name": "official IF versus LOF comparison",
+      "status": "pass"
+    },
+    {
+      "name": "prediction_series.csv row count and columns",
+      "status": "pass"
+    },
+    {
+      "name": "anomaly_summary.csv row count and columns",
+      "status": "pass"
+    },
+    {
+      "name": "prediction_metrics.csv row count and columns",
+      "status": "pass"
+    },
+    {
+      "name": "comparison_summary.csv row count and columns",
+      "status": "pass"
+    },
+    {
+      "name": "anomaly_points.csv.gz fields and row count",
+      "status": "pass"
+    },
+    {
+      "name": "prediction_points.csv.gz fields and row count",
+      "status": "pass"
+    }
+  ],
+  "row_counts": {
+    "prediction_series": 1904,
+    "anomaly_summary": 3888,
+    "prediction_metrics": 640,
+    "comparison_summary": 3888,
+    "anomaly_points": 362880,
+    "prediction_points": 113622
+  }
+}
